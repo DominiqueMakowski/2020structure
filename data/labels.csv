@@ -1,0 +1,267 @@
+Questionnaire,Dimension,Facets,Item,Reverse,Label,Description
+IPIP6,extraversion,,1,0,Q45_1,I am the life of the party. 
+IPIP6,agreeableness,,2,0,Q46_1,I sympathize with others’ feelings. 
+IPIP6,conscientiousness,,3,0,Q47_1,I get chores done right away. 
+IPIP6,neuroticism,,4,0,Q48_1,I have frequent mood swings. 
+IPIP6,openess,,5,0,Q49_1,I have a vivid imagination. 
+IPIP6,honesty_humility,,6,1,Q50_1,I feel entitled to more of everything. 
+IPIP6,extraversion,,7,1,Q51_1,I don’t talk a lot. 
+IPIP6,agreeableness,,8,1,Q52_1,I am not interested in other people’s problems.
+IPIP6,openess,,9,1,Q53_1,I have difficulty understanding abstract ideas. 
+IPIP6,conscientiousness,,10,0,Q54_1,I like order. 
+IPIP6,conscientiousness,,11,1,Q55_1,I make a mess of things. 
+IPIP6,honesty_humility,,12,1,Q56_1,I deserve more things in life. 
+IPIP6,openess,,13,1,Q57_1,I do not have a good imagination. 
+IPIP6,agreeableness,,14,0,Q58_1,I feel others’ emotions. 
+IPIP6,neuroticism,,15,1,Q59_1,I am relaxed most of the time. 
+IPIP6,neuroticism,,16,1,Q60_1,I get upset easily. 
+IPIP6,neuroticism,,17,1,Q61_1,I seldom feel blue. 
+IPIP6,honesty_humility,,18,1,Q62_1,I would like to be seen driving around in a very expensive car. 
+IPIP6,extraversion,,19,1,Q63_1,I keep in the background. 
+IPIP6,agreeableness,,20,1,Q64_1,I am not really interested in others. 
+IPIP6,openess,,21,1,Q65_1,I am not interested in abstract ideas. 
+IPIP6,conscientiousness,,22,1,Q66_1,I often forget to put things back in their proper place. 
+IPIP6,extraversion,,23,0,Q67_1,I talk to a lot of different people at parties. 
+IPIP6,honesty_humility,,24,1,Q212_1,I would get a lot of pleasure from owning expensive luxury goods. 
+PID5,disinhibition,,1,0,Q69_1,People would describe me as reckless. 
+PID5,disinhibition,,2,0,Q70_1,I feel like I act totally on impulse. 
+PID5,disinhibition,,3,0,Q71_1,"Even though I know better, I can’t stop making rash decisions. "
+PID5,detachment,,4,0,Q72_1,I often feel like nothing I do really matters. 
+PID5,disinhibition,,5,0,Q73_1,Others see me as irresponsible. 
+PID5,disinhibition,,6,0,Q74_1,I’m not good at planning ahead. 
+PID5,psychoticism,,7,0,Q75_1,My thoughts often don’t make sense to others. 
+PID5,negative_affect,,8,0,Q76_1,I worry about almost everything. 
+PID5,negative_affect,,9,0,Q77_1,"I get emotional easily, often for very little reason. "
+PID5,negative_affect,,10,0,Q78_1,I fear being alone in life more than anything else. 
+PID5,negative_affect,,11,0,Q79_1,"I get stuck on one way of doing things, even when it’s clear it won’t work. "
+PID5,psychoticism,,12,0,Q80_1,I have seen things that weren’t really there. 
+PID5,detachment,,13,0,Q81_1,I steer clear of romantic relationships. 
+PID5,detachment,,14,0,Q82_1,I’m not interested in making friends. 
+PID5,negative_affect,,15,0,Q83_1,I get irritated easily by all sorts of things. 
+PID5,detachment,,16,0,Q84_1,I don’t like to get too close to people. 
+PID5,antagonism,,17,0,Q85_1,It’s no big deal if I hurt other peoples’ feelings. 
+PID5,detachment,,18,0,Q86_1,I rarely get enthusiastic about anything. 
+PID5,antagonism,,19,0,Q87_1,I crave attention.
+PID5,antagonism,,20,0,Q201_1, I often have to deal with people who are less important than me. 
+PID5,psychoticism,,21,0,Q88_1,I often have thoughts that make sense to me but that other people say are strange
+PID5,antagonism,,22,0,Q89_1,I use people to get what I want. 
+PID5,psychoticism,,23,0,Q90_1,I often “zone out” and then suddenly come to and realize that a lot of time has passed. 
+PID5,psychoticism,,24,0,Q91_1,"Things around me often feel unreal, or more real than usual. "
+PID5,antagonism,,25,0,Q92_1,It is easy for me to take advantage of others. 
+DERS,lack_awareness,,1,1,Q94_1,I pay attention to how I feel.
+DERS,lack_clarity,,2,0,Q95_1,I have no idea how I am feeling.
+DERS,lack_clarity,,3,0,Q96_1,I have difficulty making sense out of my feelings.  
+DERS,lack_awareness,,4,1,Q97_1,I am attentive to my feelings. 
+DERS,lack_clarity,,5,0,Q98_1,I am confused about how I feel.
+DERS,lack_awareness,,6,1,Q99_1,"When I am upset, I acknowledge my emotions. "
+DERS,nonacceptance,,7,0,Q100_1,"When I am upset, I become embarrassed for feeling that way. "
+DERS,difficult_goals,,8,0,Q101_1,"When I am upset, I have difficulty getting work done. "
+DERS,impulse,,9,0,Q102_1,"When I am upset, I become out of control."
+DERS,lack_strategies,,10,0,Q103_1,"When I am upset, I believe that I will remain that way for a long time."
+DERS,lack_strategies,,11,0,Q104_1,"When I am upset, I believe that I’ll end up feeling very depressed."
+DERS,difficult_goals,,12,0,Q105_1,"When I am upset, I have difficulty focusing on other things. "
+DERS,nonacceptance,,13,0,Q106_1,"When I am upset, I feel ashamed with myself for feeling that way."
+DERS,nonacceptance,,14,0,Q107_1,"When I am upset, I feel guilty for feeling that way."
+DERS,difficult_goals,,15,0,Q108_1,"When I am upset, I have difficulty concentrating.  "
+DERS,impulse,,16,0,Q109_1,"When I am upset, I have difficulty controlling my behaviors"
+DERS,lack_strategies,,17,0,Q110_1,"When I am upset, I believe that wallowing in it is all I can do."
+DERS,impulse,,18,0,Q111_1,"When I am upset, I lose control over my behaviors. "
+UPPS,lack_perserverance,,1,0,Q113_1,I generally like to see things through to the end.
+UPPS,lack_premediation,,2,0,Q114_1,My thinking is usually careful and purposeful.
+UPPS,positive_urgency,,3,1,Q115_1,"When I am in great mood, I tend to get into situations that could cause me problems."
+UPPS,lack_perserverance,,4,0,Q116_1,Unfinished tasks really bother me. 
+UPPS,lack_premediation,,5,0,Q117_1,I like to stop and think things over before I do them. 
+UPPS,negative_urgency,,6,1,Q118_1,"When I feel bad, I will often do things I later regret in order to make myself feel better now."
+UPPS,lack_perserverance,,7,0,Q119_1,Once I get going on something I hate to stop. 
+UPPS,negative_urgency,,8,1,Q120_1,"Sometimes when I feel bad, I can't seem to stop what I am doing even though it is making me feel worse."
+UPPS,sensation_seeking,,9,1,Q121_1,I quite enjoy taking risks.
+UPPS,positive_urgency,,10,1,Q122_1,I tend to lose control when I am in a great mood.
+UPPS,lack_perserverance,,11,0,Q123_1,I finish what I start.
+UPPS,lack_premediation,,12,0,Q124_1,"I tend to value and follow a rational, “sensible” approach to things"
+UPPS,negative_urgency,,13,1,Q125_1,When I am upset I often act without thinking.
+UPPS,sensation_seeking,,14,1,Q126_1,"I welcome new and exciting experiences and sensations, even if they are a little frightening and unconventional."
+UPPS,negative_urgency,,15,1,Q127_1,"When I feel rejected, I will often say things that I later regret."
+UPPS,sensation_seeking,,16,1,Q128_1,I would like to learn to fly an airplane.
+UPPS,positive_urgency,,17,1,Q129_1,Others are shocked or worried about the things I do when I am feeling very excited.
+UPPS,sensation_seeking,,18,1,Q130_1,I would enjoy the sensation of skiing very fast down a high mountain slope.
+UPPS,lack_premediation,,19,0,Q131_1,I usually think carefully before doing anything.
+UPPS,positive_urgency,,20,1,Q132_1,I tend to act without thinking when I am really excited.
+FFNI,acclaim_seeking,,1,0,Q147_1,I am extremely ambitious. 
+FFNI,distrust,,4,0,Q148_1,"When someone does something nice for me, I wonder what they want from me. "
+FFNI,entitlement,,5,0,Q149_1,I deserve to receive special treatment. 
+FFNI,exploitativeness,,7,0,Q151_1,It’s fine to take advantage of persons to get ahead. 
+FFNI,indifference,,9,0,Q152_1,"When people judge me, I just don’t care. "
+FFNI,lack empathy,,10,0,Q153_1,I don’t worry about others’ needs. 
+FFNI,manipulativeness,,11,0,Q154_1,I’m pretty good at manipulating people. 
+FFNI,need admiration,,12,0,Q155_1,I often feel as if I need compliments from others in order to be sure of myself. 
+FFNI,thirll_seeking,,15,0,Q156_1,I will try almost anything to get my “thrills”. 
+FFNI,acclaim_seeking,,16,0,Q157_1,I have a tremendous drive to succeed. 
+FFNI,distrust,,19,1,Q158_1,I trust that other people will be honest with me. 
+FFNI,entitlement,,20,0,Q159_1,I don’t think the rules apply to me as much as they apply to others. 
+FFNI,exploitativeness,,22,0,Q161_1,I will use persons as tools to advance myself.
+FFNI,indifference,,24,0,Q162_1,I don’t really care what others think of me. 
+FFNI,lack empathy,,25,0,Q163_1,I don’t generally pay much attention to the woes of others. 
+FFNI,manipulativeness,,26,0,Q164_1,I can maneuver people into doing things. 
+FFNI,need admiration,,27,1,Q165_1,I am stable in my sense of self. 
+FFNI,thirll_seeking,,30,0,Q166_1,I am a bit of a daredevil. 
+FFNI,acclaim_seeking,,31,0,Q167_1,I aspire for greatness. 
+FFNI,distrust,,34,0,Q168_1,I’m slow to trust people. 
+FFNI,entitlement,,35,0,Q169_1,"It may seem unfair, but I deserve extra (i.e., attention, privileges, rewards). "
+FFNI,exploitativeness,,37,0,Q171_1,Sometimes to succeed you need to use other people. 
+FFNI,indifference,,39,0,Q172_1,I’m pretty indifferent to the criticism of others. 
+FFNI,lack empathy,,40,0,Q173_1,I’m not big on feelings of sympathy. 
+FFNI,manipulativeness,,41,0,Q174_1,I can talk my way into and out of anything. 
+FFNI,need admiration,,42,0,Q175_1,I feel very insecure about whether I will achieve much in life. 
+FFNI,thirll_seeking,,45,0,Q176_1,I would risk injury to do something exciting. 
+FFNI,acclaim_seeking,,46,0,Q177_1,I am driven to succeed. 
+FFNI,distrust,,49,0,Q178_1,I often think that others aren’t telling me the whole truth. 
+FFNI,entitlement,,50,0,Q179_1,I believe I am entitled to special accommodations. 
+FFNI,exploitativeness,,52,0,Q181_1,I’m willing to exploit others to further my own goals.
+FFNI,indifference,,54,0,Q182_1,Others’ opinions of me are of little concern to me. 
+FFNI,lack empathy,,55,0,Q183_1,I don’t get upset by the suffering of others. 
+FFNI,manipulativeness,,56,0,Q184_1,It is easy to get people to do what I want. 
+FFNI,need admiration,,57,0,Q185_1,I wish I didn’t care so much about what others think of me. 
+FFNI,thirll_seeking,,60,0,Q186_1,I like doing things that are risky or dangerous.
+Lying_Frequency,frequency,absolute,Day,,Q266,"On average, how many lies do you tell in a day?"
+LIE,frequency,idyosyncratic,1,,Q3_4,I lie frequently
+LIE,frequency,idyosyncratic,2,,Q4_4,I lie in many situations
+LIE,frequency,idyosyncratic,3,,Q5_4,I never tell lies
+LIE,frequency,idyosyncratic,4,,Q6_4,I have a tendency to lie
+LIE,frequency,comparison,5,,Q7_4,I lie more often than most people do 
+LIE,frequency,comparison,6,,Q8_4,I lie more frequently than what I expect myself to
+LIE,frequency,comparison,7,,Q9_4,I lie more than I think I should
+LIE,frequency,comparison,8,,Q10_4,Others lie less often than I do
+LIE,ability,skill,9,,Q12_4,I am a good liar
+LIE,ability,skill,10,,Q13_4,I can lie well
+LIE,ability,skill,11,,Q14_4,I am good at deceiving others
+LIE,ability,skill,12,,Q15_4,I can lie effectively if I want to
+LIE,ability,conceal,13,,Q16_4,Others can easily tell when I’m lying
+LIE,ability,conceal,14,,Q17_4,It is hard for others to detect my lies
+LIE,ability,conceal,15,,Q18_4,I almost never get caught lying
+LIE,ability,conceal,16,,Q19_4,My lies often arouse suspicion from others
+LIE,ability,ease,17,,Q20_4,I find lying difficult
+LIE,ability,ease,18,,Q21_4,It is easy for me to make up clever lies
+LIE,ability,ease,19,,Q22_4,I find it taxing to come up with a good lie
+LIE,ability,ease,20,,Q23_4,I do not have to prepare much for a lie
+LIE,cause_consequences,self_control,21,,Q24_4,I have to try hard to avoid lying
+LIE,cause_consequences,self_control,22,,Q25_4,I find myself lying without any reason
+LIE,cause_consequences,self_control,23,,Q26_4,I find it difficult to refrain myself from lying
+LIE,cause_consequences,self_control,24,,Q27_4,It is easy to hold back from telling lies
+LIE,cause_consequences,emotional,25,,Q28_4,I feel guilty after lying
+LIE,cause_consequences,emotional,26,,Q29_4,I enjoy lying
+LIE,cause_consequences,emotional,27,,Q30_4,I feel tense whenever I have to lie
+LIE,cause_consequences,emotional,28,,Q31_4,I feel satisfied when others believe my lie
+LIE,cause_consequences,convenience,29,,Q32_4,I lie whenever it’s convenient
+LIE,cause_consequences,convenience,30,,Q33_4,I lie when it’s easier than telling the truth
+LIE,cause_consequences,convenience,31,,Q34_4,I lie if it’s the most direct way to get what I want
+LIE,cause_consequences,convenience,32,,Q35_4,I lie when telling the truth is too troublesome
+LIE,cause_consequences,necessity,33,,Q261_1,I lie when necessary
+LIE,cause_consequences,necessity,34,,Q262_1,I always avoid lying if I can
+LIE,cause_consequences,necessity,35,,Q263_1,I would only lie if I have no other choice
+LIE,cause_consequences,necessity,36,,Q264_1,I prefer to tell the truth even if it gets me into trouble
+LIE,cause_consequences,stakes,37,,Q36_4,I would never lie for trivial matters
+LIE,cause_consequences,stakes,38,,Q37_4,I would never lie in serious contexts
+LIE,cause_consequences,stakes,39,,Q38_4,I would lie if something important was at stake
+LIE,cause_consequences,stakes,40,,Q39_4,I would only lie if it is harmless
+LIE,cause_consequences,moral,41,,Q40_4,Lying is against my principles
+LIE,cause_consequences,moral,42,,Q41_4,It is acceptable to lie depending on the context
+LIE,cause_consequences,moral,43,,Q42_4,It is okay to lie sometimes 
+LIE,cause_consequences,moral,44,,Q43_4,It is bad to lie 
+Lying_Frequency,frequency,absolute,Week,,Q267,"On average, how many lies do you tell in a week?"
+LTS,faith,,1,0,Q244_1,I tend to see the best in people.
+LTS,humanism,,2,0,Q245_1,I tend to admire others .
+LTS,kantianism,,3,0,Q246_1,I prefer honesty over charm.
+LTS,faith,,4,0,Q247_1,I tend to trust that other people will deal fairly with me. 
+LTS,humanism,,5,0,Q248_1,I tend to applaud the successes of other people.
+LTS,kantianism,,6,0,Q249_1,I don’t feel comfortable overtly manipulating people to do something I want. 
+LTS,faith,,7,0,Q250_1,I think people are mostly good.
+LTS,humanism,,8,0,Q251_1,I tend to treat others as valuable.
+LTS,kantianism,,9,0,Q252_1,I would like to be authentic even if it many damage my reputation.
+LTS,faith,,10,0,Q253_1,I’m quick to forgive people who have hurt me.
+LTS,humanism,,11,0,Q254_1,I enjoy listening to people from all walks of life.
+LTS,kantianism,,12,0,Q255_1,When I talk to people I am rarely thinking about what I want from them.
+TRIMP,boldness,optimism,1,0,Q269_1,I’m optimistic more often than not.
+TRIMP,meanness,empathy,2,1,Q270_1,How other people feel is important to me.
+TRIMP,disinhibition,impatient urgency,3,0,Q271_1,I often act on immediate needs.
+TRIMP,boldness,intrepidness,4,1,Q272_1,I have no strong desire to parachute out of an airplane.
+TRIMP,disinhibition,dependability,5,0,Q273_1,I've often missed things I promised to attend.
+TRIMP,meanness,excitement seeking,6,0,Q274_1,I would enjoy being in a high-speed chase.
+TRIMP,boldness,resilience,7,0,Q275_1,I am well-equipped to deal with stress.
+TRIMP,meanness,empathy,8,0,Q276_1,I don’t mind if someone I dislike gets hurt.
+TRIMP,disinhibition,problematic impulsivity ,9,0,Q277_1,My impulsive decisions have caused problems with loved ones.
+TRIMP,boldness,courage,10,1,Q278_1,I get scared easily.
+TRIMP,meanness,empathy,11,1,Q279_1,I sympathize with others’ problems.
+TRIMP,disinhibition,irresponsibility,12,0,Q280_1,I have missed work without bothering to call in.
+TRIMP,boldness,dominance,13,0,Q281_1,I'm a born leader.
+TRIMP,meanness,physical aggression,14,0,Q282_1,I enjoy a good physical fight.
+TRIMP,disinhibition,problematic impulsivity ,15,0,Q283_1,I jump into things without thinking.
+TRIMP,boldness,optimism,16,1,Q284_1,I have a hard time making things turn out the way I want.
+TRIMP,meanness,relational aggression,17,0,Q285_1,I return insults.
+TRIMP,disinhibition,irresponsibility,18,0,Q286_1,I've gotten in trouble because I missed too much school.
+TRIMP,boldness,persuasiveness,19,0,Q287_1,I have a knack for influencing people.
+TRIMP,meanness,empathy,20,0,Q288_1,It doesn’t bother me to see someone else in pain.
+TRIMP,disinhibition,planful control,21,1,Q289_1,I have good control over myself.
+TRIMP,boldness,tolerance for uncertainty,22,0,Q290_1,"I function well in new situations, even when unprepared."
+TRIMP,meanness,relational aggression,23,0,Q326_1,I enjoy pushing people around sometimes.
+TRIMP,disinhibition,theft,24,0,Q291_1,I have taken money from someone's purse or wallet without asking.
+TRIMP,boldness,self confidence,25,1,Q292_1,I don't think of myself as talented.
+TRIMP,meanness,relational aggression,26,0,Q293_1,I taunt people just to stir things up.
+TRIMP,disinhibition,alienation,27,0,Q294_1,People often abuse my trust.
+TRIMP,boldness,courage,28,0,Q295_1,I'm afraid of far fewer things than most people.
+TRIMP,meanness,empathy,29,0,Q296_1,I don't see any point in worrying if what I do hurts someone else.
+TRIMP,disinhibition,dependability,30,1,Q297_1,I keep appointments I make.
+TRIMP,disinhibition,boredom proneness,31,0,Q298_1,I often get bored quickly and lose interest.
+TRIMP,boldness,resilience,32,0,Q299_1,I can get over things that would traumatize others.
+TRIMP,meanness,empathy,33,1,Q300_1,I am sensitive to the feelings of others.
+TRIMP,disinhibition,fraud,34,0,Q301_1,I have conned people to get money from them.
+TRIMP,boldness,tolerance for uncertainty,35,1,Q302_1,It worries me to go into an unfamiliar situation without knowing all the details.
+TRIMP,meanness,empathy,36,0,Q303_1,I don't have much sympathy for people.
+TRIMP,disinhibition,problematic impulsivity ,37,0,Q304_1,I get in trouble for not considering the consequences of my actions.
+TRIMP,boldness,persuasiveness,38,0,Q305_1,I can convince people to do what I want.
+TRIMP,meanness,honesty,39,1,Q306_1,"For me, honesty really is the best policy. "
+TRIMP,meanness,destructive aggression,40,0,Q307_1,I've injured people to see them in pain.
+TRIMP,boldness,dominance,41,1,Q308_1,I don’t like to take the lead in groups.
+TRIMP,meanness,relational aggression,42,0,Q309_1,I sometimes insult people on purpose to get a reaction from them.
+TRIMP,disinhibition,theft,43,0,Q310_1,I have taken items from a store without paying for them.
+TRIMP,boldness,social assurance,44,1,Q311_1,It's easy to embarrass me.
+TRIMP,meanness,excitement seeking,45,0,Q312_1,Things are more fun if a little danger is involved.
+TRIMP,disinhibition,impatient urgency,46,0,Q313_1,I have a hard time waiting patiently for things I want.
+TRIMP,boldness,intrepidness,47,1,Q314_1,I stay away from physical danger as much as I can.
+TRIMP,meanness,empathy,48,0,Q315_1,I don't care much if what I do hurts others.
+TRIMP,disinhibition,irresponsibility,49,0,Q316_1,I have lost a friend because of irresponsible things I've done.
+TRIMP,boldness,self confidence,50,1,Q317_1,I don't stack up well against most others.
+TRIMP,disinhibition,problematic impulsivity ,51,0,Q318_1,Others have told me they are concerned about my lack of self-control. 
+TRIMP,meanness,empathy,52,1,Q319_1,It’s easy for me to relate to other people’s emotions.
+TRIMP,disinhibition,theft,53,0,Q320_1,I have robbed someone.
+TRIMP,boldness,social assurance,54,0,Q321_1,I never worry about making a fool of myself with others.
+TRIMP,meanness,empathy,55,0,Q322_1,It doesn’t bother me when people around me are hurting.
+TRIMP,disinhibition,irresponsibility,56,0,Q323_1,I have had problems at work because I was irresponsible.
+TRIMP,boldness,persuasiveness,57,1,Q324_1,I’m not very good at influencing people.
+TRIMP,disinhibition,theft,58,0,Q325_1,I have stolen something out of a vehicle.
+BIDR,self_deceptive,,1,1,Q328_1,I have not always been honest with myself. 
+BIDR,self_deceptive,,2,0,Q329_1,I always know why I like things. 
+BIDR,self_deceptive,,3,1,Q330_1,It's hard for me to shut off a disturbing thought. 
+BIDR,self_deceptive,,4,0,Q331_1,I never regret my decisions. 
+BIDR,self_deceptive,,5,1,Q332_1,I sometimes lose out on things because I can't make up my mind soon enough. 
+BIDR,self_deceptive,,6,0,Q333_1,I am a completely rational person. 
+BIDR,self_deceptive,,7,0,Q334_1,I am very confident of my judgments 
+BIDR,self_deceptive,,8,1,Q335_1,I have sometimes doubted my ability as a lover. 
+BIDR,impress_manage,,9,1,Q336_1,I sometimes tell lies if I have to. 
+BIDR,impress_manage,,10,0,Q337_1,I never cover up my mistakes. 
+BIDR,impress_manage,,11,1,Q338_1,There have been occasions when I have taken advantage of someone. 
+BIDR,impress_manage,,12,1,Q339_1,I sometimes try to get even rather than forgive and forget.  
+BIDR,impress_manage,,13,1,Q340_1,I have said something bad about a friend behind his/her back. 
+BIDR,impress_manage,,14,0,Q341_1,"When I hear people talking privately, I avoid listening "
+BIDR,impress_manage,,15,0,Q342_1,I never take things that don't belong to me. 
+BIDR,impress_manage,,16,0,Q343_1,I don't gossip about other people's business. 
+MAIA2,noticing,,1,0,Q345_1,When I am tense I notice where the tension is located in my body. 
+MAIA2,noticing,,2,0,Q346_1, I notice when I am uncomfortable in my body. 
+MAIA2,noticing,,3,0,Q347_1, I notice where in my body I am comfortable. 
+MAIA2,noticing,,4,0,Q348_1,"I notice changes in my breathing, such as whether it slows down or speeds up. "
+MAIA2,body_listening,,5,0,Q349_1, I listen for information from my body about my emotional state. 
+MAIA2,body_listening,,6,0,Q350_1," When I am upset, I take time to explore how my body feels. "
+MAIA2,body_listening,,7,0,Q351_1,I listen to my body to inform me about what to do. 
+MAIA2,self_regulation,,8,0,Q352_1,When I feel overwhelmed I can find a calm place inside. 
+MAIA2,self_regulation,,9,0,Q353_1,When I bring awareness to my body I feel a sense of calm. 
+MAIA2,self_regulation,,10,0,Q354_1,I can use my breath to reduce tension. 
+MAIA2,self_regulation,,11,0,Q355_1,"When I am caught up in thoughts, I can calm my mind by focusing on my body/breathing. "

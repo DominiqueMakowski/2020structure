@@ -1,0 +1,2320 @@
+---
+title: "**The Structure of Deception: Validation of the Lying Profile Questionnaire**"
+subtitle: 'Supplementary Materials'
+output:
+  html_document:
+    theme: journal
+    footer: "LIE questionnaire validation"
+    highlight: pygments
+    toc: yes
+    toc_depth: 4
+    toc_float: yes
+    df_print: "kable"
+    code_folding: hide
+  word_document:
+    toc: false
+    toc_depth: 3
+    df_print: "kable"
+    highlight: "pygments"
+    reference_docx: utils/Template_Supplementary_Materials.docx
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 4
+tags: [r, lie, questionnaire, deception]
+editor_options: 
+  chunk_output_type: console
+bibliography: utils/bibliography.bib
+csl: utils/apa.csl
+---
+
+```{r, set.seed(333), include=FALSE, warning=FALSE, message=TRUE}
+library(knitr)
+options(knitr.kable.NA = "",
+        digits = 2)
+
+figheight <- 6
+figwidth <- 6 * 1.618034
+
+knitr::opts_chunk$set(
+  comment = ">",
+  dpi = 500,
+  fig.path = "figures/",
+  tidy = TRUE,
+  fig.height=figheight,
+  fig.width=figwidth, 
+  fig.align = "center"
+)
+```
+
+
+# Methods
+
+## Packages & Data
+
+### Packages
+```{r warning=FALSE, message=FALSE}
+library(tidyverse)
+library(easystats)
+
+set.seed(333)
+```
+
+
+
+
+
+### Data
+
+```{r warning=FALSE, message=FALSE}
+labels <- read.csv("../data/labels.csv", stringsAsFactors = FALSE) %>% 
+  mutate(Item = paste0(Questionnaire, "_", Item))
+df_raw <- read.csv("../data/data.csv", stringsAsFactors = FALSE)
+```
+
+
+### Preprocessing
+
+```{r warning=FALSE, message=FALSE}
+df_raw <- df_raw %>% 
+  mutate(Participant = paste0("S", 1:nrow(df_raw)),
+         Sex = as.factor(Sex))
+
+paste("The initial sample included", report::report_participants(df_raw))
+```
+
+## Measures Scoring
+
+### Utility Functions
+```{r warning=FALSE, message=FALSE}
+# Reverse negative items
+reverse <- function(x, mini, maxi){
+  maxi - x + mini
+}
+
+
+# Descriptive statistics
+descriptive_statistics <- function(df, starts_with){
+  df %>% 
+    select(starts_with(starts_with)) %>% 
+    report::report() %>% 
+    report::table_long() %>% 
+    select(-one_of(c("n_Obs", "Median", "MAD", "n_Missing"))) %>% 
+    print()
+  
+  plot(df %>% 
+    select(starts_with(starts_with)) %>% 
+    bayestestR::estimate_density(method = "KernSmooth") %>% 
+    plot() + 
+    see::theme_modern())
+}
+```
+
+### Deception and Lying Profile (LIE)
+
+We rescaled the LIE variables, originally scored on a -10 to 10 scale, to -5 to 5, so that the coefficients are more easily interpretable (i.e., refers to a change of 10\% of the scale).
+
+```{r warning=FALSE, message=FALSE}
+df_raw[stringr::str_detect(names(df_raw), "LIE_")] <- effectsize::change_scale(df_raw[stringr::str_detect(names(df_raw), "LIE_")], from = c(-10, 10), to = c(-5, 5))
+```
+
+### Psychopathy (TRIMP)
+
+```{r warning=FALSE, message=FALSE}
+df_raw <- df_raw %>%
+   # Transform to numeric
+  mutate_at(vars(starts_with("TRIMP")), function(x) {
+    ifelse(x == "TRUE", 3,
+           ifelse(x == "somewhat true", 2,
+                  ifelse(x == "somewhat false", 1, 0)))
+    }) %>%
+  # Reverse items
+  mutate_at(vars("TRIMP_2", "TRIMP_4", "TRIMP_10", "TRIMP_11", "TRIMP_16", "TRIMP_21", "TRIMP_25", "TRIMP_30", "TRIMP_33", "TRIMP_35", "TRIMP_39", "TRIMP_41", "TRIMP_44", "TRIMP_47", "TRIMP_50", "TRIMP_52", "TRIMP_57"), reverse, mini = 0, maxi = 3) %>% 
+  # Compute scores
+      ## Boldness
+  mutate(
+    TRIMP_Boldness = (TRIMP_1 + TRIMP_16
+                      + TRIMP_7 + TRIMP_32
+                      + TRIMP_10 + TRIMP_28
+                      + TRIMP_13 + TRIMP_41
+                      + TRIMP_19 + TRIMP_38 + TRIMP_57
+                      + TRIMP_4 + TRIMP_47 
+                      + TRIMP_22 + TRIMP_35
+                      + TRIMP_25 + TRIMP_50
+                      + TRIMP_44 + TRIMP_54)/19,
+    TRIMP_Boldness_Optimism = (TRIMP_1 + TRIMP_16)/2,
+    TRIMP_Boldness_Resilience = (TRIMP_7 + TRIMP_32)/2,
+    TRIMP_Boldness_Courage = (TRIMP_10 + TRIMP_28)/2,
+    TRIMP_Boldness_Dominance = (TRIMP_13 + TRIMP_41)/2,
+    TRIMP_Boldness_Persuasiveness = (TRIMP_19 + TRIMP_38 + TRIMP_57)/3,
+    TRIMP_Boldness_Intrepidness = (TRIMP_4 + TRIMP_47)/2,
+    TRIMP_Boldness_ToleranceForUncertainty = (TRIMP_22 + TRIMP_35)/2,
+    TRIMP_Boldness_SelfConfidence = (TRIMP_25 + TRIMP_50)/2,
+    TRIMP_Boldness_SocialAssurance = (TRIMP_44 + TRIMP_54)/2
+) %>% 
+      ## Meanness
+  mutate(
+    TRIMP_Meanness = (TRIMP_2 + TRIMP_8 + TRIMP_11 + TRIMP_20 + TRIMP_29 + TRIMP_33 + TRIMP_36 + TRIMP_48 + TRIMP_52 + TRIMP_55 
+                      + TRIMP_6 + TRIMP_45
+                      + TRIMP_14
+                      + TRIMP_17 + TRIMP_23 + TRIMP_26 + TRIMP_42
+                      + TRIMP_39
+                      + TRIMP_40)/19,
+    TRIMP_Meanness_Empathy = (TRIMP_2 + TRIMP_8 + TRIMP_11 + TRIMP_20 + TRIMP_29 + TRIMP_33 + TRIMP_36 + TRIMP_48 + TRIMP_52 + TRIMP_55)/10,
+    TRIMP_Meanness_ExcitementSeeking = (TRIMP_6 + TRIMP_45)/2,
+    TRIMP_Meanness_PhysicalAggression = TRIMP_14,
+    TRIMP_Meanness_RelationalAggression = (TRIMP_17 + TRIMP_23 + TRIMP_26 + TRIMP_42)/4,
+    TRIMP_Meanness_Honesty = TRIMP_39,
+    TRIMP_Meanness_DestructiveAggression = TRIMP_40
+) %>% 
+     ## Disinhibition
+  mutate(
+    TRIMP_Disinhibition = (
+      TRIMP_3 + TRIMP_46 + 
+        TRIMP_5 + TRIMP_30 + 
+        TRIMP_9 + TRIMP_15 + TRIMP_37 + TRIMP_51 +
+        TRIMP_12 + TRIMP_18 + TRIMP_49 + TRIMP_56 +
+        TRIMP_21 +
+        TRIMP_24 + TRIMP_43 + TRIMP_53 + TRIMP_58 +
+        TRIMP_27 +
+        TRIMP_31 +
+        TRIMP_34)/20,
+    TRIMP_Disinhibition_ImpatienceUrgency = (TRIMP_3 + TRIMP_46)/2,
+    TRIMP_Disinhibition_Dependability = (TRIMP_5 + TRIMP_30)/2,
+    TRIMP_Disinhibition_ProblematicImpulsivity = (TRIMP_9 + TRIMP_15 + TRIMP_37 + TRIMP_51)/4,
+    TRIMP_Disinhibition_Irresponsibility = (TRIMP_12 + TRIMP_18 + TRIMP_49 + TRIMP_56)/4,
+    TRIMP_Disinhibition_PlanfulControl = TRIMP_21,
+    TRIMP_Disinhibition_Theft = (TRIMP_24 + TRIMP_43 + TRIMP_53 + TRIMP_58)/4,
+    TRIMP_Disinhibition_Alienation = TRIMP_27,
+    TRIMP_Disinhibition_BoredomProneness = TRIMP_31,
+    TRIMP_Disinhibition_Fraud = TRIMP_34
+) %>% 
+  ## General
+      mutate(TRIMP_General = (TRIMP_Boldness*19 + TRIMP_Meanness*19 + TRIMP_Disinhibition*20)/58
+) %>%
+  # Remove individual questions
+  select(-matches("TRIMP_\\d"))
+```
+
+
+### Narcissism (FFNI) 
+
+```{r warning=FALSE, message=FALSE}
+df_raw <- df_raw %>%
+   # Transform to numeric
+  mutate_at(vars(starts_with("FFNI")), function(x) {
+    ifelse(x == "Disagree strongly", 1,
+           ifelse(x == "Disagree a little", 2,
+                  ifelse(x == "Neither agree nor disagree", 3,
+                         ifelse(x == "Agree a little", 4, 5))))
+  })%>%
+  # Reverse items
+  mutate_at(vars("FFNI_19", "FFNI_27"), reverse, mini = 1, maxi = 5) %>% 
+  # Compute scores
+  mutate(
+    FFNI_AcclaimSeeking = (FFNI_1 + FFNI_16 + FFNI_31 + FFNI_46),
+    FFNI_Distrust = (FFNI_4 + FFNI_19 + FFNI_34 + FFNI_49),
+    FFNI_Entitlement = (FFNI_5 + FFNI_20 + FFNI_35 + FFNI_50),
+    FFNI_Exploitativeness = (FFNI_7 + FFNI_22 + FFNI_37 + FFNI_52),
+    FFNI_Indifference = (FFNI_9 + FFNI_24 + FFNI_39 + FFNI_54),
+    FFNI_LackOfEmpathy = (FFNI_10 + FFNI_25 + FFNI_40 + FFNI_55),
+    FFNI_Manipulativeness = (FFNI_11 + FFNI_26 + FFNI_41 + FFNI_56),
+    FFNI_NeedForAdmiration = (FFNI_12 + FFNI_27 + FFNI_42 + FFNI_57),
+    FFNI_ThrillSeeking = (FFNI_15 + FFNI_30 + FFNI_45 + FFNI_60),
+    FFNI_General = (FFNI_AcclaimSeeking + FFNI_Entitlement + FFNI_NeedForAdmiration + FFNI_Manipulativeness + FFNI_LackOfEmpathy + FFNI_Indifference + FFNI_ThrillSeeking + FFNI_Distrust + FFNI_Exploitativeness) / 9
+) %>% 
+  # Remove individual questions
+  select(-matches("FFNI_\\d"))
+```
+
+
+
+### Normal Personality (IPIP6)
+
+```{r warning=FALSE, message=FALSE}
+df_raw <- df_raw %>%
+  # Transform to numeric
+  mutate_at(vars(starts_with("IPIP6")), as.numeric) %>% 
+  # Reverse items
+  mutate_at(vars("IPIP6_6", "IPIP6_7", "IPIP6_8", "IPIP6_9", "IPIP6_11", "IPIP6_12", "IPIP6_13", "IPIP6_15", "IPIP6_17", "IPIP6_18", "IPIP6_19", "IPIP6_20", "IPIP6_21", "IPIP6_22", "IPIP6_24"), reverse, mini = 1, maxi = 7) %>% 
+  # Compute scores
+  mutate(
+    IPIP6_Extraversion = (IPIP6_1 + IPIP6_7 + IPIP6_19 + IPIP6_23)/4,
+    IPIP6_Agreableness = (IPIP6_2 + IPIP6_8 + IPIP6_14 + IPIP6_20)/4,
+    IPIP6_Conscientiousness = (IPIP6_3 + IPIP6_10 + IPIP6_11 + IPIP6_22)/4,
+    IPIP6_Neuroticism = (IPIP6_4 + IPIP6_15 + IPIP6_16 + IPIP6_17)/4,
+    IPIP6_Openeness = (IPIP6_5 + IPIP6_9 + IPIP6_13 + IPIP6_21)/4,
+    IPIP6_HonestyHumility = (IPIP6_6 + IPIP6_12 + IPIP6_18 + IPIP6_24)/4
+  ) %>% 
+  # Remove individual questions
+  select(-matches("IPIP6_\\d"))
+```
+
+
+### Pathological Personality (PID-5)
+
+```{r warning=FALSE, message=FALSE}
+df_raw <- df_raw %>%
+  # Transform to numeric
+  mutate_at(vars(starts_with("PID5")), function(x) {
+    ifelse(x == "Very false or often false", 0,
+           ifelse(x == "Sometimes or somewhat false", 1,
+                  ifelse(x == "Sometimes or somewhat true", 2, 3)))
+  }) %>% 
+  # Compute scores
+  mutate(
+    PID5_NegativeAffect = (PID5_8 + PID5_9 + PID5_10 + PID5_11 + PID5_15)/5,
+    PID5_Detachment = (PID5_4 + PID5_13 + PID5_14 + PID5_16 + PID5_18)/5,
+    PID5_Antagonism = (PID5_17 + PID5_19 + PID5_20 + PID5_22 + PID5_25)/5,
+    PID5_Disinhibition = (PID5_1 + PID5_2 + PID5_3 + PID5_5 + PID5_6)/5,
+    PID5_Psychoticism = (PID5_7 + PID5_12 + PID5_21 + PID5_23 + PID5_24)/5,
+    PID5_Pathology = (PID5_NegativeAffect + PID5_Detachment + PID5_Antagonism + PID5_Disinhibition + PID5_Psychoticism)/5
+  ) %>% 
+  # Remove individual questions
+  select(-matches("PID5_\\d"))
+```
+
+
+### Social Desirability (BIDR)
+
+```{r warning=FALSE, message=FALSE}
+df_raw <- df_raw %>%
+   # Reverse items
+  mutate_at(vars("BIDR_1", "BIDR_3", "BIDR_5", "BIDR_8", "BIDR_9", "BIDR_11", "BIDR_12", "BIDR_13"), reverse, mini = 1, maxi = 7) %>% 
+  # Compute scores
+  mutate(
+    BIDR_SelfDeceptiveEnhancement = (BIDR_1 + BIDR_2 + BIDR_3 + BIDR_4 + BIDR_5 + BIDR_6 + BIDR_7 + BIDR_8)/8,
+    BIDR_ImpressionManagement = (BIDR_9 + BIDR_10 + BIDR_11 + BIDR_12 + BIDR_13 + BIDR_14 + BIDR_15 + BIDR_16)/8,
+    BIDR_General = (BIDR_SelfDeceptiveEnhancement + BIDR_ImpressionManagement)/2
+) %>% 
+  # Remove individual questions
+  select(-matches("BIDR_\\d"))
+```
+ 
+ 
+### Impulsivity (UPPS)
+
+```{r warning=FALSE, message=FALSE}
+df_raw <- df_raw %>%
+   # Transform to numeric
+  mutate_at(vars(starts_with("UPPS")), function(x) {
+    ifelse(x == "Strongly Agree", 1,
+           ifelse(x == "Somewhat agree", 2,
+                  ifelse(x == "Somewhat disagree", 3, 4)))
+  })%>%
+  # Reverse items
+  mutate_at(vars("UPPS_3", "UPPS_6", "UPPS_8", "UPPS_9", "UPPS_10", "UPPS_13", "UPPS_14", "UPPS_15", "UPPS_16", "UPPS_17", "UPPS_18", "UPPS_20"), reverse, mini = 1, maxi = 4) %>% 
+  # Compute scores
+  mutate(
+    UPPS_NegativeUrgency = (UPPS_6 + UPPS_8 + UPPS_13 + UPPS_15)/4,
+    UPPS_PositiveUrgency = (UPPS_3 + UPPS_10 + UPPS_17 + UPPS_20)/4,
+    UPPS_LackOfPerseverance = (UPPS_1 + UPPS_4 + UPPS_7 + UPPS_11)/4,
+    UPPS_LackOfPremeditation = (UPPS_2 + UPPS_5 + UPPS_12 + UPPS_19)/4,
+    UPPS_SensationSeeking = (UPPS_9 + UPPS_14 + UPPS_16 + UPPS_18)/4,
+    UPPS_General = (UPPS_NegativeUrgency + UPPS_PositiveUrgency + UPPS_LackOfPerseverance + UPPS_LackOfPremeditation + UPPS_SensationSeeking)/5
+) %>% 
+  # Remove individual questions
+  select(-matches("UPPS_\\d"))
+```
+
+
+### Emotion Regulation (DERS)
+
+```{r warning=FALSE, message=FALSE}
+df_raw <- df_raw %>%
+  # Transform to numeric
+  mutate_at(vars(starts_with("DERS")), function(x) {
+    ifelse(x == "Almost never (0 - 10%)", 1,
+           ifelse(x == "Sometimes (11 - 35%)", 2,
+                  ifelse(x == "About half the time (36 - 65%)", 3,
+                         ifelse(x == "Most of the time (66 - 90%)", 4, 5))))
+  }) %>%
+  # Reverse items
+  mutate_at(vars("DERS_1", "DERS_4", "DERS_6"), reverse, mini = 1, maxi = 5) %>% 
+  # Compute scores
+  mutate(
+    DERS_Awareness = DERS_1 + DERS_4 + DERS_6,
+    DERS_Clarity = DERS_2 + DERS_3 + DERS_5,
+    DERS_Goals = DERS_8 + DERS_12 + DERS_15,
+    DERS_Impulse = DERS_9 + DERS_16 + DERS_18,
+    DERS_NonAcceptance = DERS_7 + DERS_13 + DERS_14,
+    DERS_Strategies = DERS_10 + DERS_11 + DERS_17,
+    DERS_General = (DERS_Awareness + DERS_Clarity + DERS_Goals + DERS_Impulse + DERS_NonAcceptance + DERS_Strategies) / 6
+  ) %>% 
+  # Remove individual questions
+  select(-matches("DERS_\\d"))
+```
+
+### Light Triad (LTS)
+
+```{r warning=FALSE, message=FALSE}
+df_raw <- df_raw %>%
+   # Transform to numeric
+  mutate_at(vars(starts_with("LTS")), function(x) {
+    ifelse(x == "Agree strongly", 1,
+           ifelse(x == "Agree", 2,
+                  ifelse(x == "Neutral", 3,
+                         ifelse(x == "Disagree", 4, 5)))) 
+    })%>%
+  # Compute scores
+  mutate(
+    LTS_FaithInHumanity = (LTS_1 + LTS_4 + LTS_7 + LTS_10)/4,
+    LTS_Humanism = (LTS_2 + LTS_5 + LTS_8 + LTS_11)/4,
+    LTS_Kantianism = (LTS_3 + LTS_6 + LTS_9 + LTS_12)/4,
+    LTS_General = (LTS_FaithInHumanity + LTS_Humanism + LTS_Kantianism)/3
+) %>% 
+  # Remove individual questions
+  select(-matches("LTS_\\d"))
+```
+
+
+### Introception (MAIA2)
+
+```{r warning=FALSE, message=FALSE}
+df_raw <- df_raw %>%
+  # Compute scores
+  mutate(
+   MAIA2_Noticing = (MAIA2_1 + MAIA2_2 + MAIA2_3 + MAIA2_4)/4,
+   MAIA2_BodyListening = (MAIA2_5 + MAIA2_6 + MAIA2_7 + MAIA2_8 + MAIA2_9 + MAIA2_10 + MAIA2_11)/7
+) %>% 
+  # Remove individual questions
+  select(-matches("MAIA2_\\d"))
+```
+
+
+## Data Exclusion
+
+### Incomplete Data
+
+```{r warning=FALSE, message=FALSE}
+df_incomplete <- df_raw %>% 
+  filter_at(vars(matches("IPIP6|PID5|BIDR|MAIA|DERS|UPPS|FFNI|LTS|TRIMP|LIE_")), complete.cases) %>% 
+  filter(Sex %in% c("Female", "Male")) %>% 
+  droplevels()
+
+paste("We excluded", nrow(df_raw) - nrow(df_incomplete), "participants with missing data.")
+```
+
+### Time to complete
+```{r warning=FALSE, message=FALSE}
+df_time <- df_incomplete %>% 
+  mutate(Duration = Duration / 60) %>%  # Express in minutes
+  filter(Duration < 120)
+
+# Compute highest density intervals
+ci <- bayestestR::eti(df_time$Duration, ci = c(0.8, 0.9, 0.95, 0.99))
+cat(paste0("Duration Intervals:\n", paste0("  - ", insight::format_ci(ci$CI_low, ci$CI_high, ci$CI / 100), collapse = "\n")))
+
+upper_limit <- ci[ci$CI == 90, "CI_high"]
+lower_limit <- ci[ci$CI == 90, "CI_low"]
+
+# Visualisation
+ci %>% 
+  plot(show_zero = FALSE, show_title = FALSE) +
+  geom_vline(xintercept = c(upper_limit, lower_limit), color="red", linetype="dotted") +
+  theme_modern() +
+  scale_fill_viridis_d() +
+  ylab("Distribution") +
+  xlab("Time to complete (in minutes)") 
+
+
+
+
+df_time <- df_time %>% 
+  filter(Duration < upper_limit,
+         Duration > lower_limit)
+
+paste("We excluded", nrow(df_incomplete) - nrow(df_time), "participants with a completion time outside the 90% percentile (>", insight::format_value(lower_limit), "min and <", insight::format_value(upper_limit), "min).")
+```
+
+### Multivariate outliers
+
+```{r warning=FALSE, message=FALSE}
+methods <- c("zscore", "iqr", "mahalanobis", "robust", "mcd", "ics", "iforest", "lof")
+
+# outliers <- df_time %>%
+#   select(matches("LIE_|BIDR|IPIP6|PID5|TRIMP|FFNI|UPPS|DERS|LTS|MAIA"), -matches("_Profile|_General|_Pathology|Disinhibition_|Meanness_|Boldness_")) %>%
+#   # select(matches("LIE_")) %>%
+#   effectsize::standardize() %>%
+#   performance::check_outliers(method = methods)
+# 
+# # Visualise
+# as.data.frame(outliers) %>% 
+#   mutate(Outlier = as.factor(paste0(round(Outlier*8), "/", length(methods)))) %>% 
+#   ggplot(aes(x = Outlier, fill = Outlier)) +
+#   geom_bar() +
+#   geom_vline(aes(xintercept = 6.5), color = "red", linetype = "dotted") +
+#   theme_modern() +
+#   see::scale_fill_metro_d(guide = FALSE) +
+#   xlab("Proportion of methods aggreeing on an outlier") +
+#   ylab("Number of participants")
+# 
+# save(outliers, file="outliers.Rdata")
+load("outliers.Rdata")
+
+df <- df_time[-which(as.numeric(outliers) >= 6/length(methods)), ]
+
+paste("Based on a composite outlier score (see the 'check_outliers' function in the 'performance' R package; Lüdecke et al., 2019) obtained via the joint application of multiple outliers detection algorithms (Z-scores, Iglewicz, 1993; Interquartile range (IQR); Mahalanobis distance, Cabana, 2019; Robust Mahalanobis distance, Gnanadesikan & Kettenring, 1972; Minimum Covariance Determinant, Leys et al., 2018; Invariant Coordinate Selection, Archimbaud et al., 2018; Isolation Forest, Liu et al. 2008; and Local Outlier Factor, Breunig et al., 2000), we excluded", nrow(df_time) - nrow(df), "participants that were classified as outliers by at least 6/8 of the methods used.")
+```
+
+
+### Final Sample
+
+```{r warning=FALSE, message=FALSE}
+paste("The final sample included", report_participants(df))
+```
+```{r warning=FALSE, message=FALSE}
+df <- df %>% 
+  mutate(System_Screen = sqrt(System_Screen),
+         Education_Student = as.factor(ifelse(Education_Student == "", NA, Education_Student)),
+         Religion_Type = ifelse(Religion_Type == "", NA, Religion_Type), 
+         Singapore_Duration = ifelse(Singapore_Duration > Age, NA, Singapore_Duration),
+         Singapore_Duration = Singapore_Duration / Age)
+
+df %>% 
+  select(System_Device, System_Screen, Duration, Education_Student, Education_Type, Ethnicity, starts_with("Religion"), Income, Singapore_Duration) %>% 
+  report(levels_percentage = TRUE, missing_percentage = TRUE, n_entries = 10)
+```
+
+
+```{r warning=FALSE, message=FALSE}
+df <- df %>% 
+  mutate(Education_Type = ifelse(!Education_Type %in% c("Business and Accountancy",
+                                                        "Engineering",
+                                                        "Social Sciences (Psychology, Sociology...)",
+                                                        "Sciences",
+                                                        "Computing",
+                                                        "Humanities (Languages, History...)"), "Other", Education_Type),
+         Ethnicity = ifelse(!Ethnicity %in% c("Chinese", "Malay", "Indian"), "Other", Ethnicity))
+```
+
+
+
+#### Education and Income
+
+
+```{r warning=FALSE, message=FALSE}
+report_participants(df, group = c("Sex", "Education_Student"))
+```
+
+
+```{r warning=FALSE, message=FALSE}
+as.data.frame(table(df$Education_Type)) %>%
+  ggplot(aes(x="", y =Freq, fill = reorder(Var1, -Freq))) +
+  geom_bar(width = 1, stat = "identity") +
+  labs(fill = "Course") +
+  coord_polar("y", start = 0, direction = -1) +
+  scale_fill_brewer(palette="Blues") +
+  theme_void() +
+  theme(legend.text = element_text(size = 20)) +
+  theme(legend.title = element_text(face = "bold", size = 20))
+
+df %>% 
+  filter(!is.na(Education_Student)) %>% 
+  filter(Income < 18000) %>% 
+  ggplot(aes(x = Income, colour = Education_Type)) +
+  geom_density(size = 1) +
+  facet_grid(~Education_Student, labeller = "label_both") +
+  theme_modern()
+```
+
+
+```{r warning=FALSE, message=FALSE}
+df %>% 
+  filter(!is.na(Education_Student)) %>% 
+  filter(Income < 18000) %>% 
+  ggplot(aes(x = Age, y = Income, colour = Education_Type, fill = Education_Type)) +
+  geom_point2() +
+  geom_smooth(method = "lm", alpha = 0.1) + 
+  theme_modern()
+```
+
+#### Culture
+
+```{r warning=FALSE, message=FALSE}
+as.data.frame(table(df$Ethnicity)) %>%
+  ggplot(aes(x="", y = Freq, fill = reorder(Var1, -Freq))) +
+  labs(fill = "Ethnicity") +
+  geom_bar(width = 1, stat = "identity") +
+  coord_polar("y", start = 0) +
+  scale_fill_brewer(palette="Oranges") +
+  theme_void() +
+  theme(legend.text = element_text(size = 20)) +
+  theme(legend.title = element_text(face = "bold", size = 20))
+
+df %>% 
+  filter(!is.na(Singapore_Duration)) %>% 
+  ggplot(aes(x = Singapore_Duration, colour = Ethnicity)) +
+  geom_density(size = 1) +
+  theme_modern() +
+  scale_x_continuous(labels = scales::percent)
+```
+
+#### Religion
+
+```{r warning=FALSE, message=FALSE}
+as.data.frame(table(df$Religion_Type)) %>%
+  ggplot(aes(x="", y = Freq, fill = reorder(Var1, -Freq))) +
+  geom_bar(width = 1, stat = "identity") +
+  labs(fill = "Religion") +
+  coord_polar("y", start = 0) +
+  scale_fill_brewer(palette="Purples") +
+  theme_void() +
+  theme(legend.text = element_text(size = 20)) +
+  theme(legend.title = element_text(face = "bold", size = 20))
+
+df %>% 
+  filter(!is.na(Religion_Engagement)) %>% 
+  filter(!is.na(Religion_Type)) %>% 
+  ggplot(aes(x = Religion_Engagement, colour = Religion_Type)) +
+  geom_density(size = 1) +
+  theme_modern()
+```
+
+```{r warning=FALSE, message=FALSE}
+df %>% 
+  filter(!is.na(Religion_Religiosity)) %>% 
+  filter(!is.na(Religion_Type)) %>% 
+  ggplot(aes(x = Religion_Religiosity, colour = Religion_Type)) +
+  geom_density(size = 1) +
+  theme_modern()
+```
+
+```{r warning=FALSE, message=FALSE}
+df %>% 
+  filter(!is.na(Religion_Engagement)) %>% 
+  filter(!is.na(Religion_Religiosity)) %>% 
+  filter(!is.na(Religion_Type)) %>% 
+  ggplot(aes(x = Religion_Religiosity, y = Religion_Engagement, colour = Religion_Type, fill = Religion_Type)) +
+  geom_jitter() +
+  geom_smooth(method = "lm", alpha = 0.2) +
+  ggtitle(paste("r =", insight::format_value(cor.test(df$Religion_Engagement, df$Religion_Religiosity)$estimate))) +
+  theme_modern()
+```
+
+```{r warning=FALSE, message=FALSE}
+df <- df %>% 
+  mutate(Religion_Faith = (Religion_Engagement + Religion_Religiosity) / 2)
+```
+
+# Results
+
+## Descriptive Statistics
+
+
+### Deception and Lying Profile (LIE)
+```{r warning=FALSE, message=FALSE}
+descriptive_statistics(df, "LIE_")
+```
+
+### Psychopathy (TRIMP)
+```{r warning=FALSE, message=FALSE, fig.height=figheight*3}
+df %>% 
+  select(TRIMP_General, starts_with("TRIMP_Boldness"), starts_with("TRIMP_Meanness"), starts_with("TRIMP_Disinhibition")) %>% 
+  report() %>% 
+  table_long() %>% 
+  select(-one_of(c("n_Obs", "Median", "MAD", "n_Missing"))) %>% 
+  print()
+
+
+plots(
+  df %>% 
+    select(starts_with("TRIMP_Boldness")) %>% 
+    bayestestR::estimate_density(method = "KernSmooth") %>% 
+    plot() + 
+    theme_modern(),
+  df %>% 
+    select(starts_with("TRIMP_Meanness")) %>% 
+    bayestestR::estimate_density(method = "KernSmooth") %>% 
+    plot() + 
+    theme_modern(),
+  df %>% 
+    select(starts_with("TRIMP_Disinhibition")) %>% 
+    bayestestR::estimate_density(method = "KernSmooth") %>% 
+    plot() + 
+    theme_modern()
+    )
+```
+
+### Narcissism (FFNI)
+```{r warning=FALSE, message=FALSE}
+descriptive_statistics(df, "FFNI")
+```
+
+### Normal Personality (IPIP6)
+```{r warning=FALSE, message=FALSE}
+descriptive_statistics(df, "IPIP6")
+```
+
+### Pathological Personality (PID-5)
+```{r warning=FALSE, message=FALSE}
+descriptive_statistics(df, "PID5")
+```
+
+### Social Desirability (BIDR)
+```{r warning=FALSE, message=FALSE}
+descriptive_statistics(df, "BIDR")
+```
+
+### Impulsivity (UPPS)
+```{r warning=FALSE, message=FALSE}
+descriptive_statistics(df, "UPPS")
+```
+
+### Emotion Regulation (DERS)
+```{r warning=FALSE, message=FALSE}
+descriptive_statistics(df, "DERS")
+```
+
+### Light Triad (LTS)
+```{r warning=FALSE, message=FALSE}
+descriptive_statistics(df, "LTS")
+```
+
+### Interoception (MAIA2)
+```{r warning=FALSE, message=FALSE}
+descriptive_statistics(df, "MAIA2")
+```
+
+
+## Factor Structure
+
+### Factor structure quality
+
+```{r warning=FALSE, message=FALSE}
+lie <- select(df, starts_with("LIE_"))
+labels_lie <- labels[labels$Questionnaire == "LIE", ]
+
+parameters::check_factorstructure(lie)
+```
+
+### Correlation matrix
+
+```{r warning=FALSE, message=FALSE}
+cor <- as.matrix(correlation::correlation(lie))
+```
+
+### How many factors
+
+```{r warning=FALSE, message=FALSE}
+parameters::n_factors(lie, cor = cor, rotation = "varimax", package = "all", safe = FALSE) %T>% 
+  print() %>%
+  plot() +
+  ggtitle("How many factors to retain (Pearson's correlations)") +
+  theme_modern()
+```
+
+
+
+### Exploratory Factor Analysis (EFA)
+
+#### Seven latent factors model
+
+```{r warning=FALSE, message=FALSE}
+library(psych)
+
+efa_7 <- psych::fa(cor, n.obs = nrow(lie), nfactors = 7, rotate = "varimax", fm = "ml") 
+
+parameters::model_parameters(efa_7, labels = labels_lie$Description) %>%
+  print(sort = TRUE, threshold = "max")
+```
+
+#### Four latent factors model
+
+```{r warning=FALSE, message=FALSE}
+efa_4 <- psych::fa(cor, n.obs = nrow(lie), nfactors = 4, rotate = "varimax", fm = "ml") 
+
+parameters::model_parameters(efa_4, labels = labels_lie$Description) %>% 
+  print(sort = TRUE, threshold = "max") 
+```
+
+
+#### One latent factors model
+
+```{r warning=FALSE, message=FALSE}
+efa_1 <- psych::fa(cor, n.obs = nrow(lie), nfactors = 1, rotate = "varimax", fm = "ml") 
+
+parameters::model_parameters(efa_1, labels = labels_lie$Description) %>% 
+  print(sort = TRUE, threshold = "max") 
+```
+
+```{r warning=FALSE, message=FALSE}
+paste0("The model with one, four and seven factors accounted for ",
+       report::format_text(c(insight::format_value(efa_1$Vaccounted[2,]*100),
+                             insight::format_value(efa_4$Vaccounted[3, 4]*100),
+                             insight::format_value(efa_7$Vaccounted[3, 7]*100))),
+       "% of variance of the dataset.")
+```
+
+
+The factor number exploration suggested the presence of seven, four and one latent factor(s). However, the seven-factors solution apppeared as spurious (one of the factor being loaded by only one item, "I never tell lies", which is likely to be representing social desirability than genuine lying behaviour). We therefore decided to keep the unique and four-factors models and submitted their simple structure to Confirmatory Factor Analysis (CFA)
+
+
+<!-- #### General factor model -->
+
+<!-- ```{r warning=FALSE, message=FALSE} -->
+<!-- efa_g <- psych::omega(cor, nfactors = 4, fm="ml", flip = FALSE) -->
+
+<!-- parameters::model_parameters(efa_g, labels = labels_lie$Description) %>% -->
+<!--   print(sort = TRUE, threshold = "max") -->
+<!-- ``` -->
+
+
+
+### Confirmatory Factor Analysis (CFA)
+
+#### Model Selection
+
+```{r warning=FALSE, message=FALSE}
+report_cfa_indices <- function(comparison, row=1, name="<model>"){
+  paste0("(X2", name, " = ", insight::format_value(comparison[row, "Chisq"]),
+        ", AIC", name, " = ", insight::format_value(comparison[row, "AIC"]),
+        ", BIC", name, " = ", insight::format_value(comparison[row, "BIC_adjusted"]),
+        ", RMSEA", name, " = ", insight::format_value(comparison[row, "RMSEA"]),
+        ", CFI", name, " = ", insight::format_value(comparison[row, "CFI"]),
+        ", SRMR", name, " = ", insight::format_value(comparison[row, "SRMR"]),
+        ")")
+}
+```
+
+##### One *vs.* Four Factors
+
+```{r warning=FALSE, message=FALSE}
+cfa_4 <- parameters::efa_to_cfa(efa_4, threshold = "max") %>% 
+  lavaan::cfa(data = lie)
+cfa_1 <- parameters::efa_to_cfa(efa_1, threshold = "max") %>% 
+  lavaan::cfa(data = lie)
+```
+
+```{r warning=FALSE, message=FALSE}
+comparison <- performance::compare_performance(cfa_4, cfa_1) %>% 
+  select(Model, AIC, BIC, BIC_adjusted, Chisq, RMSEA, CFI, SRMR)
+comparison
+
+paste0("The confirmatory factor analysis favoured the four-factors solution ", 
+       report_cfa_indices(comparison, 1, name="<4-factors>"),
+       " over the one-factor ",
+       report_cfa_indices(comparison, 2, name="<1-factor>"))
+```
+
+##### Four-factors *vs.* Initial Model
+
+
+
+
+```{r warning=FALSE, message=FALSE}
+# Initial Model
+model_initial <- c()
+for (dimension in unique(labels_lie$Dimension)) {
+  model_initial <- c(
+    model_initial,
+    paste0(tools::toTitleCase(dimension), " =~ ", paste(as.character(labels_lie[labels_lie$Dimension == dimension, "Item"]), collapse = " + "))
+  )
+}
+cfa_initial <- paste0(model_initial, collapse = "\n") %>% 
+  lavaan::cfa(data = lie)
+```
+
+```{r warning=FALSE, message=FALSE}
+comparison <- performance::compare_performance(cfa_4, cfa_initial) %>% 
+  select(Model, AIC, BIC, BIC_adjusted, Chisq, RMSEA, CFI, SRMR)
+comparison
+
+paste0("We then compared the four-factors solution with the initial hypothetic model with which we built the scale, which favoured the four-factors model ", report_cfa_indices(comparison, 2, name="<hypothetic>"))
+```
+
+##### Short *vs.* Long Form
+
+```{r warning=FALSE, message=FALSE}
+cfa_4_short3 <- parameters::efa_to_cfa(efa_4, threshold = 3, names = c("Ability", "Frequency", "Negativity", "Contextuality")) %>% 
+  lavaan::cfa(data = lie)
+cfa_4_short4 <- parameters::efa_to_cfa(efa_4, threshold = 4, names = c("Ability", "Frequency", "Negativity", "Contextuality")) %>% 
+  lavaan::cfa(data = lie)
+cfa_4_short5 <- parameters::efa_to_cfa(efa_4, threshold = 5, names = c("Ability", "Frequency", "Negativity", "Contextuality")) %>% 
+  lavaan::cfa(data = lie)
+```
+
+```{r warning=FALSE, message=FALSE}
+comparison <- performance::compare_performance(cfa_4, cfa_4_short3, cfa_4_short4, cfa_4_short5) %>% 
+  select(Model, AIC, BIC, BIC_adjusted, Chisq, RMSEA, CFI, SRMR)
+comparison
+
+paste0("Finally, we compared the full four-factors model (including all items) with short form retaining only the 3, 4 or 5 most loading items for each of the 4 dimensions. The 3-items version ",
+       report_cfa_indices(comparison, 2, name="<3-items>"),
+       " outperformed all versions, including 5-items ",
+       report_cfa_indices(comparison, 4, name="<5-items>"),
+       " and 4-items ",
+       report_cfa_indices(comparison, 3, name="<4-items>"), 
+       ". Nonetheless, as 3-items per construct is the bare minimum for adequate reliability, we decided to keep the second best performing version with 4-items per factor, which also displayed excellent indices of fit."
+      )
+```
+
+#### Model Description
+
+```{r warning=FALSE, message=FALSE, fig.height=figwidth, fig.width=figwidth}
+cfa_parameters <- model_parameters(cfa_4_short4, standardize = FALSE)
+cfa_parameters
+```
+
+```{r figure_CFA, warning=FALSE, message=FALSE, fig.height=figwidth*0.8, fig.width=figwidth*0.8}
+data <- see::data_plot(cfa_parameters, ci=FALSE)
+
+data$nodes <- mutate(data$nodes, Name = stringr::str_replace(Name, "LIE_", "Q")) 
+data$edges <- mutate(data$edges, from = stringr::str_replace(from, "LIE_", "Q"))
+
+figure_CFA <- tidygraph::tbl_graph(data$nodes, data$edges) %>%
+  ggraph::ggraph(layout = 'fr') +
+  ggraph::geom_edge_arc(aes(alpha = as.numeric(Type == "Correlation"),
+                    label = Label_Correlation,
+                    color = Coefficient),
+                    strength = 0.1,
+                    edge_width = 1.5,
+                    label_dodge = unit(2, "mm"),
+                    linetype = 1, angle_calc = "along",
+                    label_size = 3,
+                    start_cap = ggraph::circle(0, 'mm'), end_cap = ggraph::circle(0, 'mm')) +
+  ggraph::geom_edge_link(aes(alpha = as.numeric(Type == "Loading"),
+                     label = Label_Loading,
+                     color = Coefficient),
+                     label_dodge = unit(2, "mm"),
+                     angle_calc = "along", 
+                     edge_width = 0.9,
+                     label_size = 3,
+                     check_overlap = TRUE,
+                     arrow = arrow(type = "closed", length = unit(3, "mm")),
+                     start_cap = ggraph::circle(0, 'mm'), end_cap = ggraph::circle(-12, 'mm')) +
+  ggraph::geom_node_point(aes(colour = Name, size = Latent)) +
+  ggraph::geom_node_text(aes(label = Name))  +
+  ggraph::scale_edge_colour_gradient2(
+    guide = FALSE,
+    high = "#4CAF50",
+    mid = "#FFF9C4",
+    low = "#E91E63"
+  ) +
+  scale_alpha(guide = FALSE, range = c(0, 1)) +
+  scale_size_manual(values=c("TRUE"=33, "FALSE"=22)) +
+  scale_color_manual(values=c("Negativity"="#E91E63", "Q41"="#EC407A", "Q44"="#F06292", "Q34"="#F48FB1", "Q25"="#F8BBD0",
+                              "Contextuality"="#FF9800", "Q43"="#FFA726", "Q42"="#FFB74D", "Q33"="#FFCC80", "Q39"="#FFE0B2",
+                              "Frequency"="#4CAF50", "Q1"="#66BB6A", "Q4"="#81C784", "Q5"="#A5D6A7", "Q23"="#C8E6C9",
+                              "Ability"="#2196F3", "Q10"="#42A5F5", "Q9"="#64B5F6", "Q18"="#90CAF9", "Q14"="#BBDEFB")) +
+  ggraph::scale_edge_alpha(guide = FALSE, range = c(0, 1)) +
+  scale_x_continuous(expand = expand_scale(c(0.07, 0.07))) +
+  scale_y_continuous(expand = expand_scale(c(0.07, 0.07))) +
+  ggraph::theme_graph() +
+  theme(legend.position = "none")
+```
+
+#### Loadings Table
+
+```{r warning=FALSE, message=FALSE}
+table_efa <- as.data.frame(sort(parameters::model_parameters(efa_4, labels = labels_lie$Description)))[,1:6] %>% 
+  mutate(Variable = as.character(Variable)) %>% 
+  mutate_if(is.numeric, insight::format_value)
+names(table_efa) <- c("Item", "Label", "Ability", "Frequency", "Negativity", "Contextuality")
+
+table_cfa <- as.data.frame(parameters::model_parameters(cfa_4_short4)) %>% 
+  filter(Type == "Loading") %>% 
+  select(To, Item=From, Coefficient) %>% 
+  pivot_wider(names_from=To, values_from=Coefficient, names_prefix="CFA_") %>% 
+  mutate(Item = as.character(Item)) 
+
+table <- full_join(table_efa, table_cfa, by="Item") %>% 
+  mutate_if(is.numeric, insight::format_value) %>% 
+  mutate(Ability = paste0(Ability, " [", CFA_Ability, "]"),
+         Frequency = paste0(Frequency, " [", CFA_Frequency, "]"),
+         Negativity = paste0(Negativity, " [", CFA_Negativity, "]"),
+         Contextuality = paste0(Contextuality, " [", CFA_Contextuality, "]"),
+         Item = stringr::str_replace(Item, "LIE_", "Q")) %>% 
+  mutate_all(function(x) stringr::str_remove_all(x, " \\[]")) %>% 
+  select(Item, Label, Ability, Frequency, Negativity, Contextuality)
+write.csv(table, "figures/table_loadings.csv", row.names = FALSE)
+```
+
+
+
+#### Compute Scores
+
+```{r warning=FALSE, message=FALSE}
+lie <- predict(cfa_parameters)
+names(lie) <- paste0("LIE_", names(lie))
+```
+
+
+```{r warning=FALSE, message=FALSE}
+lie %>% 
+  select(starts_with("LIE_")) %>% 
+  report() %>% 
+  table_long() %>% 
+  select(-one_of(c("n_Obs", "Median", "MAD", "n_Missing"))) %>% 
+  print()
+
+p_distrib <- lie %>% 
+  select(starts_with("LIE_")) %>% 
+  dplyr::rename_all(.funs = list(~ sub("LIE_*", "", .))) %>%
+  bayestestR::estimate_density(method = "KernSmooth") %>% 
+  see::data_plot() %>% 
+  mutate(Parameter = fct_relevel(Parameter, "Ability", "Frequency", "Negativity", "Contextuality")) %>% 
+  ggplot(aes(x=x, y=y, color=Parameter)) +
+  geom_line(size=2) +
+  # ggtitle("Distribution of the LIE dimensions") +
+  xlab("Score\n") +
+  ylab("Distribution") +
+  theme_modern() +
+  scale_color_manual(values=c("Ability"= "#2196F3", "Frequency"="#4CAF50", "Negativity"="#E91E63", "Contextuality"="#FF9800"), name = "Dimensions")
+```
+
+
+
+### Reliability
+
+#### Cronbach's alpha
+
+```{r warning=FALSE, message=FALSE, fig.height=figheight, fig.width=figwidth}
+paste0("All subscales of the LIE scale, namely, Frequency (alpha = ",
+       insight::format_value(performance::cronbachs_alpha(select(df, LIE_1, LIE_4, LIE_5, LIE_23))),
+       "), Ability (alpha = ",
+        insight::format_value(performance::cronbachs_alpha(select(df, LIE_9, LIE_10, LIE_14, LIE_18))),
+       "), Contextuality (alpha = ",
+        insight::format_value(performance::cronbachs_alpha(select(df, LIE_33, LIE_39, LIE_42, LIE_43))),
+       ") and Negativity (alpha = ", 
+        insight::format_value(performance::cronbachs_alpha(select(df, LIE_25, LIE_34, LIE_41, LIE_44))),
+       ") have a high reliability.")
+```
+
+```{r figure_var, warning=FALSE, message=FALSE}
+library(formattable)
+
+questions <- dplyr::select(df, dplyr::one_of(row.names(lavaan::lavInspect(cfa_4_short4)$lambda)))
+
+
+om <- psych::omega(m = questions, nfactors = 4, fm = "ml", title = "Omega of LIE Scale", plot = "FALSE", n.obs = nrow(questions), flip=FALSE) # ωh = 0.36, ωt = 0.83 
+
+# Table of omega coefficients
+table_om <- om$omega.group
+rownames(table_om) <- c("All items", "Ability", "Frequency", "Contextuality", "Negativity")
+colnames(table_om) <- c("Omega (total)", "Omega (hierarchical)", "Omega (group)")
+table_om
+
+# Table of variance accounted for
+table_variance <- om$omega.group %>%
+  mutate(Composite = c("All items", "Ability", "Frequency", "Contextuality", "Negativity")) %>%
+  mutate(Total = total*100,
+         General = general*100,
+         Group = group*100) %>%
+  select(Composite, Total, General, Group)
+colnames(table_variance) <- c("Composite", "Total Variance (%)", "Variance due to General Factor (%)", "Variance due to Group Factor (%)")
+table_variance 
+cor.plot(om)
+```
+
+
+
+## Cluster Structure
+
+### Cluster Tendency
+
+```{r warning=FALSE, message=FALSE}
+parameters::check_clusterstructure(lie, standardize = FALSE) %T>%
+  print() %>%
+  plot()
+```
+
+### How many clusters
+
+```{r warning=FALSE, message=FALSE}
+parameters::n_clusters(lie, standardize = FALSE) %T>%
+  print() %>% 
+  plot() +
+  theme_modern()
+```
+
+The agreement procedure, combining 33 different methods for determining the optimal number of clusters, supported the existence of 2 (12/33) or 3 (11/33)
+clusters. 
+
+### Clustering
+
+#### K-means
+```{r warning=FALSE, message=FALSE}
+set.seed(333)
+
+k2 <- kmeans(lie, centers=2, iter.max = 10000, nstart = 1000)
+k3 <- kmeans(lie, centers=3, iter.max = 10000, nstart = 1000)
+
+model_parameters(k2) 
+model_parameters(k3) 
+
+paste0("We applied k-means clustering, which revealed that grouping the participants in 2 and 3 clusters would account for ",
+       insight::format_value(attributes(model_parameters(k2))$variance*100),
+       "% and ",
+       insight::format_value(attributes(model_parameters(k3))$variance*100),
+       "% of the total variance of the four dimensions of the questionnaire, respectively.",
+       " Thus, we decided to go ahead with the latter solution.")
+```
+
+
+
+<!-- #### H-clust -->
+<!-- ```{r warning=FALSE, message=FALSE} -->
+<!-- hc <- hclust(dist(lie, method = 'euclidean'), method = 'ward.D2') -->
+
+<!-- ggdendro::ggdendrogram(hc, labels=FALSE, leaf_labels=FALSE) + -->
+<!--   theme_void() -->
+
+<!-- lie %>%  -->
+<!--   mutate(cluster = cutree(hc, k = 3)) %>% -->
+<!--   group_by(cluster) %>%  -->
+<!--   summarise_all(mean) -->
+<!-- ``` -->
+
+<!-- #### Mixture -->
+<!-- ```{r warning=FALSE, message=FALSE} -->
+<!-- library(mclust) -->
+
+<!-- model <- mclust::Mclust(lie, verbose = FALSE) -->
+<!-- model_parameters(model) -->
+<!-- ``` -->
+
+<!-- #### Spectral -->
+<!-- ```{r warning=FALSE, message=FALSE} -->
+<!-- spectral <- kernlab::specc(as.data.frame(t(lie)), centers=3) -->
+
+<!-- lie %>%  -->
+<!--   mutate(cluster = as.numeric(spectral)) %>% -->
+<!--   group_by(cluster) %>%  -->
+<!--   summarise_all(mean) -->
+<!-- ``` -->
+
+
+
+
+### Compute Profiles
+```{r warning=FALSE, message=FALSE}
+lie$LIE_Profile <- model_parameters(k3) %>% 
+  predict(names = c("Average", "Trickster", "Virtuous")) 
+
+paste0('We then assigned each participant to its nearest cluster, labelling them as Average (',
+       insight::format_value(sum(lie$LIE_Profile=="Average")/nrow(lie)*100),
+       "% of the sample; people that report an average lying ability, slightly lower than average frequency, average negativity and contextuality), Trickster (",
+       insight::format_value(sum(lie$LIE_Profile=="Trickster")/nrow(lie)*100),
+       "%; people with high reported lying ability, frequency, low negative experience associated with deception and above-average flexibility in its implementation), and Virtuous (",
+       insight::format_value(sum(lie$LIE_Profile=="Virtuous")/nrow(lie)*100),
+       "%; people with very low reported lying ability and frequency, strong negative emotions and moral attitude associated with lying and high rigidity in their (non-)usage of deception).")
+```
+
+
+
+### Visualisation
+
+<!-- #### Parallel Coordinate Plot -->
+
+<!-- ```{r warning=FALSE, message=FALSE} -->
+<!-- colors_cluster <- c("Normal" = "#4CAF50", "Deceiver" = "#f44336", "Truthful" = "#2196F3") -->
+
+<!-- df %>%  -->
+<!--   select(Participant, starts_with("LIE_")) %>%  -->
+<!--   pivot_longer(-c(LIE_Profile, Participant), names_to = "Dimension", values_to = "Score") %>% -->
+<!--   mutate(LIE_Profile = fct_relevel(LIE_Profile, "Deceiver", "Normal", "Truthful"), -->
+<!--          Dimension = str_remove(Dimension, "LIE_"), -->
+<!--          Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Willingness", "Morality")) %>% -->
+<!--   rename(Profile = LIE_Profile) %>%  -->
+<!--   ggplot(aes(x = Dimension, y = Score)) + -->
+<!--   # geom_line(aes(color = LIE_Profile, group = Participant), alpha = 0.1, position = ggplot2::position_dodge(0.7)) + -->
+<!--   geom_violinhalf(aes(fill = Profile, color = Profile), position = ggplot2::position_dodge(0.7)) + -->
+<!--   geom_dotplot(aes(group = interaction(Dimension, Profile)), binaxis = "y", stackdir = "down", position = ggplot2::position_dodge(0.7), binwidth = 0.2, dotsize = 0.8, fill = "black") + -->
+<!--   scale_fill_manual(values = colors_cluster) + -->
+<!--   scale_color_manual(values = colors_cluster) + -->
+<!--   theme_modern() -->
+<!-- ``` -->
+
+<!-- #### Radar Plot -->
+
+```{r warning=FALSE, message=FALSE, fig.height=figheight*0.8, fig.width=figwidth*0.8}
+colors_cluster <- c("Average" = "#D500F9", "Trickster" = "#F50057", "Virtuous" = "#3D5AFE")
+
+p_profiles <- lie %>% 
+  select(starts_with("LIE_")) %>% 
+  pivot_longer(-LIE_Profile, names_to = "Dimension", values_to = "Score") %>%
+  mutate(LIE_Profile = fct_relevel(LIE_Profile, "Trickster", "Average", "Virtuous"),
+         Dimension = str_remove(Dimension, "LIE_"),
+         Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality")) %>% 
+  group_by(LIE_Profile, Dimension) %>% 
+  summarise_all(mean) %>%
+  rename(Profile = LIE_Profile) %>% 
+  ggplot(aes(x = Dimension, y = Score, color = Profile, group = Profile)) +
+  geom_line(key_glyph = "label") +
+  geom_polygon(fill = NA, size = 2.5, show.legend = FALSE) +
+  scale_color_manual(values = colors_cluster) +
+  theme_minimal() +
+  xlab("") + ylab("") +
+  scale_y_continuous(breaks = c(-2, 0, 2), expand = expand_scale(c(.10, 0))) +
+  # scale_y_continuous(limits = c(-5, 5)) +
+  theme(axis.ticks.y = element_blank(),
+        axis.text.y = element_blank(),
+        legend.title = element_text(face="bold", size=15),
+        panel.grid.major.y = element_line(color="#E0E0E0", linetype="longdash"),
+        panel.grid.major.x = element_blank(),
+        legend.text = element_text(size=13),
+        axis.text.x = element_text(
+          vjust = -0.5,
+          size = 13,
+          # face="bold",
+          color="black")) +
+  coord_radar(start = -pi/4, clip="off")
+```
+
+```{r figure_dimensions, warning=FALSE, message=FALSE, fig.height=figwidth, fig.width=figwidth*0.9}
+# Combine plots
+figure_dimensions <- cowplot::plot_grid(p_distrib, p_profiles, nrow=2, labels = c('A', 'B'), label_size = 14)
+```
+
+
+
+## Convergent Validity
+
+```{r warning=FALSE, message=FALSE, fig.height=figheight, fig.width=figwidth}
+df <- cbind(df, lie) %>% 
+  select(-matches("LIE_\\d"))
+```
+
+
+### Demographics
+
+#### Sex
+
+```{r message=FALSE, warning=FALSE}
+library(rstanarm)
+
+model_dimensional <- stan_glm(Sex ~ LIE_Ability + LIE_Frequency + LIE_Contextuality + LIE_Negativity, data=df, family = "binomial", refresh = 0, seed=333)
+model_profile <- stan_glm(Sex ~ LIE_Profile, data = df, family = "binomial", refresh = 0, seed=333)
+
+performance::compare_performance(model_dimensional, model_profile, metrics = c("LOOIC", "R2"))
+
+parameters::parameters_table(model_parameters(model_profile))
+parameters::parameters_table(model_parameters(model_dimensional))
+```
+
+```{r warning=FALSE, message=FALSE}
+model_profile %>% 
+  estimate_means() %>% 
+  mutate(LIE_Profile = fct_relevel(LIE_Profile, "Trickster", "Average", "Virtuous")) %>% 
+  ggplot(aes(x = LIE_Profile, y = Median, color = LIE_Profile)) +
+  geom_line(aes(group = 1), size = 1) +
+  geom_pointrange(aes(ymin = CI_low, ymax = CI_high), size = 1) +
+  theme_modern() +
+  scale_color_manual(values = colors_cluster, guide = FALSE) +
+  ylab("Probability of being a Male") +
+  xlab("Deception Profile")
+df %>% 
+  select(Participant, Sex, starts_with("LIE_"), -LIE_Profile) %>% 
+  pivot_longer(-c(Sex, Participant), names_to = "Dimension", values_to = "Score") %>%
+  mutate(Dimension = str_remove(Dimension, "LIE_"),
+         Dimension = fct_relevel(Dimension, "Negativity", "Contextuality", "Frequency", "Ability")) %>%
+  ggplot(aes(x = Dimension, y = Score)) +
+  geom_boxplot(aes(fill = Sex, color = Sex)) +
+  scale_fill_manual(values = c("Male" = "#2196F3", "Female" = "#F06292")) +
+  scale_color_manual(values = c("Male" = "#2196F3", "Female" = "#F06292")) +
+  theme_modern() +
+  coord_flip() 
+```
+
+```{r warning=FALSE, message=FALSE}
+sig <- model_parameters(model_dimensional)[-1,] %>% 
+  select(Parameter, pd) %>% 
+  mutate(Dimension = stringr::str_remove(Parameter, "LIE_"),
+         Text = format_pd(pd, stars_only=TRUE),
+         Median = 0.6,
+         Score = df %>% 
+           select(one_of(Parameter)) %>% 
+           summarise_all(function(x) {mean(range(x))}) %>% 
+           t()) %>% 
+  mutate(Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality"))
+
+p_sex <- rbind(estimate_link(model_dimensional, target="LIE_Ability") %>% 
+        mutate(LIE_Frequency = NA, LIE_Contextuality=NA, LIE_Negativity=NA),
+      estimate_link(model_dimensional, target="LIE_Frequency") %>% 
+        mutate(LIE_Ability = NA, LIE_Contextuality=NA, LIE_Negativity=NA),
+      estimate_link(model_dimensional, target="LIE_Contextuality") %>% 
+        mutate(LIE_Frequency = NA, LIE_Ability=NA, LIE_Negativity=NA),
+      estimate_link(model_dimensional, target="LIE_Negativity") %>% 
+        mutate(LIE_Frequency = NA, LIE_Contextuality=NA, LIE_Ability=NA)) %>% 
+  pivot_longer(cols=starts_with("LIE_"), names_to="Dimension", values_to = "Score") %>% 
+  mutate(Dimension = str_remove(Dimension, "LIE_"),
+         Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality")) %>% 
+  ggplot(aes(x = Score, y = Median)) +
+  geom_ribbon(aes(ymin=CI_low, ymax=CI_high, fill=Dimension), alpha=0.1) +
+  geom_line(aes(color=Dimension), size = 1) +
+  geom_text(data = sig, aes(label = Text)) +
+  theme_modern() +
+  theme(strip.placement = "outside",
+        strip.text = element_text(size=13, face="plain"),
+        axis.title = element_text(size=13),
+        axis.text = element_text(size=9),
+        plot.title = element_text(face="bold", hjust = 0.5)) +
+  ggtitle("Sex") +
+  ylab("Probability of being a Male") +
+  xlab("") +
+  scale_color_manual(values=c("Ability"= "#2196F3", "Frequency"="#4CAF50", "Negativity"="#E91E63", "Contextuality"="#FF9800"), name = "Dimensions", guide=FALSE) +
+   scale_fill_manual(values=c("Ability"= "#2196F3", "Frequency"="#4CAF50", "Negativity"="#E91E63", "Contextuality"="#FF9800"), name = "Dimensions", guide=FALSE) +
+  facet_wrap(~Dimension, scales="free_x", strip.position = "bottom")
+```
+
+#### Age
+
+```{r warning=FALSE, message=FALSE}
+model_dimensional <- stan_lmer(Age ~ LIE_Ability + LIE_Frequency + LIE_Contextuality + LIE_Negativity + Income + Education + (1|Sex), data = df, refresh = 0, seed=333)
+model_profile <- stan_lmer(Age ~ LIE_Profile + Income + Education + (1|Sex), data = df, refresh = 0, seed=333)
+
+performance::compare_performance(model_dimensional, model_profile)
+
+parameters::parameters_table(model_parameters(model_profile))
+parameters::parameters_table(model_parameters(model_dimensional))
+```
+
+```{r warning=FALSE, message=FALSE}
+model_profile %>% 
+  estimate_means() %>% 
+  mutate(LIE_Profile = fct_relevel(LIE_Profile, "Trickster", "Average", "Virtuous")) %>% 
+  ggplot(aes(x = LIE_Profile, y = Median, color = LIE_Profile)) +
+  geom_line(aes(group = 1), size = 1) +
+  geom_pointrange(aes(ymin = CI_low, ymax = CI_high), size = 1) +
+  theme_modern() +
+  scale_color_manual(values = colors_cluster, guide = FALSE) +
+  ylab("Age") +
+  xlab("Deception Profile")
+```
+
+```{r warning=FALSE, message=FALSE}
+sig <- model_parameters(model_dimensional)[2:5,] %>% 
+  select(Parameter, pd) %>% 
+  mutate(Dimension = stringr::str_remove(Parameter, "LIE_"),
+         Text = format_pd(pd, stars_only=TRUE),
+         Median = 29,
+         Score = df %>% 
+           select(one_of(Parameter)) %>% 
+           summarise_all(function(x) {mean(range(x))}) %>% 
+           t()) %>% 
+  mutate(Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality"))
+
+p_age <- rbind(estimate_link(model_dimensional, target="LIE_Ability") %>% 
+        mutate(LIE_Frequency = NA, LIE_Contextuality=NA, LIE_Negativity=NA),
+      estimate_link(model_dimensional, target="LIE_Frequency") %>% 
+        mutate(LIE_Ability = NA, LIE_Contextuality=NA, LIE_Negativity=NA),
+      estimate_link(model_dimensional, target="LIE_Contextuality") %>% 
+        mutate(LIE_Frequency = NA, LIE_Ability=NA, LIE_Negativity=NA),
+      estimate_link(model_dimensional, target="LIE_Negativity") %>% 
+        mutate(LIE_Frequency = NA, LIE_Contextuality=NA, LIE_Ability=NA)) %>% 
+  pivot_longer(cols=starts_with("LIE_"), names_to="Dimension", values_to = "Score") %>% 
+  mutate(Dimension = str_remove(Dimension, "LIE_"),
+         Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality")) %>% 
+  ggplot(aes(x = Score, y = Median)) +
+  geom_ribbon(aes(ymin=CI_low, ymax=CI_high, fill=Dimension), alpha=0.1) +
+  geom_line(aes(color=Dimension), size = 1) +
+  geom_text(data = sig, aes(label = Text)) +
+  theme_modern() +
+  theme(strip.placement = "outside",
+        strip.text = element_text(size=13, face="plain"),
+        axis.title = element_text(size=13),
+        axis.text = element_text(size=9),
+        plot.title = element_text(face="bold", hjust = 0.5)) +
+  ggtitle("Age") +
+  ylab("\nAge") +
+  xlab("") +
+  scale_color_manual(values=c("Ability"= "#2196F3", "Frequency"="#4CAF50", "Negativity"="#E91E63", "Contextuality"="#FF9800"), name = "Dimensions", guide=FALSE) +
+   scale_fill_manual(values=c("Ability"= "#2196F3", "Frequency"="#4CAF50", "Negativity"="#E91E63", "Contextuality"="#FF9800"), name = "Dimensions", guide=FALSE) +
+  facet_wrap(~Dimension, scales="free_x", strip.position = "bottom")
+```
+
+
+#### Education
+
+```{r warning=FALSE, message=FALSE}
+model_profile <- stan_lmer(Education ~ LIE_Profile + Age + (1|Sex), data = df, refresh = 0, seed=333)
+model_dimensional <- stan_lmer(Education ~ LIE_Ability + LIE_Frequency + LIE_Contextuality + LIE_Negativity + Age + (1|Sex), data = df, refresh = 0, seed=333)
+
+performance::compare_performance(model_dimensional, model_profile)
+
+parameters::parameters_table(model_parameters(model_profile))
+parameters::parameters_table(model_parameters(model_dimensional))
+```
+```{r warning=FALSE, message=FALSE}
+model_profile %>% 
+  estimate_means() %>% 
+  mutate(LIE_Profile = fct_relevel(LIE_Profile, "Trickster", "Average", "Virtuous")) %>% 
+  ggplot(aes(x = LIE_Profile, y = Median, color = LIE_Profile)) +
+  geom_line(aes(group = 1), size = 1) +
+  geom_pointrange(aes(ymin = CI_low, ymax = CI_high), size = 1) +
+  theme_modern() +
+  scale_color_manual(values = colors_cluster, guide = FALSE) +
+  ylab("Education (in years)") +
+  xlab("Deception Profile")
+```
+
+<!-- ##### Education Type -->
+
+<!-- ```{r warning=FALSE, message=FALSE} -->
+<!-- data <- filter(df, !Education_Type %in% c("", "Other")) -->
+
+<!-- check_model <- function(variable="LIE_Ability", data){ -->
+<!--   rez <- stan_lmer(paste0(variable, "~ Education_Type + (1|Sex)"), data = data, refresh = 0, chains = 2) %>%  -->
+<!--   estimate_contrasts() %>%  -->
+<!--   filter(pd > 0.99) -->
+
+<!--   if(nrow(rez)){ -->
+<!--     return(rez) -->
+<!--   } else{ -->
+<!--     return("No significant contrast.") -->
+<!--   } -->
+<!-- } -->
+
+<!-- check_model("LIE_Ability", data) -->
+<!-- check_model("LIE_Frequency", data) -->
+<!-- check_model("LIE_Negativity", data) -->
+<!-- check_model("LIE_Contextuality", data) -->
+<!-- ``` -->
+
+
+#### Income
+
+```{r warning=FALSE, message=FALSE}
+model_dimensional <- stan_lmer(Income ~ LIE_Ability + LIE_Frequency + LIE_Contextuality + LIE_Negativity + Age + Education + (1|Sex), data = df, refresh = 0, seed=333)
+model_profile <- stan_lmer(Income ~ LIE_Profile + Age + Education + (1|Sex), data = df, refresh = 0, seed=333)
+
+performance::compare_performance(model_dimensional, model_profile)
+
+parameters::parameters_table(model_parameters(model_profile))
+parameters::parameters_table(model_parameters(model_dimensional))
+```
+```{r warning=FALSE, message=FALSE}
+model_profile %>% 
+  estimate_means() %>% 
+  mutate(LIE_Profile = fct_relevel(LIE_Profile, "Trickster", "Average", "Virtuous")) %>% 
+  ggplot(aes(x = LIE_Profile, y = Median, color = LIE_Profile)) +
+  geom_line(aes(group = 1), size = 1) +
+  geom_pointrange(aes(ymin = CI_low, ymax = CI_high), size = 1) +
+  theme_modern() +
+  scale_color_manual(values = colors_cluster, guide = FALSE) +
+  ylab("Income") +
+  xlab("Deception Profile")
+```
+
+```{r warning=FALSE, message=FALSE}
+sig <- model_parameters(model_dimensional)[2:5,] %>% 
+  select(Parameter, pd) %>% 
+  mutate(Dimension = stringr::str_remove(Parameter, "LIE_"),
+         Text = format_pd(pd, stars_only=TRUE),
+         Median = 4500,
+         Score = df %>% 
+           select(one_of(Parameter)) %>% 
+           summarise_all(function(x) {mean(range(x))}) %>% 
+           t()) %>% 
+  mutate(Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality"))
+
+p_income <- rbind(estimate_link(model_dimensional, target="LIE_Ability") %>% 
+        mutate(LIE_Frequency = NA, LIE_Contextuality=NA, LIE_Negativity=NA),
+      estimate_link(model_dimensional, target="LIE_Frequency") %>% 
+        mutate(LIE_Ability = NA, LIE_Contextuality=NA, LIE_Negativity=NA),
+      estimate_link(model_dimensional, target="LIE_Contextuality") %>% 
+        mutate(LIE_Frequency = NA, LIE_Ability=NA, LIE_Negativity=NA),
+      estimate_link(model_dimensional, target="LIE_Negativity") %>% 
+        mutate(LIE_Frequency = NA, LIE_Contextuality=NA, LIE_Ability=NA)) %>% 
+  pivot_longer(cols=starts_with("LIE_"), names_to="Dimension", values_to = "Score") %>% 
+  mutate(Dimension = str_remove(Dimension, "LIE_"),
+         Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality")) %>% 
+  ggplot(aes(x = Score, y = Median)) +
+  geom_ribbon(aes(ymin=CI_low, ymax=CI_high, fill=Dimension), alpha=0.1) +
+  geom_line(aes(color=Dimension), size = 1) +
+  geom_text(data = sig, aes(label = Text)) +
+  theme_modern() +
+  theme(strip.placement = "outside",
+        strip.text = element_text(size=13, face="plain"),
+        axis.title = element_text(size=13),
+        axis.text = element_text(size=9),
+        plot.title = element_text(face="bold", hjust = 0.5)) +
+  ggtitle("Income") +
+  ylab("Income (in SGD per capita)") +
+  xlab("") +
+  scale_color_manual(values=c("Ability"= "#2196F3", "Frequency"="#4CAF50", "Negativity"="#E91E63", "Contextuality"="#FF9800"), name = "Dimensions", guide=FALSE) +
+   scale_fill_manual(values=c("Ability"= "#2196F3", "Frequency"="#4CAF50", "Negativity"="#E91E63", "Contextuality"="#FF9800"), name = "Dimensions", guide=FALSE) +
+  facet_wrap(~Dimension, scales="free_x", strip.position = "bottom")
+```
+<!-- #### Culture -->
+
+<!-- ##### Time in Singapore -->
+
+<!-- ```{r warning=FALSE, message=FALSE} -->
+<!-- data <- filter(df, !Education_Type %in% c("", "Other")) -->
+
+<!-- stan_glmer(Singapore_Duration ~ LIE_Ability + LIE_Frequency + LIE_Willingness + LIE_Morality + (1|Birth_Country), data = data, refresh = 0) -->
+<!-- ``` -->
+
+<!-- ##### Origin -->
+
+<!-- ```{r warning=FALSE, message=FALSE} -->
+<!-- data <- filter(df, !Education_Type %in% c("", "Other")) -->
+
+<!-- stan_glm(LIE_Ability ~ Birth_Country + Singapore_Duration, data = data, refresh = 0, chains = 2) %>% -->
+<!--   estimate_contrasts() %>% -->
+<!--   filter(pd > 0.99) -->
+<!-- stan_glm(LIE_Frequency ~ Birth_Country + Singapore_Duration, data = data, refresh = 0, chains = 2) %>% -->
+<!--   estimate_contrasts() %>% -->
+<!--   filter(pd > 0.99) -->
+<!-- stan_glm(LIE_Willingness ~ Birth_Country + Singapore_Duration, data = data, refresh = 0, chains = 2) %>% -->
+<!--   estimate_contrasts() %>% -->
+<!--   filter(pd > 0.99) -->
+<!-- stan_glm(LIE_Morality ~ Birth_Country + Singapore_Duration, data = data, refresh = 0, chains = 2) %>% -->
+<!--   estimate_contrasts() %>% -->
+<!--   filter(pd > 0.99) -->
+<!-- ``` -->
+
+
+#### Religion
+
+<!-- ##### Religion Type -->
+
+<!-- ```{r warning=FALSE, message=FALSE} -->
+<!-- check_model <- function(rez){ -->
+<!--   rez <- rez %>%  -->
+<!--     filter(pd > 0.99) -->
+
+<!--   if(nrow(rez)){ -->
+<!--     return(rez) -->
+<!--   } else{ -->
+<!--     return("No significant contrast.") -->
+<!--   } -->
+<!-- } -->
+
+<!-- stan_glm(LIE_Ability ~ Religion_Type + Religion_Engagement, data = df, refresh = 0, chains = 2) %>%  -->
+<!--   estimate_contrasts() %>%  -->
+<!--   check_model() -->
+
+<!-- stan_glm(LIE_Frequency ~ Religion_Type + Religion_Engagement, data = df, refresh = 0, chains = 2) %>%  -->
+<!--   estimate_contrasts() %>%  -->
+<!--   check_model() -->
+
+<!-- stan_glm(LIE_Negativity ~ Religion_Type + Religion_Engagement, data = df, refresh = 0, chains = 2) %>%  -->
+<!--   estimate_contrasts() %>%  -->
+<!--   check_model() -->
+
+<!-- stan_glm(LIE_Contextuality ~ Religion_Type + Religion_Engagement, data = df, refresh = 0, chains = 2) %>%  -->
+<!--   estimate_contrasts() %>%  -->
+<!--   check_model() -->
+<!-- ``` -->
+
+
+```{r warning=FALSE, message=FALSE}
+model_dimensional <- stan_lmer(Religion_Faith ~ LIE_Ability + LIE_Frequency + LIE_Contextuality + LIE_Negativity + (1|Religion_Type), data = dplyr::filter(df, !is.na(Religion_Faith)), refresh = 0, seed=333)
+model_profile <- stan_lmer(Religion_Faith ~ LIE_Profile + (1|Religion_Type), data = dplyr::filter(df, !is.na(Religion_Faith)), refresh = 0, seed=333)
+
+performance::compare_performance(model_dimensional, model_profile)
+
+parameters::parameters_table(model_parameters(model_profile))
+parameters::parameters_table(model_parameters(model_dimensional))
+```
+```{r warning=FALSE, message=FALSE}
+model_profile %>% 
+  estimate_means() %>% 
+  mutate(LIE_Profile = fct_relevel(LIE_Profile, "Trickster", "Average", "Virtuous")) %>% 
+  ggplot(aes(x = LIE_Profile, y = Median, color = LIE_Profile)) +
+  geom_line(aes(group = 1), size = 1) +
+  geom_pointrange(aes(ymin = CI_low, ymax = CI_high), size = 1) +
+  theme_modern() +
+  scale_color_manual(values = colors_cluster, guide = FALSE) +
+  ylab("Faith") +
+  xlab("Deception Profile")
+```
+
+```{r warning=FALSE, message=FALSE}
+sig <- model_parameters(model_dimensional)[-1,] %>% 
+  select(Parameter, pd) %>% 
+  mutate(Dimension = stringr::str_remove(Parameter, "LIE_"),
+         Text = format_pd(pd, stars_only=TRUE),
+         Median = 6.5,
+         Score = dplyr::filter(df, !is.na(Religion_Faith)) %>% 
+           select(one_of(Parameter)) %>% 
+           summarise_all(function(x) {mean(range(x))}) %>% 
+           t()) %>% 
+  mutate(Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality"))
+
+
+p_religion <- rbind(estimate_link(model_dimensional, target="LIE_Ability") %>% 
+        mutate(LIE_Frequency = NA, LIE_Contextuality=NA, LIE_Negativity=NA),
+      estimate_link(model_dimensional, target="LIE_Frequency") %>% 
+        mutate(LIE_Ability = NA, LIE_Contextuality=NA, LIE_Negativity=NA),
+      estimate_link(model_dimensional, target="LIE_Contextuality") %>% 
+        mutate(LIE_Frequency = NA, LIE_Ability=NA, LIE_Negativity=NA),
+      estimate_link(model_dimensional, target="LIE_Negativity") %>% 
+        mutate(LIE_Frequency = NA, LIE_Contextuality=NA, LIE_Ability=NA)) %>% 
+  pivot_longer(cols=starts_with("LIE_"), names_to="Dimension", values_to = "Score") %>% 
+  mutate(Dimension = str_remove(Dimension, "LIE_"),
+         Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality")) %>% 
+  ggplot(aes(x = Score, y = Median)) +
+  geom_ribbon(aes(ymin=CI_low, ymax=CI_high, fill=Dimension), alpha=0.1) +
+  geom_line(aes(color=Dimension), size = 1) +
+  theme_modern() +
+  theme(strip.placement = "outside",
+        strip.text = element_text(size=13, face="plain"),
+        axis.title = element_text(size=13),
+        axis.text = element_text(size=9),
+        plot.title = element_text(face="bold", hjust = 0.5)) +
+  geom_text(data = sig, aes(label = Text)) +
+  ggtitle("Religion") +
+  ylab("\nFaith") +
+  xlab("") +
+  scale_color_manual(values=c("Ability"= "#2196F3", "Frequency"="#4CAF50", "Negativity"="#E91E63", "Contextuality"="#FF9800"), name = "Dimensions", guide=FALSE) +
+   scale_fill_manual(values=c("Ability"= "#2196F3", "Frequency"="#4CAF50", "Negativity"="#E91E63", "Contextuality"="#FF9800"), name = "Dimensions", guide=FALSE) +
+  facet_wrap(~Dimension, scales="free_x", strip.position = "bottom")
+```
+
+
+```{r figure_demographics, warning=FALSE, message=FALSE, fig.height=figwidth, fig.width=figwidth}
+# Combine plots
+cowplot::plot_grid(p_sex, p_age, p_income, p_religion, nrow=2)
+```
+
+
+### Number of Lies
+
+#### Raw
+
+```{r figure_number_lies, warning=FALSE, message=FALSE}
+df$Lying_Frequency <- (df$Lying_Frequency_Day + df$Lying_Frequency_Week / 7) / 2
+outliers <- check_outliers(df$Lying_Frequency, method = "zscore", threshold = list("zscore" = stats::qnorm(p = 0.999)))
+df$Lying_Frequency[outliers == 1] <- NA
+
+  
+p_freq1 <- df %>% 
+  filter(!is.na(Lying_Frequency)) %>% 
+  ggplot(aes(x = Lying_Frequency)) +
+  geom_histogram(aes(y=..density.., fill = ..x..), binwidth = 1/7) +
+  geom_line(data=estimate_density(df$Lying_Frequency, method = "kernSmooth"),
+            aes(x = x, y = y), color = "#2196F3", size = 1.5) +
+  scale_fill_gradient(low='#AD1457', high='#F48FB1', guide = FALSE) +
+  ylab("Distribution of Participants") + 
+  xlab(expression(paste('Lying Frequency ', italic("(lies / day)"))))  +
+  theme_modern() +
+  theme(axis.text.y = element_blank())
+```
+
+```{r warning=FALSE, message=FALSE}
+library(ggforce)
+
+df %>% 
+  filter(!is.na(Lying_Frequency)) %>% 
+  dplyr::select(starts_with("LIE"), Lying_Frequency) %>% 
+  ggplot(aes(x = .panel_x, y = .panel_y, fill = LIE_Profile, colour = LIE_Profile)) + 
+  geom_point(alpha = 1, shape = 16, size = 0.5) + 
+  geom_smooth(method = 'lm', formula = y ~ poly(x, 1), alpha = 0.1) +
+  scale_color_manual(values = colors_cluster) +
+  scale_fill_manual(values = colors_cluster) +
+  ggforce::facet_matrix(cols = vars(LIE_Ability , LIE_Frequency, LIE_Negativity, LIE_Contextuality), rows = vars(Lying_Frequency)) +
+  coord_cartesian(ylim = c(0, 5)) +
+  theme_modern()
+```
+
+```{r warning=FALSE, message=FALSE}
+model_profile <- stan_glm(Lying_Frequency ~ LIE_Profile, data = df, refresh = 0, seed=333)
+model_dimensional <- stan_glm(Lying_Frequency ~ LIE_Ability + LIE_Frequency + LIE_Contextuality + LIE_Negativity, data = df, refresh = 0, seed=333)
+
+performance::compare_performance(model_dimensional, model_profile)
+
+parameters::parameters_table(model_parameters(model_profile))
+parameters::parameters_table(model_parameters(model_dimensional))
+```
+
+```{r warning=FALSE, message=FALSE}
+p_freq2 <- model_dimensional %>% 
+  estimate_link(target = "LIE_Frequency", length = 10, smooth_strength = 0) %>% 
+  ggplot(aes(x = LIE_Frequency, y = Median)) +
+  geom_point2(data = df, aes(y = Lying_Frequency, color = Lying_Frequency), size = 4, alpha=0.7) +
+  geom_ribbon(aes(ymin = CI_low, ymax = CI_high), alpha = 0.2) +
+  geom_line(size = 1.5) + 
+  scale_color_gradient(low='#AD1457', high='#F48FB1', guide = FALSE) +
+  theme_modern() +
+  ylab("Absolute Lying Frequency (lies / day)") +
+  xlab("LIE - Frequency") +
+  theme(plot.margin = unit(c(5.5, 0, 5.5, 5.5), "pt"))
+```
+
+```{r figure_absolutelying, warning=FALSE, message=FALSE, fig.height=figheight, fig.width=figwidth}
+# Combine plots
+cowplot::plot_grid(p_freq2, 
+                   p_freq1 +
+                     coord_flip() +
+                     xlab("") +
+                     ylab("") +
+                     theme(axis.line = element_blank(),
+                           axis.text.x = element_blank(),
+                           axis.title.y = element_blank(),
+                           axis.line.y = element_blank(),
+                           axis.ticks.y=element_blank(),
+                           plot.margin = unit(c(0, 0, 10, -20), "pt")), 
+                   nrow=1, rel_widths = c(0.75, 0.25))
+```
+
+#### Adjusted
+
+```{r figure_number_lies_adjusted, warning=FALSE, message=FALSE}
+df$Lying_Frequency_Adjusted <- effectsize::adjust(df, select = "Lying_Frequency", effect = c("BIDR_ImpressionManagement", "BIDR_SelfDeceptiveEnhancement"))$Lying_Frequency
+df$Lying_Frequency_Adjusted <- df$Lying_Frequency_Adjusted + abs(min(df$Lying_Frequency_Adjusted, na.rm=TRUE))
+  
+  
+p_freq1adj <- df %>% 
+  filter(!is.na(Lying_Frequency_Adjusted)) %>% 
+  ggplot(aes(x = Lying_Frequency_Adjusted)) +
+  geom_histogram(aes(y=..density.., fill = ..x..), binwidth = 1/7) +
+  geom_line(data=estimate_density(df$Lying_Frequency_Adjusted, method = "kernSmooth"),
+            aes(x = x, y = y), color = "red", size = 1.5) +
+  scale_fill_gradient(low='#1A237E', high='#2196F3', guide = FALSE) +
+  ylab("Distribution of Participants") + 
+  xlab(expression(paste('Lying Frequency ', italic("(lies / day)"))))  +
+  theme_modern() +
+  theme(axis.text.y = element_blank())
+```
+
+```{r warning=FALSE, message=FALSE}
+library(ggforce)
+
+df %>% 
+  filter(!is.na(Lying_Frequency_Adjusted)) %>% 
+  dplyr::select(starts_with("LIE"), Lying_Frequency_Adjusted) %>% 
+  ggplot(aes(x = .panel_x, y = .panel_y, fill = LIE_Profile, colour = LIE_Profile)) + 
+  geom_point(alpha = 1, shape = 16, size = 0.5) + 
+  geom_smooth(method = 'lm', formula = y ~ poly(x, 1), alpha = 0.1) +
+  scale_color_manual(values = colors_cluster) +
+  scale_fill_manual(values = colors_cluster) +
+  ggforce::facet_matrix(cols = vars(LIE_Ability , LIE_Frequency, LIE_Negativity, LIE_Contextuality), rows = vars(Lying_Frequency_Adjusted)) +
+  coord_cartesian(ylim = c(0, 5)) +
+  theme_modern()
+```
+
+```{r warning=FALSE, message=FALSE}
+model_profile <- stan_glm(Lying_Frequency_Adjusted ~ LIE_Profile, data = df, refresh = 0, seed=333)
+model_dimensional <- stan_glm(Lying_Frequency_Adjusted ~ LIE_Ability + LIE_Frequency + LIE_Contextuality + LIE_Negativity, data = df, refresh = 0, seed=333)
+
+performance::compare_performance(model_dimensional, model_profile)
+
+parameters::parameters_table(model_parameters(model_profile))
+parameters::parameters_table(model_parameters(model_dimensional))
+```
+
+```{r warning=FALSE, message=FALSE}
+p_freq2adj <- model_dimensional %>% 
+  estimate_link(target = "LIE_Frequency", length = 10, smooth_strength = 0) %>% 
+  ggplot(aes(x = LIE_Frequency, y = Median)) +
+  geom_point2(data = df, aes(y = Lying_Frequency_Adjusted, color = Lying_Frequency_Adjusted), size = 4, alpha=0.7) +
+  geom_ribbon(aes(ymin = CI_low, ymax = CI_high), alpha = 0.2) +
+  geom_line(size = 1.5) + 
+  scale_color_gradient(low='#1A237E', high='#2196F3', guide = FALSE) +
+  theme_modern() +
+  ylab("Absolute Lying Frequency (lies / day)") +
+  xlab("LIE - Frequency") +
+  theme(plot.margin = unit(c(5.5, 0, 5.5, 5.5), "pt"))
+```
+
+```{r figure_absolutelying_adjusted, warning=FALSE, message=FALSE, fig.height=figheight, fig.width=figwidth}
+# Combine plots
+cowplot::plot_grid(p_freq2adj, 
+                   p_freq1adj +
+                     coord_flip() +
+                     xlab("") +
+                     ylab("") +
+                     theme(axis.line = element_blank(),
+                           axis.text.x = element_blank(),
+                           axis.title.y = element_blank(),
+                           axis.line.y = element_blank(),
+                           axis.ticks.y=element_blank(),
+                           plot.margin = unit(c(0, 0, 10, -20), "pt")), 
+                   nrow=1, rel_widths = c(0.75, 0.25))
+```
+
+
+
+```{r figure_gif, fig.height=figheight, fig.width=figwidth, message=FALSE, warning=FALSE, include=FALSE, eval=FALSE}
+library(gganimate)
+
+
+data <- df %>% 
+  select(Participant, Lying_Frequency, Lying_Frequency_Adjusted) %>% 
+  pivot_longer(-Participant, names_to = "Variable", values_to = "Score") %>%
+  mutate(Variable = ifelse(Variable == "Lying_Frequency", 0, 1)) %>% 
+  filter(!is.na(Score))
+
+
+p_gif <- data %>% 
+  ggplot(aes(x = Score)) +
+  geom_histogram(aes(y=..density.., fill = Variable), color="white", binwidth = 1/7) +
+  geom_line(data=rbind(estimate_density(df$Lying_Frequency, method = "kernSmooth") %>% 
+                         mutate(Variable = 0),
+                       estimate_density(df$Lying_Frequency_Adjusted, method = "kernSmooth") %>% 
+                         mutate(Variable = 1)),
+            aes(x = x, y = y, color = Variable), size = 1.5) +
+  # scale_fill_gradient(low='#1A237E', high='#2196F3', guide = FALSE) +
+  ylab(expression(paste("Number of Participants ", italic(" (total N =762)")))) + 
+  xlab(expression(paste('Lying Frequency ', italic("(lies / day)"))))  +
+  theme_modern() +
+  scale_fill_gradient(low="#f44336", high="#1E88E5", breaks=c(0, 1), limits=c(0,1), labels=c("Non-Accounted", "Adjusted for"), guide = "legend", name = "Social Desirability") +
+  scale_color_gradient(low="#2196F3", high="red", guide = FALSE) +
+  # scale_fill_manual(values = c("Lying_Frequency"="#2196F3", "Lying_Frequency_Adjusted"="red")) +
+  theme(axis.text.y = element_blank(),
+        legend.title = element_text(face="bold", size=rel(2)),
+        legend.text = element_text(size=rel(2)),
+        axis.title = element_text(size=rel(2)),
+        axis.text.x = element_text(size=rel(2)),
+        plot.title = element_text(face="bold", hjust = 0.5, vjust = -10, size=rel(2)),
+        plot.subtitle = element_text(hjust = 0.5, vjust = -10, size=rel(2))) + 
+  ggtitle("How Many Lies People Tell a Day?", subtitle = "Makowski et al. (2020)") +
+  transition_states(Variable) 
+
+p_gif
+anim_save("figures/animation.gif", p_gif, duration=5, fps=30, width=figwidth*90, height=figheight*90)
+```
+
+### Social Desirability (BIDR)
+
+#### Utility Functions
+
+```{r warning=FALSE, message=FALSE}
+library(ggraph)
+library(tidygraph)
+
+colors_nodes <- c("LIE"= "#9C27B0", 
+                  "Psychopathy" = "#f44336", 
+                  "Narcissism" = "#FF9800", 
+                  "Pathological Personality" = "#FFC107", 
+                  "Normal Personality" = "#4CAF50", 
+                  "Social Desirability" = "#795548", 
+                  "Light Triad" = "#2196F3", 
+                  "Impulsivity" = "#673AB7", 
+                  "Emotion Regulation" = "#E91E63", 
+                  "Interoception" = "#b71c1c")
+
+# convenience function
+create_ggm <- function(data, title = "Pychopathy (TRIMP)", title_size=22, label_edges = TRUE, node_size=32, text_size=5.5, layout="kk", seed=333, bend=0.2){
+  set.seed(seed)
+  
+  label_edges <- ifelse(rep_len(label_edges, length.out=nrow(data$edges)), insight::format_value(data$edges$r), "")
+  
+  data %>%
+    ggraph(layout = layout) +
+    geom_edge_arc(aes(colour=r, edge_width = abs(r), label = label_edges), 
+                  strength=bend,
+                  angle_calc = 'along',
+                  label_dodge = unit(3.5, 'mm'),
+                  check_overlap = FALSE) +
+    geom_node_point(aes(colour = Questionnaire), size=node_size) +
+    geom_node_text(aes(label = name), colour="white", check_overlap = FALSE, repel = FALSE, size=text_size, fontface="bold") +
+    scale_edge_color_gradient2(low = "#d50000", high = "#00C853") +
+    scale_color_manual(values = colors_nodes) +
+    theme_graph() +
+    guides(edge_width = FALSE,
+           edge_color = FALSE,
+           colour = FALSE) +
+    scale_x_continuous(expand = expand_scale(c(.15, .15))) +
+    scale_y_continuous(expand = expand_scale(c(.15, .15))) +
+    theme(plot.title = element_text(hjust = 0.5, face="bold", size = title_size),
+          plot.margin = unit(c(0, 0, 0, 0), "cm")) +
+    ggtitle(title)
+}
+```
+
+
+#### Gaussian Graphical Model
+
+```{r warning=FALSE, message=FALSE}
+cor_bidr <- correlation::correlation(
+  dplyr::select(df, dplyr::starts_with("LIE"), dplyr::starts_with("BIDR"), -BIDR_General),
+  partial = TRUE, p_adjust = "none")
+
+parameters::parameters_table(cor_bidr)
+```
+
+
+```{r warning=FALSE, message=FALSE, fig.height=figwidth}
+graphdata_bidr <- cor_bidr %>%
+  filter(p < .001) %>%
+  tidygraph::as_tbl_graph() %>%
+  as.list()
+
+graphdata_bidr$nodes$Questionnaire <- ifelse(stringr::str_detect(graphdata_bidr$nodes$name, "LIE_"),
+                               "LIE", "Social Desirability")
+graphdata_bidr$nodes$name <- stringr::str_remove(graphdata_bidr$nodes$name, "LIE_|BIDR_")
+graphdata_bidr$nodes$name <- stringr::str_replace(graphdata_bidr$nodes$name, "fD", "f-D")
+graphdata_bidr$nodes$name <- stringr::str_replace(graphdata_bidr$nodes$name, "nM", "n\nM")
+graphdata_bidr$nodes$name <- stringr::str_replace(graphdata_bidr$nodes$name, "eE", "e\nE")
+
+ggm_bidr <- create_ggm(graphdata_bidr, title = "Social Desirability", layout="sugiyama")
+ggm_bidr
+```
+
+After controlling for social desirability, it seems that the relationship between frequency and contextuality changed from being positive to negative. The more people lie (likely representing a lack of control), and the less flexible and insensitive to the context they are.
+
+#### Adjust for Social Desirability
+
+```{r warning=FALSE, message=FALSE}
+lie <- df[names(dplyr::select(df, dplyr::starts_with("LIE"), -LIE_Profile))]
+df[names(lie)] <- effectsize::adjust(data = cbind(lie, df[c("BIDR_ImpressionManagement", "BIDR_SelfDeceptiveEnhancement", "Age", "Sex")]), 
+                                     effect = c("BIDR_ImpressionManagement", "BIDR_SelfDeceptiveEnhancement", "Age", "Sex"), 
+                                     multilevel = TRUE)[names(lie)]
+```
+
+
+### Psychopathy (TRIMP)
+
+
+
+
+```{r warning=FALSE, message=FALSE}
+cor_trimp <- correlation::correlation( 
+  dplyr::select(df, dplyr::starts_with("LIE"), -LIE_Profile, TRIMP_Boldness, TRIMP_Meanness, TRIMP_Disinhibition),
+  partial = TRUE, p_adjust = "none")
+
+parameters::parameters_table(cor_trimp)
+```
+
+
+```{r warning=FALSE, message=FALSE, fig.height=figwidth}
+graphdata_trimp <- cor_trimp %>%
+  filter(p < .001) %>%
+  tidygraph::as_tbl_graph() %>% 
+  as.list()
+
+graphdata_trimp$nodes$Questionnaire <- ifelse(stringr::str_detect(graphdata_trimp$nodes$name, "LIE_"),
+                               "LIE", "Psychopathy")
+graphdata_trimp$nodes$name <- stringr::str_remove(graphdata_trimp$nodes$name, "LIE_|TRIMP_")
+  
+
+create_ggm(graphdata_trimp, title = "Pychopathy")
+```
+
+
+
+### Narcissism (FFNI)
+
+```{r warning=FALSE, message=FALSE}
+cor_ffni <- correlation::correlation( 
+  dplyr::select(df, dplyr::starts_with("LIE"), dplyr::starts_with("FFNI"), -FFNI_General),
+  partial = TRUE, p_adjust = "none")
+
+parameters::parameters_table(cor_ffni)
+```
+
+```{r warning=FALSE, message=FALSE, fig.height=figwidth}
+graphdata_ffni <- cor_ffni %>%
+  filter(p < .001) %>% 
+  tidygraph::as_tbl_graph() %>% 
+  as.list()
+
+graphdata_ffni$nodes$Questionnaire <- ifelse(stringr::str_detect(graphdata_ffni$nodes$name, "LIE_"),
+                               "LIE", "Narcissism")
+graphdata_ffni$nodes$name <- stringr::str_remove(graphdata_ffni$nodes$name, "LIE_|FFNI_")
+graphdata_ffni$nodes$name <- stringr::str_replace(graphdata_ffni$nodes$name, "dForA", "d for\nA")
+graphdata_ffni$nodes$name <- stringr::str_replace(graphdata_ffni$nodes$name, "mS", "m\nS")
+graphdata_ffni$nodes$name <- stringr::str_replace(graphdata_ffni$nodes$name, "lS", "l\nS")
+graphdata_ffni$nodes$name <- stringr::str_replace(graphdata_ffni$nodes$name, "kOfE", "k of\nE")
+  
+
+ggm_ffni <- create_ggm(graphdata_ffni, title = "Narcissism", node_size=38)
+ggm_ffni
+```
+
+
+### Normal Personality (IPIP6)
+
+```{r warning=FALSE, message=FALSE}
+cor_ipip <- correlation::correlation( 
+  dplyr::select(df, dplyr::starts_with("LIE"), dplyr::starts_with("IPIP6")),
+  partial = TRUE, p_adjust = "none")
+
+parameters::parameters_table(cor_ipip)
+```
+
+
+```{r warning=FALSE, message=FALSE, fig.height=figwidth}
+graphdata_ipip <- cor_ipip %>%
+  filter(p < .001) %>% 
+  tidygraph::as_tbl_graph() %>% 
+  as.list()
+
+graphdata_ipip$nodes$Questionnaire <- ifelse(stringr::str_detect(graphdata_ipip$nodes$name, "LIE_"),
+                               "LIE", "Normal Personality")
+graphdata_ipip$nodes$name <- stringr::str_remove(graphdata_ipip$nodes$name, "LIE_|IPIP6_")
+graphdata_ipip$nodes$name <- stringr::str_replace(graphdata_ipip$nodes$name, "yH", "y /\nH")
+
+ggm_ipip <- create_ggm(graphdata_ipip, title = "Normal Personality", layout="graphopt", node_size=40)
+ggm_ipip
+```
+
+### Pathological Personality (PID5)
+
+```{r warning=FALSE, message=FALSE}
+cor_pid <- correlation::correlation(
+  dplyr::select(df, dplyr::starts_with("LIE"), dplyr::starts_with("PID5"), -PID5_Pathology),
+  partial = TRUE, p_adjust = "none")
+
+parameters::parameters_table(cor_pid)
+```
+
+
+```{r warning=FALSE, message=FALSE, fig.height=figwidth}
+graphdata_pid <- cor_pid %>%
+  filter(p < .001) %>%
+  tidygraph::as_tbl_graph() %>%
+  as.list()
+
+graphdata_pid$nodes$Questionnaire <- ifelse(stringr::str_detect(graphdata_pid$nodes$name, "LIE_"),
+                               "LIE", "Pathological Personality")
+graphdata_pid$nodes$name <- stringr::str_remove(graphdata_pid$nodes$name, "LIE_|PID5_")
+graphdata_pid$nodes$name <- stringr::str_replace(graphdata_pid$nodes$name, "eA", "e\nA")
+
+ggm_pid <- create_ggm(graphdata_pid, title = "Pathological Personality", layout="graphopt", node_size=40)
+ggm_pid
+```
+
+
+### Light Triad (LTS)
+
+```{r warning=FALSE, message=FALSE}
+cor_lts <- correlation::correlation(
+  dplyr::select(df, dplyr::starts_with("LIE"), dplyr::starts_with("LTS"), -LTS_General),
+  partial = TRUE, p_adjust = "none")
+
+parameters::parameters_table(cor_lts)
+```
+
+
+```{r warning=FALSE, message=FALSE, fig.height=figwidth}
+graphdata_lts <- cor_lts %>%
+  filter(p < .001) %>%
+  tidygraph::as_tbl_graph() %>%
+  as.list()
+
+graphdata_lts$nodes$Questionnaire <- ifelse(stringr::str_detect(graphdata_lts$nodes$name, "LIE_"),
+                               "LIE", "Light Triad")
+graphdata_lts$nodes$name <- stringr::str_remove(graphdata_lts$nodes$name, "LIE_|LTS_")
+graphdata_lts$nodes$name <- stringr::str_replace(graphdata_lts$nodes$name, "InH", " in\nH")
+
+ggm_lts <- create_ggm(graphdata_lts, title = "Light Triad", layout="fr", bend=0.15)
+ggm_lts
+```
+
+
+
+### Impulsivity (UPPS)
+
+```{r warning=FALSE, message=FALSE}
+cor_upps <- correlation::correlation(
+  dplyr::select(df, dplyr::starts_with("LIE"), dplyr::starts_with("UPPS"), -UPPS_General),
+  partial = TRUE, p_adjust = "none")
+
+parameters::parameters_table(cor_upps)
+```
+
+
+```{r warning=FALSE, message=FALSE, fig.height=figwidth}
+graphdata_upps <- cor_upps %>%
+  filter(p < .001) %>%
+  tidygraph::as_tbl_graph() %>%
+  as.list()
+
+graphdata_upps$nodes$Questionnaire <- ifelse(stringr::str_detect(graphdata_upps$nodes$name, "LIE_"),
+                               "LIE", "Impulsivity")
+graphdata_upps$nodes$name <- stringr::str_remove(graphdata_upps$nodes$name, "LIE_|UPPS_")
+graphdata_upps$nodes$name <- stringr::str_replace(graphdata_upps$nodes$name, "U", "\nU")
+graphdata_upps$nodes$name <- stringr::str_replace(graphdata_upps$nodes$name, "OfP", " of\nP")
+graphdata_upps$nodes$name <- stringr::str_replace(graphdata_upps$nodes$name, "nS", "n\nS")
+
+ggm_upps <- create_ggm(graphdata_upps, title = "Impulsivity")
+ggm_upps
+```
+
+### Emotion Regulation (DERS)
+
+```{r warning=FALSE, message=FALSE}
+cor_ders <- correlation::correlation(
+  dplyr::select(df, dplyr::starts_with("LIE"), dplyr::starts_with("DERS"), -DERS_General),
+  partial = TRUE, p_adjust = "none")
+
+parameters::parameters_table(cor_ders)
+```
+
+
+```{r warning=FALSE, message=FALSE, fig.height=figwidth}
+graphdata_ders <- cor_ders %>%
+  filter(p < .001) %>%
+  tidygraph::as_tbl_graph() %>%
+  as.list()
+
+graphdata_ders$nodes$Questionnaire <- ifelse(stringr::str_detect(graphdata_ders$nodes$name, "LIE_"),
+                               "LIE", "Emotion Regulation")
+graphdata_ders$nodes$name <- stringr::str_remove(graphdata_ders$nodes$name, "LIE_|DERS_")
+graphdata_ders$nodes$name <- stringr::str_replace(graphdata_ders$nodes$name, "nA", "n-\nA")
+
+ggm_ders <- create_ggm(graphdata_ders, title = "Difficulties in Emotion Regulation")
+ggm_ders
+```
+
+
+### Interoception (MAIA2)
+
+```{r warning=FALSE, message=FALSE}
+cor_maia <- correlation::correlation(
+  dplyr::select(df, dplyr::starts_with("LIE"), dplyr::starts_with("MAIA2")),
+  partial = TRUE, p_adjust = "none")
+
+parameters::parameters_table(cor_maia)
+```
+
+
+```{r warning=FALSE, message=FALSE, fig.height=figwidth}
+graphdata_maia <- cor_maia %>%
+  filter(p < .001) %>%
+  tidygraph::as_tbl_graph() %>%
+  as.list()
+
+graphdata_maia$nodes$Questionnaire <- ifelse(stringr::str_detect(graphdata_maia$nodes$name, "LIE_"),
+                               "LIE", "Interoception")
+graphdata_maia$nodes$name <- stringr::str_remove(graphdata_maia$nodes$name, "LIE_|MAIA2_")
+graphdata_maia$nodes$name <- stringr::str_replace(graphdata_maia$nodes$name, "yL", "y\nL")
+
+ggm_maia <- create_ggm(graphdata_maia, title = "Interoception")
+ggm_maia
+```
+
+
+```{r warning=FALSE, message=FALSE, fig.height=figwidth, fig.width=figwidth}
+scale <- 1.2
+# Combine plots
+p <- cowplot::plot_grid(create_ggm(graphdata_bidr, title = "Social Desirability", layout="sugiyama", label_edges = FALSE, title_size = 35, text_size=5.5*scale, node_size=48*scale), 
+                        create_ggm(graphdata_trimp, title = "Pychopathy", label_edges = FALSE, title_size = 35, text_size=5.5*scale, node_size=40*scale), 
+                        create_ggm(graphdata_ffni, title = "Narcissism", label_edges = FALSE, title_size = 35, text_size=5.5*scale, node_size=52*scale),
+                        create_ggm(graphdata_ipip, title = "Normal Personality", layout="graphopt", label_edges = FALSE, title_size = 33, text_size=5.5*scale, node_size=52*scale), 
+                        create_ggm(graphdata_pid, title = "Pathological Personality", layout="graphopt", label_edges = FALSE, title_size = 35, text_size=5.5*scale, node_size=40*scale), 
+                        create_ggm(graphdata_lts, title = "Light Triad", layout="fr", bend=0.15, label_edges = FALSE, title_size = 35, text_size=5.5*scale, node_size=40*scale), 
+                        create_ggm(graphdata_upps, title = "Impulsivity", label_edges = FALSE, title_size = 35, text_size=5.5*scale, node_size=44*scale), 
+                        create_ggm(graphdata_ders, title = "Difficulties in Emotion Regulation", label_edges = FALSE, title_size = 35, text_size=5.5*scale, node_size=40*scale), 
+                        create_ggm(graphdata_maia, title = "Interoception", label_edges = FALSE, title_size = 35, text_size=5.5*scale, node_size=40*scale)) +
+    theme(plot.margin = unit(c(0,0,0,0), "cm"))
+ggsave("figures/figure_ggm.png", p, height=figwidth*3, width=figwidth*3, dpi=600)
+```
+
+
+
+<!-- ## Structural Modelling -->
+
+<!-- ### Full Model -->
+
+<!-- ```{r warning=FALSE, message=FALSE} -->
+<!-- # cor <- correlation::correlation( -->
+<!-- #   dplyr::select(df,  -->
+<!-- #                 dplyr::starts_with("LIE"), -->
+<!-- #                 TRIMP_Boldness, TRIMP_Meanness, TRIMP_Disinhibition, -->
+<!-- #                 FFNI_Manipulativeness, FFNI_NeedForAdmiration, -->
+<!-- #                 IPIP6_Neuroticism, IPIP6_Conscientiousness, IPIP6_Openeness, -->
+<!-- #                 PID5_Disinhibition, PID5_Antagonism, PID5_NegativeAffect, -->
+<!-- #                 BIDR_SelfDeceptiveEnhancement, BIDR_ImpressionManagement, -->
+<!-- #                 UPPS_NegativeUrgency, -->
+<!-- #                 DERS_NonAcceptance, DERS_Impulse, -->
+<!-- #                 LTS_Kantianism, LTS_Humanism), -->
+<!-- #   partial = TRUE, p_adjust = "none") -->
+
+<!-- cor <- correlation::correlation( -->
+<!--   dplyr::select(df, -->
+<!--                 dplyr::starts_with("LIE"), -->
+<!--                 TRIMP_Boldness, TRIMP_Meanness, TRIMP_Disinhibition, -->
+<!--                 dplyr::starts_with("FFNI"), -FFNI_General, -->
+<!--                 dplyr::starts_with("IPIP6"), -->
+<!--                 dplyr::starts_with("PID5"), -PID5_Pathology, -->
+<!--                 dplyr::starts_with("BIDR"), -BIDR_General, -->
+<!--                 dplyr::starts_with("UPPS"), -UPPS_General, -->
+<!--                 dplyr::starts_with("DERS"), -DERS_General, -->
+<!--                 dplyr::starts_with("LTS"), -LTS_General, -->
+<!--                 dplyr::starts_with("MAIA2")), -->
+<!--   partial = TRUE, p_adjust = "none") -->
+<!-- ``` -->
+
+
+<!-- ```{r warning=FALSE, message=FALSE, fig.height=figwidth * 1.5, fig.widtht=figwidth * 1.5} -->
+<!-- graphdata <- cor %>% -->
+<!--   filter(p < .001) %>% -->
+<!--   tidygraph::as_tbl_graph() %>% -->
+<!--   as.list() -->
+
+<!-- graphdata$nodes$Questionnaire <- case_when( -->
+<!--   stringr::str_detect(graphdata$nodes$name, "LIE_") ~ "LIE", -->
+<!--   stringr::str_detect(graphdata$nodes$name, "TRIMP_") ~ "Psychopathy", -->
+<!--   stringr::str_detect(graphdata$nodes$name, "FFNI_") ~ "Narcissism", -->
+<!--   stringr::str_detect(graphdata$nodes$name, "PID5_") ~ "Pathological Personality", -->
+<!--   stringr::str_detect(graphdata$nodes$name, "IPIP6_") ~ "Normal Personality", -->
+<!--   stringr::str_detect(graphdata$nodes$name, "BIDR_") ~ "Social Desirability", -->
+<!--   stringr::str_detect(graphdata$nodes$name, "LTS_") ~ "Light Triad", -->
+<!--   stringr::str_detect(graphdata$nodes$name, "UPPS_") ~ "Impulsivity", -->
+<!--   stringr::str_detect(graphdata$nodes$name, "DERS_") ~ "Emotion Regulation", -->
+<!--   stringr::str_detect(graphdata$nodes$name, "MAIA2_") ~ "Interoception" -->
+<!-- ) -->
+<!-- graphdata$nodes$Questionnaire <- as.factor(graphdata$nodes$Questionnaire) -->
+<!-- graphdata$nodes$Questionnaire <- fct_relevel(graphdata$nodes$Questionnaire, -->
+<!--                                              "LIE", -->
+<!--                                              "Psychopathy", -->
+<!--                                              "Narcissism", -->
+<!--                                              "Pathological Personality", -->
+<!--                                              "Normal Personality", -->
+<!--                                              "Social Desirability", -->
+<!--                                              "Light Triad", -->
+<!--                                              "Impulsivity", -->
+<!--                                              "Emotion Regulation", -->
+<!--                                              "Interoception") -->
+
+<!-- graphdata$nodes$name <- stringr::str_remove(graphdata$nodes$name, "LIE_|TRIMP_|FFNI_|IPIP6_|PID5_|BIDR_|UPPS_|DERS_|LTS_|MAIA2_") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "dForA", "d for\nA") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "mS", "m\nS") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "lS", "l\nS") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "kOfE", "k of\nE") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "yH", "y /\nH") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "eA", "e\nA") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "fD", "f-D") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "nM", "n\nM") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "eE", "e\nE") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "U", "\nU") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "OfP", " of\nP") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "nS", "n\nS") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "nA", "n-a") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "InH", " in\nH") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "dyL", "dy\nL") -->
+
+<!-- create_ggm(graphdata, title = "", label_edges = FALSE) + -->
+<!--   guides(colour = guide_legend(override.aes = list(size=10))) -->
+<!-- ``` -->
+
+
+<!-- ### Deception-Centred Model -->
+
+<!-- ```{r warning=FALSE, message=FALSE, fig.height=figwidth * 1.5, fig.widtht=figwidth * 1.5} -->
+<!-- graphdata <- cor %>% -->
+<!--   filter(!(str_detect(Parameter1, "LIE_") & str_detect(Parameter2, "LIE_"))) %>%  -->
+<!--   filter(str_detect(Parameter1, "LIE_") | str_detect(Parameter2, "LIE_")) %>%  -->
+<!--   filter(p < .05) %>% -->
+<!--   tidygraph::as_tbl_graph() %>% -->
+<!--   as.list() -->
+
+<!-- graphdata$nodes$Questionnaire <- case_when( -->
+<!--   stringr::str_detect(graphdata$nodes$name, "LIE_") ~ "LIE", -->
+<!--   stringr::str_detect(graphdata$nodes$name, "TRIMP_") ~ "Psychopathy", -->
+<!--   stringr::str_detect(graphdata$nodes$name, "FFNI_") ~ "Narcissism", -->
+<!--   stringr::str_detect(graphdata$nodes$name, "PID5_") ~ "Pathological Personality", -->
+<!--   stringr::str_detect(graphdata$nodes$name, "IPIP6_") ~ "Normal Personality", -->
+<!--   stringr::str_detect(graphdata$nodes$name, "BIDR_") ~ "Social Desirability", -->
+<!--   stringr::str_detect(graphdata$nodes$name, "LTS_") ~ "Light Triad", -->
+<!--   stringr::str_detect(graphdata$nodes$name, "UPPS_") ~ "Impulsivity", -->
+<!--   stringr::str_detect(graphdata$nodes$name, "DERS_") ~ "Emotion Regulation", -->
+<!--   stringr::str_detect(graphdata$nodes$name, "MAIA2_") ~ "Interoception" -->
+<!-- ) -->
+<!-- graphdata$nodes$Questionnaire <- as.factor(graphdata$nodes$Questionnaire) -->
+<!-- graphdata$nodes$Questionnaire <- fct_relevel(graphdata$nodes$Questionnaire, -->
+<!--                                              "LIE", -->
+<!--                                              "Psychopathy", -->
+<!--                                              "Narcissism", -->
+<!--                                              "Pathological Personality", -->
+<!--                                              "Normal Personality", -->
+<!--                                              "Social Desirability", -->
+<!--                                              "Light Triad", -->
+<!--                                              "Impulsivity", -->
+<!--                                              "Emotion Regulation", -->
+<!--                                              "Interoception") -->
+
+<!-- graphdata$nodes$name <- stringr::str_remove(graphdata$nodes$name, "LIE_|TRIMP_|FFNI_|IPIP6_|PID5_|BIDR_|UPPS_|DERS_|LTS_|MAIA2_") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "dForA", "d for\nA") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "mS", "m\nS") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "lS", "l\nS") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "kOfE", "k of\nE") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "yH", "y /\nH") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "eA", "e\nA") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "fD", "f-D") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "nM", "n\nM") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "eE", "e\nE") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "U", "\nU") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "OfP", " of\nP") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "nS", "n\nS") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "nA", "n-a") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "InH", " in\nH") -->
+<!-- graphdata$nodes$name <- stringr::str_replace(graphdata$nodes$name, "dyL", "dy\nL") -->
+
+<!-- create_ggm(graphdata, title = "") + -->
+<!--   guides(colour = guide_legend(override.aes = list(size=10))) -->
+<!-- ``` -->
+
+
+<!-- ## Predictive Modelling -->
+
+<!-- ```{r warning=FALSE, message=FALSE} -->
+<!-- vars <- cor %>% -->
+<!--   filter(!(str_detect(Parameter1, "LIE_") & str_detect(Parameter2, "LIE_"))) %>%  -->
+<!--   filter(str_detect(Parameter1, "LIE_") | str_detect(Parameter2, "LIE_")) %>%  -->
+<!--   filter(p < .05) -->
+
+<!-- data <- df[unique(c(vars$Parameter1, vars$Parameter2))] -->
+<!-- data <- select(data, -starts_with("LIE_")) -->
+<!-- data$LIE_Profile <- df$LIE_Profile -->
+
+<!-- m1 <- glm(LIE_Profile ~ ., data = data %>%  -->
+<!--                 mutate(LIE_Profile = ifelse(LIE_Profile == "Virtuous", 1, 0)), family = "binomial")  -->
+<!-- m2 <- glm(LIE_Profile ~ ., data = data %>%  -->
+<!--                 mutate(LIE_Profile = ifelse(LIE_Profile == "Trickster", 1, 0)), family = "binomial") -->
+<!-- m3 <- glm(LIE_Profile ~ ., data = data %>%  -->
+<!--                 mutate(LIE_Profile = ifelse(LIE_Profile == "Average", 1, 0)), family = "binomial") -->
+
+<!-- params1 <- model_parameters(m1) -->
+<!-- params1[order(params1$p),] -->
+<!-- params2 <- model_parameters(m2) -->
+<!-- params2[order(params2$p),] -->
+<!-- ``` -->
+<!-- ```{r warning=FALSE, message=FALSE} -->
+<!-- # Convenience functions -->
+<!-- profile_prediction_data <- function(df, m1, m2, var = "FFNI_Manipulativeness"){ -->
+<!--   data <- visualisation_matrix(m1, target = var, length = 25)  -->
+
+<!--   pred1 <- estimate_link(m1, data) -->
+<!--   pred2 <- estimate_link(m2, data) -->
+<!--   pred3 <- estimate_link(m3, data) -->
+
+
+<!--   out <- rbind(mutate(pred1, Profile = "Virtuous"), -->
+<!--         mutate(pred3, Profile = "Average"), -->
+<!--         mutate(pred2, Profile = "Trickster"))  -->
+<!--   out$x <- out[[var]] -->
+<!--   out -->
+<!-- } -->
+<!-- ``` -->
+<!-- ```{r warning=FALSE, message=FALSE} -->
+<!-- rbind(mutate(profile_prediction_data(df, m1, m2, var = "FFNI_Manipulativeness"), Predictor = "Narcissism - Manipulativeness"), -->
+<!--       mutate(profile_prediction_data(df, m1, m2, var = "TRIMP_Meanness"), Predictor = "Psychopathy - Meanness"), -->
+<!--       mutate(profile_prediction_data(df, m1, m2, var = "BIDR_ImpressionManagement"), Predictor = "Social Desirability - Impression Management"), -->
+<!--       mutate(profile_prediction_data(df, m1, m2, var = "IPIP6_Openeness"), Predictor = "Normal Personality - Openeness"), -->
+<!--       mutate(profile_prediction_data(df, m1, m2, var = "LTS_Kantianism"), Predictor = "Light Triad - Kantianism")) %>%  -->
+<!--   ggplot(aes(x = x, y = Predicted)) + -->
+<!--     geom_ribbon(aes(ymin = CI_low, ymax = CI_high, fill = Profile), alpha = 0.1) + -->
+<!--     geom_line(aes(color = Profile)) + -->
+<!--     theme_modern() + -->
+<!--     scale_y_continuous(labels = scales::percent) + -->
+<!--     scale_color_manual(values = colors_cluster) + -->
+<!--     scale_fill_manual(values = colors_cluster) + -->
+<!--     ylab("Probability of Belonging to Cluster") + -->
+<!--     theme(axis.title.x = element_blank(), -->
+<!--           strip.placement = "outside") + -->
+<!--     facet_wrap(~Predictor, nrow = 2, scales = "free", strip.position = "bottom") -->
+<!-- ``` -->
+
+# References
+
+
+```{r warning=FALSE, message=FALSE}
+report::cite_packages(sessionInfo())
+```
+
+
+```{r warning=FALSE, message=FALSE,include=FALSE}
+# Save PROFLIER things
+data <- dplyr::select(df, starts_with("LIE_"))
+save(data, file = "proflier/data.rda")
+save(cfa_parameters, file = "proflier/model_dimensions.rda")
+k <- parameters::model_parameters(k3) 
+save(k, file = "proflier/model_clusters.rda")
+```
