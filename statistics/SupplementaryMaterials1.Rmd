@@ -446,9 +446,6 @@ as.data.frame(outliers) %>%
   xlab("Number of methods detecting the same outliers") +
   ylab("Number of participants")
 
-save(outliers, file="outliers.Rdata")
-load("outliers.Rdata")
-
 df <- df_time[-which(as.numeric(outliers) >= 7/ n_methods), ]
 
 paste("Based on a composite outlier score (see the 'check_outliers' function in the 'performance' R package; Lüdecke et al., 2019) obtained via the joint application of multiple outliers detection algorithms (Z-scores, Iglewicz, 1993; Interquartile range (IQR); Mahalanobis distance, Cabana, 2019; Robust Mahalanobis distance, Gnanadesikan & Kettenring, 1972; Minimum Covariance Determinant, Leys et al., 2018; Invariant Coordinate Selection, Archimbaud et al., 2018; Isolation Forest, Liu et al. 2008; and Local Outlier Factor, Breunig et al., 2000), we excluded", nrow(df_time) - nrow(df), "participants that were classified as outliers by at least 8/10 of the methods used.")

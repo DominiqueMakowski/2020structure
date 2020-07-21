@@ -1,0 +1,564 @@
+---
+title: "**The Structure of Deception: Validation of the Lying Profile Questionnaire**"
+subtitle: 'Supplementary Materials'
+output:
+  html_document:
+    theme: journal
+    footer: "LIE questionnaire validation"
+    highlight: pygments
+    toc: yes
+    toc_depth: 4
+    toc_float: yes
+    df_print: "kable"
+    code_folding: hide
+    keep_md: yes
+  word_document:
+    toc: false
+    toc_depth: 3
+    df_print: "kable"
+    highlight: "pygments"
+    reference_docx: utils/Template_Supplementary_Materials.docx
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 4
+tags: [r, lie, questionnaire, deception]
+editor_options: 
+  chunk_output_type: console
+bibliography: bibliography.bib
+csl: utils/apa.csl
+---
+
+
+
+
+# Methods
+
+## Packages & Data
+
+### Packages
+
+```r
+library(tidyverse)
+library(easystats)
+```
+
+```
+> # Attaching packages (red = needs update)
+> <U+26A0> insight     0.8.5.1   <U+26A0> bayestestR  0.7.1  
+> <U+2714> performance 0.4.7.1   <U+2714> parameters  0.8.1  
+> <U+2714> see         0.5.1     <U+2714> effectsize  0.3.1  
+> <U+2714> correlation 0.3.0     <U+2714> modelbased  0.2.1  
+> <U+2714> report      0.1.0     
+> Warnings or errors in CRAN checks for package(s) 'modelbased'.
+> Restart the R-Session and update packages in red with 'easystats::easystats_update()'.
+```
+
+```r
+set.seed(333)
+```
+
+
+
+
+
+### Data
+
+
+```r
+labels <- read.csv("../data/labels.csv", stringsAsFactors = FALSE) %>% mutate(Item = paste0(Questionnaire, 
+    "_", Item))
+df_raw <- read.csv("../data/data.csv", stringsAsFactors = FALSE)
+```
+
+
+### Preprocessing
+
+
+```r
+df_raw <- df_raw %>% mutate(Participant = paste0("S", 1:nrow(df_raw)), Sex = as.factor(Sex))
+
+paste("The initial sample included", report::report_participants(df_raw))
+```
+
+```
+> [1] "The initial sample included 1011 participants (Mean age = 25.56, SD = 7.89, range = [12.96, 73.51]; 55.09% females; Mean education = 3.38, SD = 2.15, range = [-7, 10])"
+```
+
+## Measures Scoring
+
+### Utility Functions
+
+```r
+# Reverse negative items
+reverse <- function(x, mini, maxi) {
+    maxi - x + mini
+}
+
+
+# Descriptive statistics
+descriptive_statistics <- function(df, begins_with) {
+    df %>% select(dplyr::starts_with(begins_with)) %>% report::report() %>% report::table_long() %>% 
+        select(-one_of(c("n_Obs", "Median", "MAD", "n_Missing"))) %>% print()
+    
+    plot(df %>% select(dplyr::starts_with(begins_with)) %>% bayestestR::estimate_density(method = "KernSmooth") %>% 
+        plot() + see::theme_modern())
+}
+```
+
+### Deception and Lying Profile (LIE)
+
+We rescaled the LIE variables, originally scored on a -10 to 10 scale, to -5 to 5, so that the coefficients are more easily interpretable (i.e., refers to a change of 10\% of the scale).
+
+
+```r
+df_raw[stringr::str_detect(names(df_raw), "LIE_")] <- effectsize::change_scale(df_raw[stringr::str_detect(names(df_raw), 
+    "LIE_")], from = c(-10, 10), to = c(-5, 5))
+```
+
+### Psychopathy (TRIMP)
+
+
+```r
+df_raw <- df_raw %>% # Transform to numeric
+mutate_at(vars(starts_with("TRIMP")), function(x) {
+    ifelse(x == "TRUE", 3, ifelse(x == "somewhat true", 2, ifelse(x == "somewhat false", 
+        1, 0)))
+}) %>% # Reverse items
+mutate_at(vars("TRIMP_2", "TRIMP_4", "TRIMP_10", "TRIMP_11", "TRIMP_16", "TRIMP_21", 
+    "TRIMP_25", "TRIMP_30", "TRIMP_33", "TRIMP_35", "TRIMP_39", "TRIMP_41", "TRIMP_44", 
+    "TRIMP_47", "TRIMP_50", "TRIMP_52", "TRIMP_57"), reverse, mini = 0, maxi = 3) %>% 
+    # Compute scores Boldness
+mutate(TRIMP_Boldness = (TRIMP_1 + TRIMP_16 + TRIMP_7 + TRIMP_32 + TRIMP_10 + TRIMP_28 + 
+    TRIMP_13 + TRIMP_41 + TRIMP_19 + TRIMP_38 + TRIMP_57 + TRIMP_4 + TRIMP_47 + TRIMP_22 + 
+    TRIMP_35 + TRIMP_25 + TRIMP_50 + TRIMP_44 + TRIMP_54)/19, TRIMP_Boldness_Optimism = (TRIMP_1 + 
+    TRIMP_16)/2, TRIMP_Boldness_Resilience = (TRIMP_7 + TRIMP_32)/2, TRIMP_Boldness_Courage = (TRIMP_10 + 
+    TRIMP_28)/2, TRIMP_Boldness_Dominance = (TRIMP_13 + TRIMP_41)/2, TRIMP_Boldness_Persuasiveness = (TRIMP_19 + 
+    TRIMP_38 + TRIMP_57)/3, TRIMP_Boldness_Intrepidness = (TRIMP_4 + TRIMP_47)/2, 
+    TRIMP_Boldness_ToleranceForUncertainty = (TRIMP_22 + TRIMP_35)/2, TRIMP_Boldness_SelfConfidence = (TRIMP_25 + 
+        TRIMP_50)/2, TRIMP_Boldness_SocialAssurance = (TRIMP_44 + TRIMP_54)/2) %>% 
+    ## Meanness
+mutate(TRIMP_Meanness = (TRIMP_2 + TRIMP_8 + TRIMP_11 + TRIMP_20 + TRIMP_29 + TRIMP_33 + 
+    TRIMP_36 + TRIMP_48 + TRIMP_52 + TRIMP_55 + TRIMP_6 + TRIMP_45 + TRIMP_14 + TRIMP_17 + 
+    TRIMP_23 + TRIMP_26 + TRIMP_42 + TRIMP_39 + TRIMP_40)/19, TRIMP_Meanness_Empathy = (TRIMP_2 + 
+    TRIMP_8 + TRIMP_11 + TRIMP_20 + TRIMP_29 + TRIMP_33 + TRIMP_36 + TRIMP_48 + TRIMP_52 + 
+    TRIMP_55)/10, TRIMP_Meanness_ExcitementSeeking = (TRIMP_6 + TRIMP_45)/2, TRIMP_Meanness_PhysicalAggression = TRIMP_14, 
+    TRIMP_Meanness_RelationalAggression = (TRIMP_17 + TRIMP_23 + TRIMP_26 + TRIMP_42)/4, 
+    TRIMP_Meanness_Honesty = TRIMP_39, TRIMP_Meanness_DestructiveAggression = TRIMP_40) %>% 
+    ## Disinhibition
+mutate(TRIMP_Disinhibition = (TRIMP_3 + TRIMP_46 + TRIMP_5 + TRIMP_30 + TRIMP_9 + 
+    TRIMP_15 + TRIMP_37 + TRIMP_51 + TRIMP_12 + TRIMP_18 + TRIMP_49 + TRIMP_56 + 
+    TRIMP_21 + TRIMP_24 + TRIMP_43 + TRIMP_53 + TRIMP_58 + TRIMP_27 + TRIMP_31 + 
+    TRIMP_34)/20, TRIMP_Disinhibition_ImpatienceUrgency = (TRIMP_3 + TRIMP_46)/2, 
+    TRIMP_Disinhibition_Dependability = (TRIMP_5 + TRIMP_30)/2, TRIMP_Disinhibition_ProblematicImpulsivity = (TRIMP_9 + 
+        TRIMP_15 + TRIMP_37 + TRIMP_51)/4, TRIMP_Disinhibition_Irresponsibility = (TRIMP_12 + 
+        TRIMP_18 + TRIMP_49 + TRIMP_56)/4, TRIMP_Disinhibition_PlanfulControl = TRIMP_21, 
+    TRIMP_Disinhibition_Theft = (TRIMP_24 + TRIMP_43 + TRIMP_53 + TRIMP_58)/4, TRIMP_Disinhibition_Alienation = TRIMP_27, 
+    TRIMP_Disinhibition_BoredomProneness = TRIMP_31, TRIMP_Disinhibition_Fraud = TRIMP_34) %>% 
+    ## General
+mutate(TRIMP_General = (TRIMP_Boldness * 19 + TRIMP_Meanness * 19 + TRIMP_Disinhibition * 
+    20)/58) %>% # Remove individual questions
+select(-matches("TRIMP_\\d"))
+```
+
+
+### Narcissism (FFNI) 
+
+
+```r
+df_raw <- df_raw %>% # Transform to numeric
+mutate_at(vars(starts_with("FFNI")), function(x) {
+    ifelse(x == "Disagree strongly", 1, ifelse(x == "Disagree a little", 2, ifelse(x == 
+        "Neither agree nor disagree", 3, ifelse(x == "Agree a little", 4, 5))))
+}) %>% # Reverse items
+mutate_at(vars("FFNI_19", "FFNI_27"), reverse, mini = 1, maxi = 5) %>% # Compute scores
+mutate(FFNI_AcclaimSeeking = (FFNI_1 + FFNI_16 + FFNI_31 + FFNI_46), FFNI_Distrust = (FFNI_4 + 
+    FFNI_19 + FFNI_34 + FFNI_49), FFNI_Entitlement = (FFNI_5 + FFNI_20 + FFNI_35 + 
+    FFNI_50), FFNI_Exploitativeness = (FFNI_7 + FFNI_22 + FFNI_37 + FFNI_52), FFNI_Indifference = (FFNI_9 + 
+    FFNI_24 + FFNI_39 + FFNI_54), FFNI_LackOfEmpathy = (FFNI_10 + FFNI_25 + FFNI_40 + 
+    FFNI_55), FFNI_Manipulativeness = (FFNI_11 + FFNI_26 + FFNI_41 + FFNI_56), FFNI_NeedForAdmiration = (FFNI_12 + 
+    FFNI_27 + FFNI_42 + FFNI_57), FFNI_ThrillSeeking = (FFNI_15 + FFNI_30 + FFNI_45 + 
+    FFNI_60), FFNI_General = (FFNI_AcclaimSeeking + FFNI_Entitlement + FFNI_NeedForAdmiration + 
+    FFNI_Manipulativeness + FFNI_LackOfEmpathy + FFNI_Indifference + FFNI_ThrillSeeking + 
+    FFNI_Distrust + FFNI_Exploitativeness)/9) %>% # Remove individual questions
+select(-matches("FFNI_\\d"))
+```
+
+
+
+### Normal Personality (IPIP6)
+
+
+```r
+df_raw <- df_raw %>% # Transform to numeric
+mutate_at(vars(starts_with("IPIP6")), as.numeric) %>% # Reverse items
+mutate_at(vars("IPIP6_6", "IPIP6_7", "IPIP6_8", "IPIP6_9", "IPIP6_11", "IPIP6_12", 
+    "IPIP6_13", "IPIP6_15", "IPIP6_17", "IPIP6_18", "IPIP6_19", "IPIP6_20", "IPIP6_21", 
+    "IPIP6_22", "IPIP6_24"), reverse, mini = 1, maxi = 7) %>% # Compute scores
+mutate(IPIP6_Extraversion = (IPIP6_1 + IPIP6_7 + IPIP6_19 + IPIP6_23)/4, IPIP6_Agreableness = (IPIP6_2 + 
+    IPIP6_8 + IPIP6_14 + IPIP6_20)/4, IPIP6_Conscientiousness = (IPIP6_3 + IPIP6_10 + 
+    IPIP6_11 + IPIP6_22)/4, IPIP6_Neuroticism = (IPIP6_4 + IPIP6_15 + IPIP6_16 + 
+    IPIP6_17)/4, IPIP6_Openeness = (IPIP6_5 + IPIP6_9 + IPIP6_13 + IPIP6_21)/4, IPIP6_HonestyHumility = (IPIP6_6 + 
+    IPIP6_12 + IPIP6_18 + IPIP6_24)/4) %>% # Remove individual questions
+select(-matches("IPIP6_\\d"))
+```
+
+
+### Pathological Personality (PID-5)
+
+
+```r
+df_raw <- df_raw %>% # Transform to numeric
+mutate_at(vars(starts_with("PID5")), function(x) {
+    ifelse(x == "Very false or often false", 0, ifelse(x == "Sometimes or somewhat false", 
+        1, ifelse(x == "Sometimes or somewhat true", 2, 3)))
+}) %>% # Compute scores
+mutate(PID5_NegativeAffect = (PID5_8 + PID5_9 + PID5_10 + PID5_11 + PID5_15)/5, PID5_Detachment = (PID5_4 + 
+    PID5_13 + PID5_14 + PID5_16 + PID5_18)/5, PID5_Antagonism = (PID5_17 + PID5_19 + 
+    PID5_20 + PID5_22 + PID5_25)/5, PID5_Disinhibition = (PID5_1 + PID5_2 + PID5_3 + 
+    PID5_5 + PID5_6)/5, PID5_Psychoticism = (PID5_7 + PID5_12 + PID5_21 + PID5_23 + 
+    PID5_24)/5, PID5_Pathology = (PID5_NegativeAffect + PID5_Detachment + PID5_Antagonism + 
+    PID5_Disinhibition + PID5_Psychoticism)/5) %>% # Remove individual questions
+select(-matches("PID5_\\d"))
+```
+
+
+### Social Desirability (BIDR)
+
+
+```r
+df_raw <- df_raw %>% # Reverse items
+mutate_at(vars("BIDR_1", "BIDR_3", "BIDR_5", "BIDR_8", "BIDR_9", "BIDR_11", "BIDR_12", 
+    "BIDR_13"), reverse, mini = 1, maxi = 7) %>% # Compute scores
+mutate(BIDR_SelfDeceptiveEnhancement = (BIDR_1 + BIDR_2 + BIDR_3 + BIDR_4 + BIDR_5 + 
+    BIDR_6 + BIDR_7 + BIDR_8)/8, BIDR_ImpressionManagement = (BIDR_9 + BIDR_10 + 
+    BIDR_11 + BIDR_12 + BIDR_13 + BIDR_14 + BIDR_15 + BIDR_16)/8, BIDR_General = (BIDR_SelfDeceptiveEnhancement + 
+    BIDR_ImpressionManagement)/2) %>% # Remove individual questions
+select(-matches("BIDR_\\d"))
+```
+ 
+ 
+### Impulsivity (UPPS)
+
+
+```r
+df_raw <- df_raw %>% # Transform to numeric
+mutate_at(vars(starts_with("UPPS")), function(x) {
+    ifelse(x == "Strongly Agree", 1, ifelse(x == "Somewhat agree", 2, ifelse(x == 
+        "Somewhat disagree", 3, 4)))
+}) %>% # Reverse items
+mutate_at(vars("UPPS_3", "UPPS_6", "UPPS_8", "UPPS_9", "UPPS_10", "UPPS_13", "UPPS_14", 
+    "UPPS_15", "UPPS_16", "UPPS_17", "UPPS_18", "UPPS_20"), reverse, mini = 1, maxi = 4) %>% 
+    # Compute scores
+mutate(UPPS_NegativeUrgency = (UPPS_6 + UPPS_8 + UPPS_13 + UPPS_15)/4, UPPS_PositiveUrgency = (UPPS_3 + 
+    UPPS_10 + UPPS_17 + UPPS_20)/4, UPPS_LackOfPerseverance = (UPPS_1 + UPPS_4 + 
+    UPPS_7 + UPPS_11)/4, UPPS_LackOfPremeditation = (UPPS_2 + UPPS_5 + UPPS_12 + 
+    UPPS_19)/4, UPPS_SensationSeeking = (UPPS_9 + UPPS_14 + UPPS_16 + UPPS_18)/4, 
+    UPPS_General = (UPPS_NegativeUrgency + UPPS_PositiveUrgency + UPPS_LackOfPerseverance + 
+        UPPS_LackOfPremeditation + UPPS_SensationSeeking)/5) %>% # Remove individual questions
+select(-matches("UPPS_\\d"))
+```
+
+
+### Emotion Regulation (DERS)
+
+
+```r
+df_raw <- df_raw %>% # Transform to numeric
+mutate_at(vars(starts_with("DERS")), function(x) {
+    ifelse(x == "Almost never (0 - 10%)", 1, ifelse(x == "Sometimes (11 - 35%)", 
+        2, ifelse(x == "About half the time (36 - 65%)", 3, ifelse(x == "Most of the time (66 - 90%)", 
+            4, 5))))
+}) %>% # Reverse items
+mutate_at(vars("DERS_1", "DERS_4", "DERS_6"), reverse, mini = 1, maxi = 5) %>% # Compute scores
+mutate(DERS_Awareness = DERS_1 + DERS_4 + DERS_6, DERS_Clarity = DERS_2 + DERS_3 + 
+    DERS_5, DERS_Goals = DERS_8 + DERS_12 + DERS_15, DERS_Impulse = DERS_9 + DERS_16 + 
+    DERS_18, DERS_NonAcceptance = DERS_7 + DERS_13 + DERS_14, DERS_Strategies = DERS_10 + 
+    DERS_11 + DERS_17, DERS_General = (DERS_Awareness + DERS_Clarity + DERS_Goals + 
+    DERS_Impulse + DERS_NonAcceptance + DERS_Strategies)/6) %>% # Remove individual questions
+select(-matches("DERS_\\d"))
+```
+
+### Light Triad (LTS)
+
+
+```r
+df_raw <- df_raw %>% # Transform to numeric
+mutate_at(vars(starts_with("LTS")), function(x) {
+    ifelse(x == "Agree strongly", 1, ifelse(x == "Agree", 2, ifelse(x == "Neutral", 
+        3, ifelse(x == "Disagree", 4, 5))))
+}) %>% # Compute scores
+mutate(LTS_FaithInHumanity = (LTS_1 + LTS_4 + LTS_7 + LTS_10)/4, LTS_Humanism = (LTS_2 + 
+    LTS_5 + LTS_8 + LTS_11)/4, LTS_Kantianism = (LTS_3 + LTS_6 + LTS_9 + LTS_12)/4, 
+    LTS_General = (LTS_FaithInHumanity + LTS_Humanism + LTS_Kantianism)/3) %>% # Remove individual questions
+select(-matches("LTS_\\d"))
+```
+
+
+### Introception (MAIA2)
+
+
+```r
+df_raw <- df_raw %>% # Compute scores
+mutate(MAIA2_Noticing = (MAIA2_1 + MAIA2_2 + MAIA2_3 + MAIA2_4)/4, MAIA2_BodyListening = (MAIA2_5 + 
+    MAIA2_6 + MAIA2_7 + MAIA2_8 + MAIA2_9 + MAIA2_10 + MAIA2_11)/7) %>% # Remove individual questions
+select(-matches("MAIA2_\\d"))
+```
+
+
+## Data Exclusion
+
+### Incomplete Data
+
+
+```r
+df_incomplete <- df_raw %>% filter_at(vars(matches("IPIP6|PID5|BIDR|MAIA|DERS|UPPS|FFNI|LTS|TRIMP|LIE_")), 
+    complete.cases) %>% filter(Sex %in% c("Female", "Male")) %>% droplevels()
+
+paste("We excluded", nrow(df_raw) - nrow(df_incomplete), "participants with missing data.")
+```
+
+```
+> [1] "We excluded 5 participants with missing data."
+```
+
+### Time to complete
+
+```r
+df_time <- df_incomplete %>% 
+  mutate(Duration = Duration / 60) %>%  # Express in minutes
+  filter(Duration < 120)
+
+# Compute highest density intervals
+ci <- bayestestR::eti(df_time$Duration, ci = c(0.8, 0.9, 0.95, 0.99))
+cat(paste0("Duration Intervals:\n", paste0("  - ", insight::format_ci(ci$CI_low, ci$CI_high, ci$CI / 100), collapse = "\n")))
+```
+
+```
+> Duration Intervals:
+>   - 80% CI [13.09, 42.75]
+>   - 90% CI [10.95, 61.94]
+>   - 95% CI [9.42, 76.05]
+>   - 99% CI [7.52, 96.32]
+```
+
+```r
+upper_limit <- ci[ci$CI == 90, "CI_high"]
+lower_limit <- ci[ci$CI == 90, "CI_low"]
+
+# Visualisation
+ci %>% 
+  plot(show_zero = FALSE, show_title = FALSE) +
+  geom_vline(xintercept = c(upper_limit, lower_limit), color="red", linetype="dotted") +
+  theme_modern() +
+  scale_fill_viridis_d() +
+  ylab("Distribution") +
+  xlab("Time to complete (in minutes)") 
+```
+
+<img src="figures/unnamed-chunk-16-1.png" style="display: block; margin: auto;" />
+
+```r
+df_time <- df_time %>% 
+  filter(Duration < upper_limit,
+         Duration > lower_limit)
+
+paste("We excluded", nrow(df_incomplete) - nrow(df_time), "participants with a completion time outside the 90% percentile (>", insight::format_value(lower_limit), "min and <", insight::format_value(upper_limit), "min).")
+```
+
+```
+> [1] "We excluded 141 participants with a completion time outside the 90% percentile (> 10.95 min and < 61.94 min)."
+```
+
+### Multivariate outliers
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
