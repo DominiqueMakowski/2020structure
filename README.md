@@ -1,6 +1,6 @@
 # The Structure of Deception: Validation of the Lying Profile Questionnaire
 
-Makowski, D., Pham, T., Lau, Z. J., Leow, D., Raine, A. & Chen, S. H. *(under review)*. *The Structure of Deception: Validation of the Lying Profile Questionnaire*.
+Makowski, D., Pham, T., Lau, Z. J., Raine, A. & Chen, S. H. *(under review)*. *The Structure of Deception: Validation of the Lying Profile Questionnaire*.
 
 - [**preprint**](https://psyarxiv.com/t7s32/)
 - [**data**](https://raw.githubusercontent.com/DominiqueMakowski/2020structure/master/data/data.csv)
