@@ -2,15 +2,6 @@
 title: "**The Structure of Deception: Validation of the Lying Profile Questionnaire**"
 subtitle: 'Supplementary Materials'
 output:
-  rmarkdown::html_vignette:
-    toc: true
-    toc_depth: 4
-  word_document:
-    toc: false
-    toc_depth: 3
-    df_print: "kable"
-    highlight: "pygments"
-    reference_docx: utils/Template_Supplementary_Materials.docx
   html_document:
     theme: journal
     footer: "LIE questionnaire validation"
@@ -20,6 +11,16 @@ output:
     toc_float: yes
     df_print: "kable"
     code_folding: hide
+    keep_md: yes
+  word_document:
+    toc: false
+    toc_depth: 3
+    df_print: "kable"
+    highlight: "pygments"
+    reference_docx: utils/Template_Supplementary_Materials.docx
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 4
 tags: [r, lie, questionnaire, deception]
 editor_options: 
   chunk_output_type: console
@@ -417,8 +418,8 @@ ci %>%
   xlab("Time to complete (in minutes)") 
 
 df_time <- df_time %>% 
-  filter(Duration < upper_limit,
-         Duration > lower_limit)
+  filter(Duration <= upper_limit,
+         Duration >= lower_limit)
 
 paste("We excluded", nrow(df_incomplete) - nrow(df_time), "participants with a completion time outside the 90% percentile (>", insight::format_value(lower_limit), "min and <", insight::format_value(upper_limit), "min).")
 ```
@@ -426,31 +427,31 @@ paste("We excluded", nrow(df_incomplete) - nrow(df_time), "participants with a c
 ### Multivariate outliers
 
 ```{r warning=FALSE, message=FALSE}
-methods <- c("zscore", "iqr", "mahalanobis", "robust", "mcd", "ics", "iforest", "lof")
- 
 outliers <- df_time %>%
   select(matches("LIE_|BIDR|IPIP6|PID5|TRIMP|FFNI|UPPS|DERS|LTS|MAIA"), -matches("_Profile|_General|_Pathology|Disinhibition_|Meanness_|Boldness_")) %>%
   select(matches("LIE_")) %>%
   effectsize::standardize() %>%
-  performance::check_outliers(method = methods)
+  performance::check_outliers(method = "all")
 
-Visualise
+n_methods <- length(attributes(outliers)$method)
+
+# Visualise
 as.data.frame(outliers) %>%
-  mutate(Outlier = as.factor(paste0(round(Outlier*8), "/", length(methods)))) %>%
+  mutate(Outlier = as.factor(paste0(round(Outlier*n_methods), "/", n_methods))) %>%
   ggplot(aes(x = Outlier, fill = Outlier)) +
   geom_bar() +
   geom_vline(aes(xintercept = 6.5), color = "red", linetype = "dotted") +
   theme_modern() +
   see::scale_fill_metro_d(guide = FALSE) +
-  xlab("Proportion of methods aggreeing on an outlier") +
+  xlab("Number of methods detecting the same outliers") +
   ylab("Number of participants")
 
 save(outliers, file="outliers.Rdata")
 load("outliers.Rdata")
 
-df <- df_time[-which(as.numeric(outliers) >= 6/length(methods)), ]
+df <- df_time[-which(as.numeric(outliers) >= 7/ n_methods), ]
 
-paste("Based on a composite outlier score (see the 'check_outliers' function in the 'performance' R package; Lüdecke et al., 2019) obtained via the joint application of multiple outliers detection algorithms (Z-scores, Iglewicz, 1993; Interquartile range (IQR); Mahalanobis distance, Cabana, 2019; Robust Mahalanobis distance, Gnanadesikan & Kettenring, 1972; Minimum Covariance Determinant, Leys et al., 2018; Invariant Coordinate Selection, Archimbaud et al., 2018; Isolation Forest, Liu et al. 2008; and Local Outlier Factor, Breunig et al., 2000), we excluded", nrow(df_time) - nrow(df), "participants that were classified as outliers by at least 6/8 of the methods used.")
+paste("Based on a composite outlier score (see the 'check_outliers' function in the 'performance' R package; Lüdecke et al., 2019) obtained via the joint application of multiple outliers detection algorithms (Z-scores, Iglewicz, 1993; Interquartile range (IQR); Mahalanobis distance, Cabana, 2019; Robust Mahalanobis distance, Gnanadesikan & Kettenring, 1972; Minimum Covariance Determinant, Leys et al., 2018; Invariant Coordinate Selection, Archimbaud et al., 2018; Isolation Forest, Liu et al. 2008; and Local Outlier Factor, Breunig et al., 2000), we excluded", nrow(df_time) - nrow(df), "participants that were classified as outliers by at least 8/10 of the methods used.")
 ```
 
 
