@@ -489,13 +489,13 @@ as.data.frame(outliers) %>%
 <img src="figures/unnamed-chunk-17-1.png" style="display: block; margin: auto;" />
 
 ```r
-df <- df_time[-which(as.numeric(outliers) >= 7/ n_methods), ]
+df <- df_time[-which(as.numeric(outliers) >= 6/ n_methods), ]
 
 paste("Based on a composite outlier score (see the 'check_outliers' function in the 'performance' R package; Lüdecke et al., 2019) obtained via the joint application of multiple outliers detection algorithms (Z-scores, Iglewicz, 1993; Interquartile range (IQR); Mahalanobis distance, Cabana, 2019; Robust Mahalanobis distance, Gnanadesikan & Kettenring, 1972; Minimum Covariance Determinant, Leys et al., 2018; Invariant Coordinate Selection, Archimbaud et al., 2018; Isolation Forest, Liu et al. 2008; and Local Outlier Factor, Breunig et al., 2000), we excluded", nrow(df_time) - nrow(df), "participants that were classified as outliers by at least 8/10 of the methods used.")
 ```
 
 ```
-> [1] "Based on a composite outlier score (see the 'check_outliers' function in the 'performance' R package; Lüdecke et al., 2019) obtained via the joint application of multiple outliers detection algorithms (Z-scores, Iglewicz, 1993; Interquartile range (IQR); Mahalanobis distance, Cabana, 2019; Robust Mahalanobis distance, Gnanadesikan & Kettenring, 1972; Minimum Covariance Determinant, Leys et al., 2018; Invariant Coordinate Selection, Archimbaud et al., 2018; Isolation Forest, Liu et al. 2008; and Local Outlier Factor, Breunig et al., 2000), we excluded 70 participants that were classified as outliers by at least 8/10 of the methods used."
+> [1] "Based on a composite outlier score (see the 'check_outliers' function in the 'performance' R package; Lüdecke et al., 2019) obtained via the joint application of multiple outliers detection algorithms (Z-scores, Iglewicz, 1993; Interquartile range (IQR); Mahalanobis distance, Cabana, 2019; Robust Mahalanobis distance, Gnanadesikan & Kettenring, 1972; Minimum Covariance Determinant, Leys et al., 2018; Invariant Coordinate Selection, Archimbaud et al., 2018; Isolation Forest, Liu et al. 2008; and Local Outlier Factor, Breunig et al., 2000), we excluded 149 participants that were classified as outliers by at least 8/10 of the methods used."
 ```
 
 
@@ -507,7 +507,7 @@ paste("The final sample included", report_participants(df))
 ```
 
 ```
-> [1] "The final sample included 795 participants (Mean age = 25.40, SD = 7.66, range = [16.55, 73.51]; 56.35% females; Mean education = 3.50, SD = 1.99, range = [-7, 10])"
+> [1] "The final sample included 716 participants (Mean age = 25.02, SD = 7.07, range = [16.55, 73.51]; 55.87% females; Mean education = 3.54, SD = 1.95, range = [-7, 10])"
 ```
 
 ```r
@@ -524,18 +524,18 @@ df %>%
 ```
 
 ```
-> The data contains 795 observations of the following variables:
->   - System_Device: 3 entries: Phone, 74.21%; Computer, 25.03%; Tablet, 0.75%(0.00% missing)
->   - System_Screen: Mean = 692.42, SD = 266.38, Median = 552.00, MAD = 76.91, range: [426.33, 2225.67], Skewness = 1.50, Kurtosis = 1.57, 0% missing
->   - Duration: Mean = 23.81, SD = 9.60, Median = 21.22, MAD = 7.09, range: [10.97, 61.70], Skewness = 1.43, Kurtosis = 2.11, 0% missing
->   - Education_Student: 2 levels: No (n = 243, 30.57%); Yes (n = 551, 69.31%) and missing (n = 1, 0.13%)
->   - Education_Type: 17 entries: Business and Accountancy, 22.26%; Engineering, 19.12%; Social Sciences (Psychology, Sociology, etc.), 15.47%; Sciences, 10.69%; Others, 7.42%; Computing, 5.91%; Humanities (Languages, History, etc.), 5.03%; Communication Studies, 4.03%; Medicine, 3.02%; Art and Design, 1.89% and 7 others(0.00% missing)
->   - Ethnicity: 22 entries: Chinese, 87.30%; Malay, 4.28%; Indian, 3.90%; , 1.76%; Vietnamese, 0.38%; Eurasian, 0.25%; Korean, 0.25%; African, 0.13%; Arabic, 0.13%; Boyanese , 0.13% and 12 others(0.00% missing)
->   - Religion_Type: 6 entries: Buddhism, 31.95%; No religion, 26.16%; Christianity, 25.03%; Taoism, 5.91%; Islam, 5.03%; Hinduism, 2.77%(3.14% missing)
->   - Religion_Religiosity: Mean = 4.16, SD = 3.02, Median = , MAD = 4.45, range: [0, 10], Skewness = 0.08, Kurtosis = -1.28, 2.77% missing
->   - Religion_Engagement: Mean = 3.74, SD = 3.11, Median = , MAD = 4.45, range: [0, 10], Skewness = 0.34, Kurtosis = -1.16, 3.40% missing
->   - Income: Mean = 2825.20, SD = 4302.03, Median = , MAD = 1482.60, range: [0, 60000], Skewness = 8.41, Kurtosis = 96.91, 13.33% missing
->   - Singapore_Duration: Mean = 0.88, SD = 0.25, Median = , MAD = 0.02, range: [0, 1.00], Skewness = -2.50, Kurtosis = 4.81, 23.77% missing
+> The data contains 716 observations of the following variables:
+>   - System_Device: 3 entries: Phone, 74.02%; Computer, 25.14%; Tablet, 0.84%(0.00% missing)
+>   - System_Screen: Mean = 694.44, SD = 267.84, Median = 552.00, MAD = 76.91, range: [426.33, 2225.67], Skewness = 1.50, Kurtosis = 1.63, 0% missing
+>   - Duration: Mean = 23.75, SD = 9.53, Median = 21.21, MAD = 7.08, range: [10.97, 61.70], Skewness = 1.42, Kurtosis = 2.06, 0% missing
+>   - Education_Student: 2 levels: No (n = 212, 29.61%); Yes (n = 503, 70.25%) and missing (n = 1, 0.14%)
+>   - Education_Type: 17 entries: Business and Accountancy, 21.51%; Engineering, 19.13%; Social Sciences (Psychology, Sociology, etc.), 16.20%; Sciences, 10.89%; Others, 7.26%; Computing, 5.87%; Humanities (Languages, History, etc.), 5.17%; Communication Studies, 3.77%; Medicine, 2.93%; Art and Design, 1.96% and 7 others(0.00% missing)
+>   - Ethnicity: 21 entries: Chinese, 87.85%; Malay, 4.05%; Indian, 3.49%; , 1.82%; Vietnamese, 0.42%; Eurasian, 0.28%; African, 0.14%; Arabic, 0.14%; Boyanese , 0.14%; Caucasian, 0.14% and 11 others(0.00% missing)
+>   - Religion_Type: 6 entries: Buddhism, 32.12%; No religion, 26.12%; Christianity, 25.00%; Taoism, 6.28%; Islam, 4.75%; Hinduism, 2.51%(3.21% missing)
+>   - Religion_Religiosity: Mean = 4.14, SD = 2.97, Median = , MAD = 4.45, range: [0, 10], Skewness = 0.09, Kurtosis = -1.26, 2.93% missing
+>   - Religion_Engagement: Mean = 3.73, SD = 3.07, Median = , MAD = 4.45, range: [0, 10], Skewness = 0.33, Kurtosis = -1.15, 3.63% missing
+>   - Income: Mean = 2815.77, SD = 4352.05, Median = , MAD = 1482.60, range: [0, 60000], Skewness = 8.67, Kurtosis = 101.04, 13.83% missing
+>   - Singapore_Duration: Mean = 0.89, SD = 0.24, Median = , MAD = 0.02, range: [0, 1.00], Skewness = -2.55, Kurtosis = 5.09, 24.44% missing
 ```
 
 
@@ -562,7 +562,7 @@ report_participants(df, group = c("Sex", "Education_Student"))
 ```
 
 ```
-> [1] "For the 'Sex - Female and Education_Student - No' group: 145 participants (Mean age = 31.14, SD = 11.42, range = [21.73, 73.51]; 100.00% females; Mean education = 2.85, SD = 2.74, range = [-7, 6]), for the 'Sex - Male and Education_Student - No' group: 98 participants (Mean age = 30.80, SD = 11.55, range = [19.73, 66.19]; 0.00% females; Mean education = 2.18, SD = 2.76, range = [-6, 10]), for the 'Sex - Female and Education_Student - Yes' group: 303 participants (Mean age = 22.64, SD = 3.05, range = [16.55, 56.25]; 100.00% females; Mean education = 3.94, SD = 1.48, range = [-2, 10]) and for the 'Sex - Male and Education_Student - Yes' group: 248 participants (Mean age = 23.29, SD = 2.05, range = [19.02, 39.79]; 0.00% females; Mean education = 3.88, SD = 1.18, range = [-2, 10])"
+> [1] "For the 'Sex - Female and Education_Student - No' group: 125 participants (Mean age = 30.43, SD = 10.99, range = [21.73, 73.51]; 100.00% females; Mean education = 2.84, SD = 2.74, range = [-7, 6]), for the 'Sex - Male and Education_Student - No' group: 87 participants (Mean age = 30.18, SD = 10.85, range = [19.73, 62.66]; 0.00% females; Mean education = 2.25, SD = 2.66, range = [-6, 10]), for the 'Sex - Female and Education_Student - Yes' group: 275 participants (Mean age = 22.37, SD = 1.95, range = [16.55, 40.70]; 100.00% females; Mean education = 3.96, SD = 1.46, range = [-2, 10]) and for the 'Sex - Male and Education_Student - Yes' group: 228 participants (Mean age = 23.30, SD = 2.10, range = [19.02, 39.79]; 0.00% females; Mean education = 3.90, SD = 1.18, range = [-2, 10])"
 ```
 
 
@@ -708,52 +708,52 @@ descriptive_statistics(df, "LIE_")
 ```
 
 ```
-> Variable |  Mean |   SD | Min | Max | Skewness | Kurtosis
-> ---------------------------------------------------------
-> LIE_1    | -1.70 | 2.52 |  -5 |   5 |     0.57 |    -0.48
-> LIE_2    | -1.34 | 2.64 |  -5 |   5 |     0.41 |    -0.76
-> LIE_3    | -2.47 | 2.67 |  -5 |   5 |     1.06 |     0.26
-> LIE_4    | -1.54 | 2.52 |  -5 |   5 |     0.43 |    -0.67
-> LIE_5    | -1.79 | 2.37 |  -5 |   5 |     0.57 |    -0.39
-> LIE_6    | -0.95 | 2.65 |  -5 |   5 |     0.16 |    -1.01
-> LIE_7    | -0.74 | 2.78 |  -5 |   5 |     0.19 |    -0.96
-> LIE_8    | -1.31 | 2.39 |  -5 |   5 |     0.45 |    -0.42
-> LIE_9    | -0.13 | 2.80 |  -5 |   5 |    -0.14 |    -1.00
-> LIE_10   |  0.21 | 2.77 |  -5 |   5 |    -0.27 |    -0.88
-> LIE_11   | -0.27 | 2.69 |  -5 |   5 |    -0.04 |    -0.92
-> LIE_12   |  0.84 | 2.69 |  -5 |   5 |    -0.57 |    -0.52
-> LIE_13   | -0.50 | 2.63 |  -5 |   5 |     0.27 |    -0.71
-> LIE_14   |  0.41 | 2.52 |  -5 |   5 |    -0.39 |    -0.62
-> LIE_15   |  0.17 | 2.65 |  -5 |   5 |    -0.16 |    -0.84
-> LIE_16   | -0.98 | 2.45 |  -5 |   5 |     0.39 |    -0.43
-> LIE_17   |  0.44 | 2.79 |  -5 |   5 |    -0.08 |    -0.96
-> LIE_18   |  0.05 | 2.75 |  -5 |   5 |    -0.20 |    -0.95
-> LIE_19   |  0.97 | 2.72 |  -5 |   5 |    -0.33 |    -0.87
-> LIE_20   | -0.17 | 2.70 |  -5 |   5 |    -0.06 |    -0.92
-> LIE_21   | -0.97 | 2.81 |  -5 |   5 |     0.36 |    -0.84
-> LIE_22   | -2.27 | 2.41 |  -5 |   5 |     0.73 |    -0.31
-> LIE_23   | -1.87 | 2.40 |  -5 |   5 |     0.60 |    -0.42
-> LIE_24   |  1.29 | 2.38 |  -5 |   5 |    -0.37 |    -0.51
-> LIE_25   |  1.71 | 2.46 |  -5 |   5 |    -0.63 |    -0.23
-> LIE_26   | -2.62 | 2.24 |  -5 |   5 |     0.90 |     0.14
-> LIE_27   |  1.10 | 2.66 |  -5 |   5 |    -0.40 |    -0.72
-> LIE_28   | -0.24 | 2.64 |  -5 |   5 |    -0.07 |    -0.78
-> LIE_29   | -0.86 | 2.81 |  -5 |   5 |     0.30 |    -0.91
-> LIE_30   |  0.47 | 2.77 |  -5 |   5 |    -0.34 |    -0.84
-> LIE_31   | -0.34 | 2.71 |  -5 |   5 |     0.01 |    -0.94
-> LIE_32   |  0.61 | 2.72 |  -5 |   5 |    -0.37 |    -0.75
-> LIE_33   |  1.90 | 2.23 |  -5 |   5 |    -1.05 |     1.29
-> LIE_34   |  2.56 | 2.11 |  -5 |   5 |    -0.88 |     0.66
-> LIE_35   |  1.71 | 2.38 |  -5 |   5 |    -0.61 |    -0.14
-> LIE_36   |  0.93 | 2.51 |  -5 |   5 |    -0.26 |    -0.67
-> LIE_37   |  0.55 | 2.80 |  -5 |   5 |    -0.01 |    -1.00
-> LIE_38   |  1.79 | 2.58 |  -5 |   5 |    -0.55 |    -0.63
-> LIE_39   |  1.80 | 2.47 |  -5 |   5 |    -0.88 |     0.33
-> LIE_40   |  1.81 | 2.46 |  -5 |   5 |    -0.73 |     0.02
-> LIE_41   |  0.89 | 2.72 |  -5 |   5 |    -0.22 |    -0.80
-> LIE_42   |  1.91 | 2.25 |  -5 |   5 |    -0.77 |     0.57
-> LIE_43   |  1.84 | 2.31 |  -5 |   5 |    -0.98 |     0.95
-> LIE_44   |  2.03 | 2.49 |  -5 |   5 |    -0.72 |    -0.07
+> Variable |  Mean |   SD | Min |  Max | Skewness | Kurtosis
+> ----------------------------------------------------------
+> LIE_1    | -1.70 | 2.39 |  -5 | 5.00 |     0.47 |    -0.56
+> LIE_2    | -1.32 | 2.52 |  -5 | 5.00 |     0.34 |    -0.79
+> LIE_3    | -2.49 | 2.56 |  -5 | 5.00 |     1.03 |     0.29
+> LIE_4    | -1.56 | 2.41 |  -5 | 5.00 |     0.37 |    -0.69
+> LIE_5    | -1.80 | 2.26 |  -5 | 5.00 |     0.49 |    -0.47
+> LIE_6    | -0.98 | 2.55 |  -5 | 5.00 |     0.14 |    -0.96
+> LIE_7    | -0.84 | 2.62 |  -5 | 5.00 |     0.16 |    -0.94
+> LIE_8    | -1.41 | 2.22 |  -5 | 4.25 |     0.31 |    -0.62
+> LIE_9    | -0.13 | 2.71 |  -5 | 5.00 |    -0.15 |    -0.94
+> LIE_10   |  0.20 | 2.66 |  -5 | 5.00 |    -0.30 |    -0.78
+> LIE_11   | -0.29 | 2.59 |  -5 | 5.00 |    -0.07 |    -0.85
+> LIE_12   |  0.79 | 2.63 |  -5 | 5.00 |    -0.56 |    -0.48
+> LIE_13   | -0.49 | 2.51 |  -5 | 5.00 |     0.27 |    -0.63
+> LIE_14   |  0.46 | 2.40 |  -5 | 5.00 |    -0.41 |    -0.51
+> LIE_15   |  0.21 | 2.56 |  -5 | 5.00 |    -0.21 |    -0.75
+> LIE_16   | -0.99 | 2.31 |  -5 | 5.00 |     0.38 |    -0.31
+> LIE_17   |  0.40 | 2.65 |  -5 | 5.00 |    -0.03 |    -0.89
+> LIE_18   |  0.04 | 2.64 |  -5 | 5.00 |    -0.25 |    -0.84
+> LIE_19   |  0.94 | 2.60 |  -5 | 5.00 |    -0.29 |    -0.85
+> LIE_20   | -0.18 | 2.56 |  -5 | 5.00 |    -0.09 |    -0.83
+> LIE_21   | -1.03 | 2.69 |  -5 | 5.00 |     0.35 |    -0.79
+> LIE_22   | -2.20 | 2.32 |  -5 | 5.00 |     0.62 |    -0.50
+> LIE_23   | -1.83 | 2.28 |  -5 | 5.00 |     0.52 |    -0.48
+> LIE_24   |  1.27 | 2.23 |  -5 | 5.00 |    -0.32 |    -0.45
+> LIE_25   |  1.74 | 2.33 |  -5 | 5.00 |    -0.58 |    -0.19
+> LIE_26   | -2.59 | 2.14 |  -5 | 5.00 |     0.80 |    -0.05
+> LIE_27   |  1.13 | 2.53 |  -5 | 5.00 |    -0.38 |    -0.66
+> LIE_28   | -0.21 | 2.53 |  -5 | 5.00 |    -0.09 |    -0.68
+> LIE_29   | -0.91 | 2.69 |  -5 | 5.00 |     0.28 |    -0.83
+> LIE_30   |  0.48 | 2.65 |  -5 | 5.00 |    -0.38 |    -0.74
+> LIE_31   | -0.42 | 2.57 |  -5 | 5.00 |    -0.02 |    -0.89
+> LIE_32   |  0.55 | 2.63 |  -5 | 5.00 |    -0.36 |    -0.70
+> LIE_33   |  1.90 | 2.09 |  -5 | 5.00 |    -1.01 |     1.45
+> LIE_34   |  2.53 | 1.99 |  -5 | 5.00 |    -0.72 |     0.40
+> LIE_35   |  1.71 | 2.22 |  -5 | 5.00 |    -0.52 |    -0.20
+> LIE_36   |  0.90 | 2.37 |  -5 | 5.00 |    -0.20 |    -0.66
+> LIE_37   |  0.55 | 2.68 |  -5 | 5.00 |     0.05 |    -0.96
+> LIE_38   |  1.81 | 2.46 |  -5 | 5.00 |    -0.50 |    -0.66
+> LIE_39   |  1.74 | 2.39 |  -5 | 5.00 |    -0.87 |     0.39
+> LIE_40   |  1.78 | 2.34 |  -5 | 5.00 |    -0.68 |     0.04
+> LIE_41   |  0.88 | 2.63 |  -5 | 5.00 |    -0.16 |    -0.79
+> LIE_42   |  1.88 | 2.16 |  -5 | 5.00 |    -0.77 |     0.82
+> LIE_43   |  1.85 | 2.19 |  -5 | 5.00 |    -0.96 |     1.12
+> LIE_44   |  1.99 | 2.38 |  -5 | 5.00 |    -0.65 |    -0.13
 ```
 
 <img src="figures/unnamed-chunk-29-1.png" style="display: block; margin: auto;" />
@@ -772,34 +772,34 @@ df %>%
 ```
 > Variable                                   | Mean |   SD |  Min |  Max | Skewness | Kurtosis
 > --------------------------------------------------------------------------------------------
-> TRIMP_General                              | 1.08 | 0.28 | 0.34 | 2.09 |     0.34 |    -0.14
-> TRIMP_Boldness                             | 1.43 | 0.39 | 0.11 | 2.47 |    -0.18 |     0.18
-> TRIMP_Boldness_Optimism                    | 1.72 | 0.58 | 0.00 | 3.00 |    -0.31 |     0.16
-> TRIMP_Boldness_Resilience                  | 1.53 | 0.66 | 0.00 | 3.00 |    -0.13 |    -0.32
-> TRIMP_Boldness_Courage                     | 1.36 | 0.68 | 0.00 | 3.00 |     0.11 |    -0.10
-> TRIMP_Boldness_Dominance                   | 1.40 | 0.72 | 0.00 | 3.00 |    -0.03 |    -0.36
-> TRIMP_Boldness_Persuasiveness              | 1.54 | 0.62 | 0.00 | 3.00 |    -0.17 |    -0.18
-> TRIMP_Boldness_Intrepidness                | 1.06 | 0.75 | 0.00 | 3.00 |     0.36 |    -0.54
-> TRIMP_Boldness_ToleranceForUncertainty     | 1.31 | 0.61 | 0.00 | 3.00 |     0.09 |     0.26
-> TRIMP_Boldness_SelfConfidence              | 1.58 | 0.68 | 0.00 | 3.00 |     0.07 |    -0.39
-> TRIMP_Boldness_SocialAssurance             | 1.31 | 0.67 | 0.00 | 3.00 |     0.09 |    -0.16
-> TRIMP_Meanness                             | 0.88 | 0.42 | 0.00 | 2.63 |     0.39 |    -0.03
-> TRIMP_Meanness_Empathy                     | 0.80 | 0.47 | 0.00 | 2.40 |     0.36 |    -0.36
-> TRIMP_Meanness_ExcitementSeeking           | 1.31 | 0.81 | 0.00 | 3.00 |     0.04 |    -0.72
-> TRIMP_Meanness_PhysicalAggression          | 0.88 | 0.94 | 0.00 | 3.00 |     0.64 |    -0.75
-> TRIMP_Meanness_RelationalAggression        | 1.03 | 0.64 | 0.00 | 3.00 |     0.32 |    -0.43
-> TRIMP_Meanness_Honesty                     | 0.81 | 0.72 | 0.00 | 3.00 |     0.69 |     0.42
-> TRIMP_Meanness_DestructiveAggression       | 0.36 | 0.66 | 0.00 | 3.00 |     1.78 |     2.38
-> TRIMP_Disinhibition                        | 0.94 | 0.41 | 0.05 | 2.55 |     0.51 |     0.07
-> TRIMP_Disinhibition_ImpatienceUrgency      | 1.76 | 0.60 | 0.00 | 3.00 |    -0.22 |     0.03
-> TRIMP_Disinhibition_Dependability          | 0.93 | 0.69 | 0.00 | 3.00 |     0.35 |    -0.36
-> TRIMP_Disinhibition_ProblematicImpulsivity | 1.13 | 0.65 | 0.00 | 3.00 |     0.14 |    -0.50
-> TRIMP_Disinhibition_Irresponsibility       | 0.65 | 0.61 | 0.00 | 2.75 |     0.83 |    -0.01
-> TRIMP_Disinhibition_PlanfulControl         | 1.10 | 0.68 | 0.00 | 3.00 |     0.51 |     0.67
-> TRIMP_Disinhibition_Theft                  | 0.39 | 0.53 | 0.00 | 2.50 |     1.47 |     1.63
-> TRIMP_Disinhibition_Alienation             | 1.46 | 0.89 | 0.00 | 3.00 |     0.02 |    -0.74
-> TRIMP_Disinhibition_BoredomProneness       | 1.71 | 0.82 | 0.00 | 3.00 |    -0.24 |    -0.43
-> TRIMP_Disinhibition_Fraud                  | 0.42 | 0.72 | 0.00 | 3.00 |     1.69 |     2.10
+> TRIMP_General                              | 1.08 | 0.28 | 0.34 | 2.09 |     0.33 |    -0.02
+> TRIMP_Boldness                             | 1.42 | 0.39 | 0.11 | 2.47 |    -0.19 |     0.22
+> TRIMP_Boldness_Optimism                    | 1.71 | 0.57 | 0.00 | 3.00 |    -0.36 |     0.26
+> TRIMP_Boldness_Resilience                  | 1.52 | 0.65 | 0.00 | 3.00 |    -0.12 |    -0.28
+> TRIMP_Boldness_Courage                     | 1.34 | 0.68 | 0.00 | 3.00 |     0.07 |    -0.15
+> TRIMP_Boldness_Dominance                   | 1.39 | 0.72 | 0.00 | 3.00 |    -0.02 |    -0.37
+> TRIMP_Boldness_Persuasiveness              | 1.53 | 0.62 | 0.00 | 3.00 |    -0.18 |    -0.19
+> TRIMP_Boldness_Intrepidness                | 1.06 | 0.74 | 0.00 | 3.00 |     0.34 |    -0.59
+> TRIMP_Boldness_ToleranceForUncertainty     | 1.31 | 0.61 | 0.00 | 3.00 |     0.06 |     0.20
+> TRIMP_Boldness_SelfConfidence              | 1.56 | 0.67 | 0.00 | 3.00 |     0.09 |    -0.32
+> TRIMP_Boldness_SocialAssurance             | 1.30 | 0.67 | 0.00 | 3.00 |     0.07 |    -0.16
+> TRIMP_Meanness                             | 0.88 | 0.41 | 0.00 | 2.63 |     0.37 |     0.04
+> TRIMP_Meanness_Empathy                     | 0.80 | 0.46 | 0.00 | 2.40 |     0.32 |    -0.41
+> TRIMP_Meanness_ExcitementSeeking           | 1.29 | 0.80 | 0.00 | 3.00 |     0.02 |    -0.69
+> TRIMP_Meanness_PhysicalAggression          | 0.87 | 0.92 | 0.00 | 3.00 |     0.64 |    -0.73
+> TRIMP_Meanness_RelationalAggression        | 1.03 | 0.63 | 0.00 | 3.00 |     0.28 |    -0.49
+> TRIMP_Meanness_Honesty                     | 0.82 | 0.71 | 0.00 | 3.00 |     0.65 |     0.38
+> TRIMP_Meanness_DestructiveAggression       | 0.35 | 0.64 | 0.00 | 3.00 |     1.79 |     2.44
+> TRIMP_Disinhibition                        | 0.94 | 0.41 | 0.05 | 2.55 |     0.55 |     0.19
+> TRIMP_Disinhibition_ImpatienceUrgency      | 1.75 | 0.59 | 0.00 | 3.00 |    -0.27 |     0.10
+> TRIMP_Disinhibition_Dependability          | 0.93 | 0.67 | 0.00 | 3.00 |     0.35 |    -0.26
+> TRIMP_Disinhibition_ProblematicImpulsivity | 1.12 | 0.64 | 0.00 | 3.00 |     0.15 |    -0.48
+> TRIMP_Disinhibition_Irresponsibility       | 0.65 | 0.61 | 0.00 | 2.75 |     0.84 |     0.00
+> TRIMP_Disinhibition_PlanfulControl         | 1.10 | 0.66 | 0.00 | 3.00 |     0.51 |     0.81
+> TRIMP_Disinhibition_Theft                  | 0.39 | 0.52 | 0.00 | 2.50 |     1.45 |     1.55
+> TRIMP_Disinhibition_Alienation             | 1.45 | 0.86 | 0.00 | 3.00 |     0.01 |    -0.66
+> TRIMP_Disinhibition_BoredomProneness       | 1.71 | 0.81 | 0.00 | 3.00 |    -0.23 |    -0.40
+> TRIMP_Disinhibition_Fraud                  | 0.41 | 0.70 | 0.00 | 3.00 |     1.69 |     2.12
 ```
 
 ```r
@@ -833,16 +833,16 @@ descriptive_statistics(df, "FFNI")
 ```
 > Variable               |  Mean |   SD |  Min |   Max | Skewness | Kurtosis
 > --------------------------------------------------------------------------
-> FFNI_AcclaimSeeking    | 14.20 | 3.47 | 4.00 | 20.00 |    -0.66 |     0.35
-> FFNI_Distrust          | 12.36 | 2.92 | 4.00 | 20.00 |     0.01 |    -0.02
-> FFNI_Entitlement       |  9.96 | 3.74 | 4.00 | 20.00 |     0.20 |    -0.72
-> FFNI_Exploitativeness  |  9.04 | 3.80 | 4.00 | 20.00 |     0.42 |    -0.65
-> FFNI_Indifference      | 11.03 | 3.87 | 4.00 | 20.00 |     0.21 |    -0.67
-> FFNI_LackOfEmpathy     |  9.18 | 3.26 | 4.00 | 20.00 |     0.54 |    -0.09
-> FFNI_Manipulativeness  | 10.36 | 3.77 | 4.00 | 20.00 |     0.18 |    -0.74
-> FFNI_NeedForAdmiration | 12.88 | 3.04 | 4.00 | 20.00 |    -0.42 |     0.15
-> FFNI_ThrillSeeking     | 10.59 | 3.87 | 4.00 | 20.00 |     0.12 |    -0.79
-> FFNI_General           | 11.07 | 2.00 | 5.67 | 19.44 |     0.26 |     0.46
+> FFNI_AcclaimSeeking    | 14.14 | 3.44 | 4.00 | 20.00 |    -0.68 |     0.43
+> FFNI_Distrust          | 12.34 | 2.89 | 4.00 | 20.00 |     0.04 |    -0.09
+> FFNI_Entitlement       |  9.90 | 3.69 | 4.00 | 20.00 |     0.19 |    -0.73
+> FFNI_Exploitativeness  |  9.04 | 3.76 | 4.00 | 20.00 |     0.38 |    -0.73
+> FFNI_Indifference      | 10.89 | 3.80 | 4.00 | 20.00 |     0.24 |    -0.59
+> FFNI_LackOfEmpathy     |  9.12 | 3.18 | 4.00 | 20.00 |     0.51 |    -0.15
+> FFNI_Manipulativeness  | 10.32 | 3.74 | 4.00 | 20.00 |     0.19 |    -0.73
+> FFNI_NeedForAdmiration | 12.97 | 2.94 | 4.00 | 20.00 |    -0.39 |     0.25
+> FFNI_ThrillSeeking     | 10.54 | 3.79 | 4.00 | 20.00 |     0.10 |    -0.80
+> FFNI_General           | 11.03 | 1.97 | 5.89 | 19.44 |     0.28 |     0.58
 ```
 
 <img src="figures/unnamed-chunk-31-1.png" style="display: block; margin: auto;" />
@@ -854,14 +854,14 @@ descriptive_statistics(df, "IPIP6")
 ```
 
 ```
-> Variable                | Mean |   SD |  Min | Max | Skewness | Kurtosis
-> ------------------------------------------------------------------------
-> IPIP6_Extraversion      | 3.60 | 1.23 | 1.00 |   7 |     0.17 |    -0.51
-> IPIP6_Agreableness      | 4.99 | 0.94 | 1.00 |   7 |    -0.49 |     0.74
-> IPIP6_Conscientiousness | 4.44 | 1.10 | 1.00 |   7 |    -0.29 |    -0.02
-> IPIP6_Neuroticism       | 3.94 | 1.13 | 1.00 |   7 |     0.01 |    -0.24
-> IPIP6_Openeness         | 4.58 | 1.09 | 1.25 |   7 |    -0.09 |    -0.36
-> IPIP6_HonestyHumility   | 4.38 | 1.26 | 1.00 |   7 |    -0.08 |    -0.55
+> Variable                | Mean |   SD |  Min |  Max | Skewness | Kurtosis
+> -------------------------------------------------------------------------
+> IPIP6_Extraversion      | 3.58 | 1.20 | 1.00 | 6.75 |     0.15 |    -0.57
+> IPIP6_Agreableness      | 5.01 | 0.91 | 1.25 | 7.00 |    -0.38 |     0.46
+> IPIP6_Conscientiousness | 4.43 | 1.08 | 1.00 | 7.00 |    -0.27 |    -0.03
+> IPIP6_Neuroticism       | 3.94 | 1.13 | 1.00 | 7.00 |     0.02 |    -0.18
+> IPIP6_Openeness         | 4.56 | 1.08 | 1.25 | 7.00 |    -0.12 |    -0.33
+> IPIP6_HonestyHumility   | 4.39 | 1.23 | 1.00 | 7.00 |    -0.06 |    -0.55
 ```
 
 <img src="figures/unnamed-chunk-32-1.png" style="display: block; margin: auto;" />
@@ -875,12 +875,12 @@ descriptive_statistics(df, "PID5")
 ```
 > Variable            | Mean |   SD | Min | Max | Skewness | Kurtosis
 > -------------------------------------------------------------------
-> PID5_NegativeAffect | 1.42 | 0.64 |   0 |   3 |    -0.12 |    -0.31
-> PID5_Detachment     | 1.08 | 0.57 |   0 |   3 |     0.20 |    -0.05
-> PID5_Antagonism     | 0.90 | 0.56 |   0 |   3 |     0.46 |     0.11
-> PID5_Disinhibition  | 0.98 | 0.65 |   0 |   3 |     0.19 |    -0.67
-> PID5_Psychoticism   | 1.24 | 0.62 |   0 |   3 |    -0.06 |    -0.29
-> PID5_Pathology      | 1.13 | 0.46 |   0 |   3 |     0.06 |     0.32
+> PID5_NegativeAffect | 1.42 | 0.63 |   0 |   3 |    -0.10 |    -0.35
+> PID5_Detachment     | 1.09 | 0.56 |   0 |   3 |     0.21 |    -0.02
+> PID5_Antagonism     | 0.89 | 0.54 |   0 |   3 |     0.42 |     0.12
+> PID5_Disinhibition  | 0.99 | 0.64 |   0 |   3 |     0.17 |    -0.69
+> PID5_Psychoticism   | 1.24 | 0.61 |   0 |   3 |    -0.07 |    -0.29
+> PID5_Pathology      | 1.13 | 0.45 |   0 |   3 |     0.12 |     0.37
 ```
 
 <img src="figures/unnamed-chunk-33-1.png" style="display: block; margin: auto;" />
@@ -894,9 +894,9 @@ descriptive_statistics(df, "BIDR")
 ```
 > Variable                      | Mean |   SD |  Min |  Max | Skewness | Kurtosis
 > -------------------------------------------------------------------------------
-> BIDR_SelfDeceptiveEnhancement | 3.88 | 0.82 | 1.50 | 7.00 |     0.06 |     0.60
-> BIDR_ImpressionManagement     | 3.78 | 0.84 | 1.00 | 6.62 |     0.06 |     0.68
-> BIDR_General                  | 3.83 | 0.67 | 1.44 | 6.56 |     0.18 |     1.03
+> BIDR_SelfDeceptiveEnhancement | 3.86 | 0.79 | 1.50 | 6.12 |    -0.03 |     0.28
+> BIDR_ImpressionManagement     | 3.78 | 0.82 | 1.00 | 6.62 |     0.14 |     0.73
+> BIDR_General                  | 3.82 | 0.65 | 1.44 | 6.38 |     0.13 |     0.95
 ```
 
 <img src="figures/unnamed-chunk-34-1.png" style="display: block; margin: auto;" />
@@ -910,12 +910,12 @@ descriptive_statistics(df, "UPPS")
 ```
 > Variable                 | Mean |   SD |  Min |  Max | Skewness | Kurtosis
 > --------------------------------------------------------------------------
-> UPPS_NegativeUrgency     | 2.39 | 0.65 | 1.00 | 4.00 |    -0.14 |    -0.32
-> UPPS_PositiveUrgency     | 2.14 | 0.63 | 1.00 | 4.00 |     0.03 |    -0.50
-> UPPS_LackOfPerseverance  | 1.86 | 0.47 | 1.00 | 4.00 |     0.20 |     0.38
-> UPPS_LackOfPremeditation | 1.87 | 0.47 | 1.00 | 4.00 |     0.18 |     0.89
-> UPPS_SensationSeeking    | 2.68 | 0.67 | 1.00 | 4.00 |    -0.26 |    -0.32
-> UPPS_General             | 2.19 | 0.35 | 1.10 | 3.55 |    -0.27 | 1.47e-04
+> UPPS_NegativeUrgency     | 2.40 | 0.64 | 1.00 | 4.00 |    -0.11 |    -0.35
+> UPPS_PositiveUrgency     | 2.13 | 0.62 | 1.00 | 4.00 |     0.02 |    -0.51
+> UPPS_LackOfPerseverance  | 1.87 | 0.46 | 1.00 | 4.00 |     0.18 |     0.48
+> UPPS_LackOfPremeditation | 1.87 | 0.46 | 1.00 | 3.75 |     0.11 |     0.67
+> UPPS_SensationSeeking    | 2.68 | 0.66 | 1.00 | 4.00 |    -0.28 |    -0.25
+> UPPS_General             | 2.19 | 0.35 | 1.10 | 3.55 |    -0.25 |     0.01
 ```
 
 <img src="figures/unnamed-chunk-35-1.png" style="display: block; margin: auto;" />
@@ -927,15 +927,15 @@ descriptive_statistics(df, "DERS")
 ```
 
 ```
-> Variable           | Mean |   SD | Min |   Max | Skewness | Kurtosis
-> --------------------------------------------------------------------
-> DERS_Awareness     | 7.00 | 2.13 |   3 | 14.00 |     0.34 |    -0.13
-> DERS_Clarity       | 7.46 | 2.58 |   3 | 15.00 |     0.51 |    -0.06
-> DERS_Goals         | 9.46 | 3.24 |   3 | 15.00 |    -0.01 |    -0.98
-> DERS_Impulse       | 6.80 | 3.06 |   3 | 15.00 |     0.65 |    -0.35
-> DERS_NonAcceptance | 7.38 | 3.16 |   3 | 15.00 |     0.52 |    -0.52
-> DERS_Strategies    | 7.00 | 3.10 |   3 | 15.00 |     0.59 |    -0.51
-> DERS_General       | 7.52 | 1.99 |   3 | 13.33 |     0.24 |    -0.53
+> Variable           | Mean |   SD |  Min |   Max | Skewness | Kurtosis
+> ---------------------------------------------------------------------
+> DERS_Awareness     | 7.00 | 2.06 | 3.00 | 13.00 |     0.32 |    -0.21
+> DERS_Clarity       | 7.46 | 2.53 | 3.00 | 15.00 |     0.50 |    -0.05
+> DERS_Goals         | 9.41 | 3.18 | 3.00 | 15.00 |    -0.01 |    -0.99
+> DERS_Impulse       | 6.78 | 3.02 | 3.00 | 15.00 |     0.66 |    -0.33
+> DERS_NonAcceptance | 7.35 | 3.10 | 3.00 | 15.00 |     0.55 |    -0.48
+> DERS_Strategies    | 6.98 | 3.04 | 3.00 | 15.00 |     0.56 |    -0.57
+> DERS_General       | 7.50 | 1.95 | 3.50 | 13.33 |     0.28 |    -0.52
 ```
 
 <img src="figures/unnamed-chunk-36-1.png" style="display: block; margin: auto;" />
@@ -949,10 +949,10 @@ descriptive_statistics(df, "LTS")
 ```
 > Variable            | Mean |   SD | Min |  Max | Skewness | Kurtosis
 > --------------------------------------------------------------------
-> LTS_FaithInHumanity | 2.40 | 0.68 |   1 | 4.75 |     0.63 |     0.66
-> LTS_Humanism        | 2.04 | 0.51 |   1 | 4.00 |     0.29 |     0.45
-> LTS_Kantianism      | 2.08 | 0.57 |   1 | 5.00 |     0.44 |     0.74
-> LTS_General         | 2.17 | 0.47 |   1 | 4.58 |     0.31 |     0.96
+> LTS_FaithInHumanity | 2.41 | 0.66 |   1 | 4.75 |     0.64 |     0.67
+> LTS_Humanism        | 2.04 | 0.50 |   1 | 4.00 |     0.23 |     0.38
+> LTS_Kantianism      | 2.08 | 0.56 |   1 | 4.00 |     0.31 |     0.14
+> LTS_General         | 2.18 | 0.45 |   1 | 4.00 |     0.18 |     0.33
 ```
 
 <img src="figures/unnamed-chunk-37-1.png" style="display: block; margin: auto;" />
@@ -966,8 +966,8 @@ descriptive_statistics(df, "MAIA2")
 ```
 > Variable            | Mean |   SD | Min | Max | Skewness | Kurtosis
 > -------------------------------------------------------------------
-> MAIA2_Noticing      | 3.13 | 0.91 |   0 |   5 |    -0.45 |     0.33
-> MAIA2_BodyListening | 2.78 | 0.94 |   0 |   5 |    -0.36 |     0.02
+> MAIA2_Noticing      | 3.12 | 0.89 |   0 |   5 |    -0.46 |     0.35
+> MAIA2_BodyListening | 2.77 | 0.93 |   0 |   5 |    -0.39 |     0.08
 ```
 
 <img src="figures/unnamed-chunk-38-1.png" style="display: block; margin: auto;" />
@@ -981,7 +981,7 @@ descriptive_statistics(df, "MAIA2")
 lie <- select(df, starts_with("LIE_"))
 labels_lie <- labels[labels$Questionnaire == "LIE", ]
 
-# Two sets of data 50-50
+# Two sets of data 60-40
 partitions <- parameters::data_partition(lie, training_proportion = 0.6)
 lie_EFA <- partitions$training
 lie_CFA <- partitions$test
@@ -999,7 +999,7 @@ psych::statsBy(lie_grouped, group = "group_indices")
 > Call: psych::statsBy(data = lie_grouped, group = "group_indices")
 > Intraclass Correlation 1 (Percentage of variance due to groups) 
 >         LIE_1         LIE_2         LIE_3         LIE_4         LIE_5 
->          0.00          0.00          0.00          0.00          0.02 
+>          0.00          0.00          0.00          0.00          0.03 
 >         LIE_6         LIE_7         LIE_8         LIE_9        LIE_10 
 >          0.01          0.00          0.00          0.00          0.00 
 >        LIE_11        LIE_12        LIE_13        LIE_14        LIE_15 
@@ -1007,7 +1007,7 @@ psych::statsBy(lie_grouped, group = "group_indices")
 >        LIE_16        LIE_17        LIE_18        LIE_19        LIE_20 
 >          0.00          0.00          0.00          0.00          0.00 
 >        LIE_21        LIE_22        LIE_23        LIE_24        LIE_25 
->          0.00          0.00          0.01          0.00          0.00 
+>          0.00          0.00          0.00          0.00          0.00 
 >        LIE_26        LIE_27        LIE_28        LIE_29        LIE_30 
 >          0.01          0.00          0.00          0.01          0.00 
 >        LIE_31        LIE_32        LIE_33        LIE_34        LIE_35 
@@ -1018,23 +1018,23 @@ psych::statsBy(lie_grouped, group = "group_indices")
 >          0.01          0.00          0.00          0.01          1.00 
 > Intraclass Correlation 2 (Reliability of group differences) 
 >         LIE_1         LIE_2         LIE_3         LIE_4         LIE_5 
->          0.56         -1.03         -2.92          0.16          0.90 
+>          0.45         -1.14        -17.63          0.36          0.91 
 >         LIE_6         LIE_7         LIE_8         LIE_9        LIE_10 
->          0.83          0.51          0.09        -21.27        -63.24 
+>          0.75          0.41          0.31         -1.44         -3.98 
 >        LIE_11        LIE_12        LIE_13        LIE_14        LIE_15 
->         -4.61        -16.05      -3519.96         -5.28          0.31 
+>         -2.47        -12.61        -27.85        -54.67         -0.30 
 >        LIE_16        LIE_17        LIE_18        LIE_19        LIE_20 
->          0.45         -1.00         -0.24         -0.01          0.40 
+>          0.36         -4.47         -0.22         -0.13          0.41 
 >        LIE_21        LIE_22        LIE_23        LIE_24        LIE_25 
->        -34.67         -9.83          0.75        -73.30          0.54 
+>        -43.53         -3.90          0.55        -17.65          0.54 
 >        LIE_26        LIE_27        LIE_28        LIE_29        LIE_30 
->          0.83         -8.15         -1.24          0.75         -0.58 
+>          0.83         -0.72          0.52          0.81          0.26 
 >        LIE_31        LIE_32        LIE_33        LIE_34        LIE_35 
->        -59.97        -17.76         -0.67          0.77          0.51 
+>        -13.59        -16.87         -0.35          0.77          0.33 
 >        LIE_36        LIE_37        LIE_38        LIE_39        LIE_40 
->          0.89          0.79          0.64          0.24         -1.21 
+>          0.87          0.84          0.61          0.48         -4.07 
 >        LIE_41        LIE_42        LIE_43        LIE_44 group_indices 
->          0.80         -1.45         -1.88          0.77          1.00 
+>          0.84         -3.38        -23.52          0.69          1.00 
 > eta^2 between groups  
 >  LIE_1.bg  LIE_2.bg  LIE_3.bg  LIE_4.bg  LIE_5.bg  LIE_6.bg  LIE_7.bg  LIE_8.bg 
 >      0.00      0.00      0.00      0.00      0.01      0.01      0.00      0.00 
@@ -1047,7 +1047,7 @@ psych::statsBy(lie_grouped, group = "group_indices")
 > LIE_33.bg LIE_34.bg LIE_35.bg LIE_36.bg LIE_37.bg LIE_38.bg LIE_39.bg LIE_40.bg 
 >      0.00      0.01      0.00      0.01      0.01      0.00      0.00      0.00 
 > LIE_41.bg LIE_42.bg LIE_43.bg LIE_44.bg 
->      0.01      0.00      0.00      0.01 
+>      0.01      0.00      0.00      0.00 
 > 
 > To see the correlations between and within groups, use the short=FALSE option in your print statement.
 > Many results are not shown directly. To see specific objects select from the following list:
@@ -1066,7 +1066,7 @@ parameters::check_factorstructure(lie_EFA)
 > # Is the data suitable for Factor Analysis?
 > 
 >   - KMO: The Kaiser, Meyer, Olkin (KMO) measure of sampling adequacy suggests that data seems appropriate for factor analysis (KMO = 0.94).
->   - Sphericity: Bartlett's test of sphericity suggests that there is sufficient significant correlation in the data for factor analaysis (Chisq(946) = 10779.91, p < .001).
+>   - Sphericity: Bartlett's test of sphericity suggests that there is sufficient significant correlation in the data for factor analaysis (Chisq(946) = 10773.22, p < .001).
 ```
 
 ### Correlation matrix
@@ -1090,7 +1090,7 @@ parameters::n_factors(lie_EFA, cor = cor, rotation = "varimax", package = "all",
 ```
 > # Method Agreement Procedure:
 > 
-> The choice of 4 dimensions is supported by 8 (32.00%) methods out of 25 (beta, Optimal coordinates, R2, EGA (glasso), EGA (TMFG), Velicer's MAP, BIC, BIC).
+> The choice of 4 dimensions is supported by 5 (20.00%) methods out of 25 (beta, R2, Velicer's MAP, BIC, BIC).
 ```
 
 <img src="figures/unnamed-chunk-42-1.png" style="display: block; margin: auto;" />
@@ -1114,52 +1114,52 @@ parameters::model_parameters(efa_4, labels = labels_lie$Description) %>%
 > 
 > Variable |                                                      Label |   ML1 |   ML2 |  ML4 |   ML3 | Complexity | Uniqueness
 > ------------------------------------------------------------------------------------------------------------------------------
-> LIE_10   |                                             I can lie well |  0.87 |       |      |       |       1.27 |       0.15
-> LIE_9    |                                           I am a good liar |  0.80 |       |      |       |       1.37 |       0.25
-> LIE_12   |                         I can lie effectively if I want to |  0.77 |       |      |       |       1.21 |       0.34
-> LIE_18   |                   It is easy for me to make up clever lies |  0.76 |       |      |       |       1.38 |       0.31
-> LIE_14   |                    It is hard for others to detect my lies |  0.76 |       |      |       |       1.23 |       0.37
-> LIE_11   |                              I am good at deceiving others |  0.73 |       |      |       |       1.38 |       0.37
-> LIE_15   |                            I almost never get caught lying |  0.66 |       |      |       |       1.26 |       0.51
-> LIE_17   |                                     I find lying difficult | -0.65 |       |      |       |       1.72 |       0.42
-> LIE_13   |                      Others can easily tell when I’m lying | -0.65 |       |      |       |       1.24 |       0.53
-> LIE_20   |                    I do not have to prepare much for a lie |  0.56 |       |      |       |       1.74 |       0.58
-> LIE_19   |                I find it taxing to come up with a good lie | -0.52 |       |      |       |       2.01 |       0.54
-> LIE_16   |                 My lies often arouse suspicion from others | -0.48 |       |      |       |       1.60 |       0.70
-> LIE_4    |                                   I have a tendency to lie |       |  0.75 |      |       |       1.27 |       0.37
-> LIE_1    |                                           I lie frequently |       |  0.71 |      |       |       1.69 |       0.32
-> LIE_5    |                      I lie more often than most people do  |       |  0.70 |      |       |       1.42 |       0.40
-> LIE_7    |                           I lie more than I think I should |       |  0.70 |      |       |       1.13 |       0.48
-> LIE_6    |         I lie more frequently than what I expect myself to |       |  0.70 |      |       |       1.15 |       0.48
-> LIE_22   |                     I find myself lying without any reason |       |  0.67 |      |       |       1.20 |       0.51
-> LIE_23   |           I find it difficult to refrain myself from lying |       |  0.66 |      |       |       1.03 |       0.56
-> LIE_2    |                                   I lie in many situations |       |  0.66 |      |       |       1.70 |       0.42
-> LIE_26   |                                              I enjoy lying |       |  0.51 |      |       |       2.15 |       0.58
-> LIE_31   |       I lie if it’s the most direct way to get what I want |       |  0.50 |      |       |       2.13 |       0.61
-> LIE_29   |                             I lie whenever it’s convenient |       |  0.49 |      |       |       2.05 |       0.64
-> LIE_8    |                            Others lie less often than I do |       |  0.46 |      |       |       1.30 |       0.76
-> LIE_21   |                          I have to try hard to avoid lying |       |  0.43 |      |       |       1.42 |       0.78
-> LIE_24   |                  It is easy to hold back from telling lies |       | -0.37 |      |       |       1.35 |       0.84
-> LIE_41   |                             Lying is against my principles |       |       | 0.67 |       |       1.59 |       0.43
-> LIE_25   |                                  I feel guilty after lying |       |       | 0.65 |       |       1.36 |       0.51
-> LIE_34   |                              I always avoid lying if I can |       |       | 0.59 |       |       1.54 |       0.56
-> LIE_27   |                        I feel tense whenever I have to lie |       |       | 0.56 |       |       1.92 |       0.48
-> LIE_44   |                                          It is bad to lie  |       |       | 0.56 |       |       1.27 |       0.65
-> LIE_36   | I prefer to tell the truth even if it gets me into trouble |       |       | 0.45 |       |       2.31 |       0.67
-> LIE_35   |                 I would only lie if I have no other choice |       |       | 0.37 |       |       2.42 |       0.72
-> LIE_37   |                      I would never lie for trivial matters |       |       | 0.35 |       |       1.40 |       0.85
-> LIE_38   |                      I would never lie in serious contexts |       |       | 0.27 |       |       2.01 |       0.88
-> LIE_33   |                                       I lie when necessary |       |       |      |  0.71 |       1.21 |       0.44
-> LIE_43   |                               It is okay to lie sometimes  |       |       |      |  0.70 |       1.40 |       0.41
-> LIE_42   |           It is acceptable to lie depending on the context |       |       |      |  0.60 |       1.49 |       0.54
-> LIE_39   |            I would lie if something important was at stake |       |       |      |  0.55 |       1.14 |       0.68
-> LIE_32   |            I lie when telling the truth is too troublesome |       |       |      |  0.47 |       2.26 |       0.63
-> LIE_30   |              I lie when it’s easier than telling the truth |       |       |      |  0.46 |       2.17 |       0.64
-> LIE_40   |                         I would only lie if it is harmless |       |       |      |  0.40 |       1.44 |       0.80
-> LIE_3    |                                          I never tell lies |       |       |      | -0.40 |       2.24 |       0.73
-> LIE_28   |                I feel satisfied when others believe my lie |       |       |      |  0.34 |       2.80 |       0.73
+> LIE_10   |                                             I can lie well |  0.86 |       |      |       |       1.31 |       0.15
+> LIE_9    |                                           I am a good liar |  0.83 |       |      |       |       1.36 |       0.20
+> LIE_12   |                         I can lie effectively if I want to |  0.78 |       |      |       |       1.40 |       0.28
+> LIE_14   |                    It is hard for others to detect my lies |  0.76 |       |      |       |       1.24 |       0.36
+> LIE_18   |                   It is easy for me to make up clever lies |  0.74 |       |      |       |       1.46 |       0.33
+> LIE_11   |                              I am good at deceiving others |  0.74 |       |      |       |       1.43 |       0.35
+> LIE_13   |                      Others can easily tell when I’m lying | -0.73 |       |      |       |       1.26 |       0.40
+> LIE_17   |                                     I find lying difficult | -0.66 |       |      |       |       1.84 |       0.38
+> LIE_15   |                            I almost never get caught lying |  0.66 |       |      |       |       1.17 |       0.54
+> LIE_20   |                    I do not have to prepare much for a lie |  0.61 |       |      |       |       1.84 |       0.48
+> LIE_19   |                I find it taxing to come up with a good lie | -0.56 |       |      |       |       1.89 |       0.51
+> LIE_16   |                 My lies often arouse suspicion from others | -0.49 |       |      |       |       1.46 |       0.71
+> LIE_5    |                      I lie more often than most people do  |       |  0.75 |      |       |       1.39 |       0.33
+> LIE_4    |                                   I have a tendency to lie |       |  0.74 |      |       |       1.25 |       0.39
+> LIE_23   |           I find it difficult to refrain myself from lying |       |  0.74 |      |       |       1.06 |       0.44
+> LIE_22   |                     I find myself lying without any reason |       |  0.73 |      |       |       1.16 |       0.43
+> LIE_1    |                                           I lie frequently |       |  0.73 |      |       |       1.55 |       0.33
+> LIE_6    |         I lie more frequently than what I expect myself to |       |  0.72 |      |       |       1.23 |       0.42
+> LIE_7    |                           I lie more than I think I should |       |  0.71 |      |       |       1.17 |       0.45
+> LIE_2    |                                   I lie in many situations |       |  0.64 |      |       |       2.10 |       0.38
+> LIE_29   |                             I lie whenever it’s convenient |       |  0.59 |      |       |       1.82 |       0.51
+> LIE_8    |                            Others lie less often than I do |       |  0.58 |      |       |       1.48 |       0.59
+> LIE_21   |                          I have to try hard to avoid lying |       |  0.53 |      |       |       1.08 |       0.70
+> LIE_26   |                                              I enjoy lying |       |  0.53 |      |       |       2.22 |       0.51
+> LIE_31   |       I lie if it’s the most direct way to get what I want |       |  0.48 |      |       |       2.32 |       0.60
+> LIE_24   |                  It is easy to hold back from telling lies |       | -0.41 |      |       |       1.36 |       0.80
+> LIE_28   |                I feel satisfied when others believe my lie |       |  0.33 |      |       |       3.62 |       0.69
+> LIE_25   |                                  I feel guilty after lying |       |       | 0.64 |       |       1.58 |       0.47
+> LIE_44   |                                          It is bad to lie  |       |       | 0.63 |       |       1.28 |       0.54
+> LIE_41   |                             Lying is against my principles |       |       | 0.62 |       |       1.97 |       0.44
+> LIE_34   |                              I always avoid lying if I can |       |       | 0.55 |       |       1.97 |       0.51
+> LIE_27   |                        I feel tense whenever I have to lie |       |       | 0.52 |       |       2.02 |       0.53
+> LIE_36   | I prefer to tell the truth even if it gets me into trouble |       |       | 0.40 |       |       2.62 |       0.70
+> LIE_35   |                 I would only lie if I have no other choice |       |       | 0.38 |       |       2.05 |       0.76
+> LIE_37   |                      I would never lie for trivial matters |       |       | 0.33 |       |       1.47 |       0.86
+> LIE_38   |                      I would never lie in serious contexts |       |       | 0.29 |       |       2.60 |       0.82
+> LIE_43   |                               It is okay to lie sometimes  |       |       |      |  0.70 |       1.37 |       0.42
+> LIE_33   |                                       I lie when necessary |       |       |      |  0.66 |       1.35 |       0.49
+> LIE_42   |           It is acceptable to lie depending on the context |       |       |      |  0.63 |       1.40 |       0.52
+> LIE_30   |              I lie when it’s easier than telling the truth |       |       |      |  0.52 |       1.85 |       0.61
+> LIE_32   |            I lie when telling the truth is too troublesome |       |       |      |  0.49 |       2.21 |       0.62
+> LIE_39   |            I would lie if something important was at stake |       |       |      |  0.45 |       1.42 |       0.75
+> LIE_3    |                                          I never tell lies |       |       |      | -0.40 |       1.98 |       0.76
+> LIE_40   |                         I would only lie if it is harmless |       |       |      |  0.35 |       1.85 |       0.83
 > 
-> The 4 latent factors (varimax rotation) accounted for 45.11% of the total variance of the original data (ML1 = 15.24%, ML2 = 14.15%, ML4 = 8.35%, ML3 = 7.37%).
+> The 4 latent factors (varimax rotation) accounted for 47.98% of the total variance of the original data (ML1 = 16.11%, ML2 = 15.99%, ML4 = 8.25%, ML3 = 7.62%).
 ```
 
 
@@ -1178,52 +1178,52 @@ parameters::model_parameters(efa_1, labels = labels_lie$Description) %>%
 > 
 > Variable |                                                      Label |   ML1 | Complexity | Uniqueness
 > -------------------------------------------------------------------------------------------------------
-> LIE_10   |                                             I can lie well |  0.85 |       1.00 |       0.28
-> LIE_9    |                                           I am a good liar |  0.81 |       1.00 |       0.34
-> LIE_18   |                   It is easy for me to make up clever lies |  0.79 |       1.00 |       0.38
-> LIE_11   |                              I am good at deceiving others |  0.75 |       1.00 |       0.43
-> LIE_12   |                         I can lie effectively if I want to |  0.72 |       1.00 |       0.48
+> LIE_10   |                                             I can lie well |  0.84 |       1.00 |       0.29
+> LIE_9    |                                           I am a good liar |  0.83 |       1.00 |       0.31
+> LIE_18   |                   It is easy for me to make up clever lies |  0.77 |       1.00 |       0.40
+> LIE_11   |                              I am good at deceiving others |  0.77 |       1.00 |       0.41
+> LIE_12   |                         I can lie effectively if I want to |  0.77 |       1.00 |       0.41
 > LIE_14   |                    It is hard for others to detect my lies |  0.72 |       1.00 |       0.49
-> LIE_17   |                                     I find lying difficult | -0.69 |       1.00 |       0.53
-> LIE_20   |                    I do not have to prepare much for a lie |  0.64 |       1.00 |       0.59
-> LIE_15   |                            I almost never get caught lying |  0.63 |       1.00 |       0.60
-> LIE_1    |                                           I lie frequently |  0.62 |       1.00 |       0.61
-> LIE_2    |                                   I lie in many situations |  0.61 |       1.00 |       0.63
-> LIE_5    |                      I lie more often than most people do  |  0.59 |       1.00 |       0.66
-> LIE_19   |                I find it taxing to come up with a good lie | -0.58 |       1.00 |       0.66
-> LIE_13   |                      Others can easily tell when I’m lying | -0.57 |       1.00 |       0.67
-> LIE_4    |                                   I have a tendency to lie |  0.56 |       1.00 |       0.68
+> LIE_17   |                                     I find lying difficult | -0.71 |       1.00 |       0.49
+> LIE_20   |                    I do not have to prepare much for a lie |  0.71 |       1.00 |       0.49
+> LIE_2    |                                   I lie in many situations |  0.67 |       1.00 |       0.55
+> LIE_13   |                      Others can easily tell when I’m lying | -0.63 |       1.00 |       0.60
+> LIE_1    |                                           I lie frequently |  0.62 |       1.00 |       0.62
+> LIE_5    |                      I lie more often than most people do  |  0.62 |       1.00 |       0.62
+> LIE_19   |                I find it taxing to come up with a good lie | -0.61 |       1.00 |       0.63
+> LIE_15   |                            I almost never get caught lying |  0.59 |       1.00 |       0.65
+> LIE_41   |                             Lying is against my principles | -0.58 |       1.00 |       0.66
+> LIE_4    |                                   I have a tendency to lie |  0.57 |       1.00 |       0.67
+> LIE_26   |                                              I enjoy lying |  0.56 |       1.00 |       0.68
 > LIE_27   |                        I feel tense whenever I have to lie | -0.56 |       1.00 |       0.69
-> LIE_41   |                             Lying is against my principles | -0.54 |       1.00 |       0.71
-> LIE_26   |                                              I enjoy lying |  0.53 |       1.00 |       0.72
-> LIE_29   |                             I lie whenever it’s convenient |  0.48 |       1.00 |       0.77
-> LIE_7    |                           I lie more than I think I should |  0.48 |       1.00 |       0.77
-> LIE_22   |                     I find myself lying without any reason |  0.48 |       1.00 |       0.77
-> LIE_6    |         I lie more frequently than what I expect myself to |  0.48 |       1.00 |       0.77
-> LIE_31   |       I lie if it’s the most direct way to get what I want |  0.47 |       1.00 |       0.77
-> LIE_36   | I prefer to tell the truth even if it gets me into trouble | -0.46 |       1.00 |       0.78
-> LIE_25   |                                  I feel guilty after lying | -0.46 |       1.00 |       0.79
+> LIE_28   |                I feel satisfied when others believe my lie |  0.54 |       1.00 |       0.71
+> LIE_25   |                                  I feel guilty after lying | -0.53 |       1.00 |       0.71
+> LIE_29   |                             I lie whenever it’s convenient |  0.53 |       1.00 |       0.72
+> LIE_31   |       I lie if it’s the most direct way to get what I want |  0.52 |       1.00 |       0.73
+> LIE_6    |         I lie more frequently than what I expect myself to |  0.51 |       1.00 |       0.74
+> LIE_8    |                            Others lie less often than I do |  0.51 |       1.00 |       0.74
+> LIE_34   |                              I always avoid lying if I can | -0.48 |       1.00 |       0.77
+> LIE_22   |                     I find myself lying without any reason |  0.47 |       1.00 |       0.78
+> LIE_7    |                           I lie more than I think I should |  0.46 |       1.00 |       0.78
+> LIE_32   |            I lie when telling the truth is too troublesome |  0.46 |       1.00 |       0.79
 > LIE_43   |                               It is okay to lie sometimes  |  0.46 |       1.00 |       0.79
-> LIE_28   |                I feel satisfied when others believe my lie |  0.43 |       1.00 |       0.81
-> LIE_42   |           It is acceptable to lie depending on the context |  0.43 |       1.00 |       0.82
-> LIE_32   |            I lie when telling the truth is too troublesome |  0.42 |       1.00 |       0.83
+> LIE_23   |           I find it difficult to refrain myself from lying |  0.46 |       1.00 |       0.79
+> LIE_36   | I prefer to tell the truth even if it gets me into trouble | -0.46 |       1.00 |       0.79
+> LIE_33   |                                       I lie when necessary |  0.44 |       1.00 |       0.80
+> LIE_42   |           It is acceptable to lie depending on the context |  0.43 |       1.00 |       0.81
+> LIE_44   |                                          It is bad to lie  | -0.42 |       1.00 |       0.83
 > LIE_30   |              I lie when it’s easier than telling the truth |  0.41 |       1.00 |       0.83
-> LIE_33   |                                       I lie when necessary |  0.40 |       1.00 |       0.84
-> LIE_34   |                              I always avoid lying if I can | -0.39 |       1.00 |       0.85
-> LIE_44   |                                          It is bad to lie  | -0.37 |       1.00 |       0.86
-> LIE_8    |                            Others lie less often than I do |  0.36 |       1.00 |       0.87
-> LIE_3    |                                          I never tell lies | -0.36 |       1.00 |       0.87
-> LIE_23   |           I find it difficult to refrain myself from lying |  0.35 |       1.00 |       0.88
-> LIE_16   |                 My lies often arouse suspicion from others | -0.33 |       1.00 |       0.89
-> LIE_39   |            I would lie if something important was at stake |  0.28 |       1.00 |       0.92
-> LIE_38   |                      I would never lie in serious contexts | -0.25 |       1.00 |       0.94
+> LIE_38   |                      I would never lie in serious contexts | -0.36 |       1.00 |       0.87
+> LIE_3    |                                          I never tell lies | -0.32 |       1.00 |       0.90
+> LIE_16   |                 My lies often arouse suspicion from others | -0.32 |       1.00 |       0.90
+> LIE_39   |            I would lie if something important was at stake |  0.29 |       1.00 |       0.91
+> LIE_21   |                          I have to try hard to avoid lying |  0.24 |       1.00 |       0.94
 > LIE_37   |                      I would never lie for trivial matters | -0.23 |       1.00 |       0.95
-> LIE_35   |                 I would only lie if I have no other choice | -0.15 |       1.00 |       0.98
-> LIE_40   |                         I would only lie if it is harmless |  0.13 |       1.00 |       0.98
-> LIE_21   |                          I have to try hard to avoid lying |  0.12 |       1.00 |       0.99
-> LIE_24   |                  It is easy to hold back from telling lies | -0.11 |       1.00 |       0.99
+> LIE_24   |                  It is easy to hold back from telling lies | -0.18 |       1.00 |       0.97
+> LIE_35   |                 I would only lie if I have no other choice | -0.12 |       1.00 |       0.99
+> LIE_40   |                         I would only lie if it is harmless |  0.06 |       1.00 |       1.00
 > 
-> The unique latent factor (varimax rotation) accounted for 26.22% of the total variance of the original data.
+> The unique latent factor (varimax rotation) accounted for 29.04% of the total variance of the original data.
 ```
 
 
@@ -1235,7 +1235,7 @@ paste0("The model with one, and four factors accounted for ",
 ```
 
 ```
-> [1] "The model with one, and four factors accounted for 26.22 and 45.11% of variance of the dataset."
+> [1] "The model with one, and four factors accounted for 29.04 and 47.98% of variance of the dataset."
 ```
 
 
@@ -1291,8 +1291,8 @@ comparison
 
 Model      AIC     BIC   BIC_adjusted   Chisq   RMSEA    CFI   SRMR
 ------  ------  ------  -------------  ------  ------  -----  -----
-cfa_4    60834   61187          60889    2460    0.07   0.79   0.10
-cfa_1    62623   62954          62675    4261    0.11   0.55   0.12
+cfa_4    53242   53586          53288    2184    0.07   0.80   0.10
+cfa_1    55145   55467          55188    4100    0.11   0.51   0.14
 
 </div>
 
@@ -1304,7 +1304,7 @@ paste0("The confirmatory factor analysis favoured the four-factors solution ",
 ```
 
 ```
-> [1] "The confirmatory factor analysis favoured the four-factors solution (X2<4-factors> = 2459.84, AIC<4-factors> = 60833.67, BIC<4-factors> = 60889.15, RMSEA<4-factors> = 0.07, CFI<4-factors> = 0.79, SRMR<4-factors> = 0.10) over the one-factor (X2<1-factor> = 4261.22, AIC<1-factor> = 62623.05, BIC<1-factor> = 62675.00, RMSEA<1-factor> = 0.11, CFI<1-factor> = 0.55, SRMR<1-factor> = 0.12)"
+> [1] "The confirmatory factor analysis favoured the four-factors solution (X2<4-factors> = 2184.35, AIC<4-factors> = 53241.67, BIC<4-factors> = 53287.58, RMSEA<4-factors> = 0.07, CFI<4-factors> = 0.80, SRMR<4-factors> = 0.10) over the one-factor (X2<1-factor> = 4100.08, AIC<1-factor> = 55145.41, BIC<1-factor> = 55188.38, RMSEA<1-factor> = 0.11, CFI<1-factor> = 0.51, SRMR<1-factor> = 0.14)"
 ```
 
 ##### Four-factors *vs.* Initial Model
@@ -1337,8 +1337,8 @@ comparison
 
 Model            AIC     BIC   BIC_adjusted   Chisq   RMSEA    CFI   SRMR
 ------------  ------  ------  -------------  ------  ------  -----  -----
-cfa_4          60834   61187          60889    2460    0.07   0.79    0.1
-cfa_initial    61348   61691          61402    2980    0.09   0.72    0.1
+cfa_4          53242   53586          53288    2184    0.07   0.80   0.10
+cfa_initial    53756   54090          53801    2705    0.08   0.72   0.11
 
 </div>
 
@@ -1347,18 +1347,18 @@ paste0("We then compared the four-factors solution with the initial hypothetic m
 ```
 
 ```
-> [1] "We then compared the four-factors solution with the initial hypothetic model with which we built the scale, which favoured the four-factors model (X2<hypothetic> = 2980.37, AIC<hypothetic> = 61348.20, BIC<hypothetic> = 61401.92, RMSEA<hypothetic> = 0.09, CFI<hypothetic> = 0.72, SRMR<hypothetic> = 0.10)"
+> [1] "We then compared the four-factors solution with the initial hypothetic model with which we built the scale, which favoured the four-factors model (X2<hypothetic> = 2705.16, AIC<hypothetic> = 53756.49, BIC<hypothetic> = 53800.93, RMSEA<hypothetic> = 0.08, CFI<hypothetic> = 0.72, SRMR<hypothetic> = 0.11)"
 ```
 
 ##### Short *vs.* Long Form
 
 
 ```r
-cfa_4_short3 <- parameters::efa_to_cfa(efa_4, threshold = 3, names = c( "Frequency", "Ability", "Negativity", "Contextuality")) %>% 
+cfa_4_short3 <- parameters::efa_to_cfa(efa_4, threshold = 3, names = c( "Ability", "Frequency", "Negativity", "Contextuality")) %>% 
   lavaan::cfa(data = lie_CFA)
-cfa_4_short4 <- parameters::efa_to_cfa(efa_4, threshold = 4, names = c( "Frequency", "Ability", "Negativity", "Contextuality")) %>% 
+cfa_4_short4 <- parameters::efa_to_cfa(efa_4, threshold = 4, names = c( "Ability", "Frequency", "Negativity", "Contextuality")) %>% 
   lavaan::cfa(data = lie_CFA)
-cfa_4_short5 <- parameters::efa_to_cfa(efa_4, threshold = 5, names = c( "Frequency", "Ability", "Negativity", "Contextuality")) %>% 
+cfa_4_short5 <- parameters::efa_to_cfa(efa_4, threshold = 5, names = c( "Ability", "Frequency", "Negativity", "Contextuality")) %>% 
   lavaan::cfa(data = lie_CFA)
 ```
 
@@ -1373,10 +1373,10 @@ comparison
 
 Model             AIC     BIC   BIC_adjusted   Chisq   RMSEA    CFI   SRMR
 -------------  ------  ------  -------------  ------  ------  -----  -----
-cfa_4           60834   61187          60889    2460    0.07   0.79   0.10
-cfa_4_short3    16094   16206          16111     139    0.08   0.95   0.06
-cfa_4_short4    21707   21850          21729     268    0.07   0.93   0.06
-cfa_4_short5    27206   27379          27234     471    0.08   0.91   0.08
+cfa_4           53242   53586          53288    2184    0.07   0.80   0.10
+cfa_4_short3    14181   14291          14196      61    0.03   0.99   0.04
+cfa_4_short4    18876   19015          18894     208    0.06   0.95   0.07
+cfa_4_short5    23655   23823          23677     467    0.08   0.90   0.09
 
 </div>
 
@@ -1392,7 +1392,7 @@ paste0("Finally, we compared the full four-factors model (including all items) w
 ```
 
 ```
-> [1] "Finally, we compared the full four-factors model (including all items) with short form retaining only the 3, 4 or 5 most loading items for each of the 4 dimensions. The 3-items version (X2<3-items> = 138.59, AIC<3-items> = 16093.60, BIC<3-items> = 16111.31, RMSEA<3-items> = 0.08, CFI<3-items> = 0.95, SRMR<3-items> = 0.06) outperformed all versions, including 5-items (X2<5-items> = 471.34, AIC<5-items> = 27206.35, BIC<5-items> = 27233.50, RMSEA<5-items> = 0.08, CFI<5-items> = 0.91, SRMR<5-items> = 0.08) and 4-items (X2<4-items> = 268.44, AIC<4-items> = 21706.84, BIC<4-items> = 21729.27, RMSEA<4-items> = 0.07, CFI<4-items> = 0.93, SRMR<4-items> = 0.06). Nonetheless, as 3-items per construct is the bare minimum for adequate reliability, we decided to keep the second best performing version with 4-items per factor, which also displayed excellent indices of fit."
+> [1] "Finally, we compared the full four-factors model (including all items) with short form retaining only the 3, 4 or 5 most loading items for each of the 4 dimensions. The 3-items version (X2<3-items> = 60.54, AIC<3-items> = 14181.35, BIC<3-items> = 14196.01, RMSEA<3-items> = 0.03, CFI<3-items> = 0.99, SRMR<3-items> = 0.04) outperformed all versions, including 5-items (X2<5-items> = 467.21, AIC<5-items> = 23654.95, BIC<5-items> = 23677.41, RMSEA<5-items> = 0.08, CFI<5-items> = 0.90, SRMR<5-items> = 0.09) and 4-items (X2<4-items> = 207.63, AIC<4-items> = 18875.55, BIC<4-items> = 18894.11, RMSEA<4-items> = 0.06, CFI<4-items> = 0.95, SRMR<4-items> = 0.07). Nonetheless, as 3-items per construct is the bare minimum for adequate reliability, we decided to keep the second best performing version with 4-items per factor, which also displayed excellent indices of fit."
 ```
 
 #### Model Description
@@ -1400,7 +1400,7 @@ paste0("Finally, we compared the full four-factors model (including all items) w
 
 ```r
 # Refit the cfa model with the full sample
-cfa_4_short4_full <- parameters::efa_to_cfa(efa_4, threshold = 4, names = c( "Frequency", "Ability", "Negativity", "Contextuality")) %>% 
+cfa_4_short4_full <- parameters::efa_to_cfa(efa_4, threshold = 4, names = c( "Ability", "Frequency", "Negativity", "Contextuality")) %>% 
   lavaan::cfa(data = lie)
 
 cfa_parameters <- model_parameters(cfa_4_short4_full, standardize = FALSE)
@@ -1411,28 +1411,28 @@ cfa_parameters
 
      To              Operator   From             Coefficient     SE   CI_low   CI_high    p  Type        
 ---  --------------  ---------  --------------  ------------  -----  -------  --------  ---  ------------
-1    Frequency       =~         LIE_9                   1.00   0.00     1.00      1.00    0  Loading     
-2    Frequency       =~         LIE_10                  1.05   0.03     0.99      1.11    0  Loading     
-3    Frequency       =~         LIE_12                  0.87   0.03     0.81      0.93    0  Loading     
-4    Frequency       =~         LIE_18                  0.92   0.03     0.85      0.98    0  Loading     
-5    Ability         =~         LIE_1                   1.00   0.00     1.00      1.00    0  Loading     
-6    Ability         =~         LIE_4                   1.02   0.04     0.94      1.10    0  Loading     
-7    Ability         =~         LIE_5                   0.93   0.04     0.86      1.01    0  Loading     
-8    Ability         =~         LIE_7                   0.88   0.05     0.79      0.97    0  Loading     
+1    Ability         =~         LIE_9                   1.00   0.00     1.00      1.00    0  Loading     
+2    Ability         =~         LIE_10                  1.01   0.03     0.96      1.06    0  Loading     
+3    Ability         =~         LIE_12                  0.88   0.03     0.82      0.94    0  Loading     
+4    Ability         =~         LIE_14                  0.78   0.03     0.73      0.83    0  Loading     
+5    Frequency       =~         LIE_4                   1.00   0.00     1.00      1.00    0  Loading     
+6    Frequency       =~         LIE_5                   0.91   0.04     0.83      0.99    0  Loading     
+7    Frequency       =~         LIE_22                  0.79   0.04     0.71      0.88    0  Loading     
+8    Frequency       =~         LIE_23                  0.82   0.04     0.74      0.91    0  Loading     
 9    Negativity      =~         LIE_25                  1.00   0.00     1.00      1.00    0  Loading     
-10   Negativity      =~         LIE_27                  0.99   0.07     0.86      1.12    0  Loading     
-11   Negativity      =~         LIE_34                  0.76   0.05     0.66      0.86    0  Loading     
-12   Negativity      =~         LIE_41                  1.13   0.07     0.99      1.26    0  Loading     
-13   Contextuality   =~         LIE_33                  1.00   0.00     1.00      1.00    0  Loading     
-14   Contextuality   =~         LIE_39                  0.77   0.06     0.65      0.90    0  Loading     
-15   Contextuality   =~         LIE_42                  1.03   0.06     0.92      1.15    0  Loading     
-16   Contextuality   =~         LIE_43                  1.17   0.06     1.04      1.29    0  Loading     
-37   Frequency       ~~         Ability                 2.48   0.23     2.03      2.93    0  Correlation 
-38   Frequency       ~~         Negativity             -2.40   0.22    -2.83     -1.97    0  Correlation 
-39   Frequency       ~~         Contextuality           1.84   0.19     1.48      2.21    0  Correlation 
-40   Ability         ~~         Negativity             -2.10   0.19    -2.48     -1.72    0  Correlation 
-41   Ability         ~~         Contextuality           1.04   0.15     0.75      1.34    0  Correlation 
-42   Negativity      ~~         Contextuality          -1.12   0.14    -1.40     -0.85    0  Correlation 
+10   Negativity      =~         LIE_34                  0.81   0.06     0.69      0.92    0  Loading     
+11   Negativity      =~         LIE_41                  1.28   0.08     1.12      1.44    0  Loading     
+12   Negativity      =~         LIE_44                  1.01   0.07     0.87      1.15    0  Loading     
+13   Contextuality   =~         LIE_30                  1.00   0.00     1.00      1.00    0  Loading     
+14   Contextuality   =~         LIE_33                  1.28   0.13     1.02      1.53    0  Loading     
+15   Contextuality   =~         LIE_42                  1.47   0.15     1.18      1.75    0  Loading     
+16   Contextuality   =~         LIE_43                  1.58   0.15     1.28      1.88    0  Loading     
+37   Ability         ~~         Frequency               2.15   0.23     1.70      2.60    0  Correlation 
+38   Ability         ~~         Negativity             -1.89   0.20    -2.29     -1.50    0  Correlation 
+39   Ability         ~~         Contextuality           1.34   0.18     1.00      1.69    0  Correlation 
+40   Frequency       ~~         Negativity             -1.72   0.18    -2.06     -1.37    0  Correlation 
+41   Frequency       ~~         Contextuality           0.65   0.12     0.41      0.88    0  Correlation 
+42   Negativity      ~~         Contextuality          -0.78   0.12    -1.01     -0.56    0  Correlation 
 
 </div>
 
@@ -1475,9 +1475,9 @@ tidygraph::tbl_graph(data$nodes, data$edges) %>%
   scale_alpha(guide = FALSE, range = c(0, 1)) +
   scale_size_manual(values=c("TRUE"=33, "FALSE"=22)) +
   scale_color_manual(values=c("Negativity"="#E91E63", "Q41"="#EC407A", "Q44"="#F06292", "Q34"="#F48FB1", "Q25"="#F8BBD0",
-                              "Contextuality"="#FF9800", "Q43"="#FFA726", "Q42"="#FFB74D", "Q33"="#FFCC80", "Q39"="#FFE0B2",
-                              "Frequency"="#4CAF50", "Q1"="#66BB6A", "Q4"="#81C784", "Q5"="#A5D6A7", "Q23"="#C8E6C9",
-                              "Ability"="#2196F3", "Q10"="#42A5F5", "Q9"="#64B5F6", "Q18"="#90CAF9", "Q14"="#BBDEFB")) +
+                              "Contextuality"="#FF9800", "Q43"="#FFA726", "Q42"="#FFB74D", "Q33"="#FFCC80", "Q30"="#FFE0B2",
+                              "Frequency"="#4CAF50", "Q4"="#66BB6A", "Q5"="#81C784", "Q22"="#A5D6A7", "Q23"="#C8E6C9",
+                              "Ability"="#2196F3", "Q10"="#42A5F5", "Q9"="#64B5F6", "Q12"="#90CAF9", "Q14"="#BBDEFB")) +
   ggraph::scale_edge_alpha(guide = FALSE, range = c(0, 1)) +
   scale_x_continuous(expand = expansion(c(0.07, 0.07))) +
   scale_y_continuous(expand = expansion(c(0.07, 0.07))) +
@@ -1494,7 +1494,7 @@ tidygraph::tbl_graph(data$nodes, data$edges) %>%
 table_efa <- as.data.frame(sort(parameters::model_parameters(efa_4, labels = labels_lie$Description)))[,1:6] %>% 
   mutate(Variable = as.character(Variable)) %>% 
   mutate_if(is.numeric, insight::format_value)
-names(table_efa) <- c("Item", "Label", "Frequency", "Ability", "Negativity", "Contextuality")
+names(table_efa) <- c("Item", "Label", "Ability", "Frequency", "Negativity", "Contextuality")
 
 table_cfa <- as.data.frame(parameters::model_parameters(cfa_4_short4_full)) %>% 
   filter(Type == "Loading") %>% 
@@ -1538,10 +1538,10 @@ lie %>%
 ```
 > Variable          |      Mean |   SD |   Min |  Max | Skewness | Kurtosis
 > -------------------------------------------------------------------------
-> LIE_Frequency     | -1.49e-17 | 2.35 | -5.19 | 4.86 |    -0.30 |    -0.70
-> LIE_Ability       | -4.32e-17 | 1.93 | -3.43 | 6.23 |     0.35 |    -0.40
-> LIE_Negativity    | -5.03e-17 | 1.53 | -5.56 | 3.36 |    -0.23 |     0.11
-> LIE_Contextuality |  6.03e-18 | 1.43 | -5.41 | 2.81 |    -0.87 |     1.34
+> LIE_Ability       | -3.03e-17 | 2.38 | -5.43 | 4.58 |    -0.34 |    -0.61
+> LIE_Frequency     | -7.84e-19 | 1.86 | -3.36 | 6.76 |     0.26 |    -0.50
+> LIE_Negativity    |  1.73e-17 | 1.40 | -5.34 | 3.11 |    -0.11 |    -0.07
+> LIE_Contextuality |  2.82e-17 | 1.00 | -3.88 | 2.02 |    -0.94 |     1.72
 ```
 
 ```r
@@ -1550,14 +1550,14 @@ p_distrib <- lie %>%
   dplyr::rename_all(.funs = list(~ sub("LIE_*", "", .))) %>%
   bayestestR::estimate_density(method = "KernSmooth") %>% 
   see::data_plot() %>% 
-  mutate(Parameter = fct_relevel(Parameter, "Frequency", "Ability", "Negativity", "Contextuality")) %>% 
+  mutate(Parameter = fct_relevel(Parameter, "Ability", "Frequency", "Negativity", "Contextuality")) %>% 
   ggplot(aes(x=x, y=y, color=Parameter)) +
   geom_line(size=2) +
   # ggtitle("Distribution of the LIE dimensions") +
   xlab("Score\n") +
   ylab("Distribution") +
   theme_modern() +
-  scale_color_manual(values=c("Frequency"= "#2196F3", "Ability"="#4CAF50", "Negativity"="#E91E63", "Contextuality"="#FF9800"), name = "Dimensions")
+  scale_color_manual(values=c("Ability"= "#2196F3", "Frequency"="#4CAF50", "Negativity"="#E91E63", "Contextuality"="#FF9800"), name = "Dimensions")
 ```
 
 
@@ -1580,7 +1580,7 @@ paste0("All subscales of the LIE scale, namely, Frequency (alpha = ",
 ```
 
 ```
-> [1] "All subscales of the LIE scale, namely, Frequency (alpha = 0.86), Ability (alpha = 0.90), Contextuality (alpha = 0.77) and Negativity (alpha = 0.77) have a high reliability."
+> [1] "All subscales of the LIE scale, namely, Frequency (alpha = 0.86), Ability (alpha = 0.92), Contextuality (alpha = 0.77) and Negativity (alpha = 0.77) have a high reliability."
 ```
 
 
@@ -1594,7 +1594,7 @@ om <- psych::omega(m = questions, nfactors = 4, fm = "ml", title = "Omega of LIE
 
 # Table of omega coefficients
 table_om <- om$omega.group
-rownames(table_om) <- c("All items","Frequency", "Ability", "Negativity", "Contextuality")
+rownames(table_om) <- c("All items","Ability", "Frequency", "Negativity", "Contextuality")
 colnames(table_om) <- c("Omega (total)", "Omega (hierarchical)", "Omega (group)")
 table_om
 ```
@@ -1603,18 +1603,18 @@ table_om
 
                  Omega (total)   Omega (hierarchical)   Omega (group)
 --------------  --------------  ---------------------  --------------
-All items                 0.84                   0.43            0.46
-Frequency                 0.91                   0.56            0.35
-Ability                   0.87                   0.31            0.56
-Negativity                0.78                   0.24            0.53
-Contextuality             0.75                   0.34            0.40
+All items                 0.84                   0.39            0.50
+Ability                   0.92                   0.49            0.43
+Frequency                 0.85                   0.25            0.60
+Negativity                0.78                   0.29            0.49
+Contextuality             0.77                   0.34            0.43
 
 </div>
 
 ```r
 # Table of variance accounted for
 table_variance <- om$omega.group %>%
-  mutate(Composite = c("All items", "Frequency", "Ability", "Negativity", "Contextuality")) %>%
+  mutate(Composite = c("All items", "Ability", "Frequency", "Negativity", "Contextuality")) %>%
   mutate(Total = total*100,
          General = general*100,
          Group = group*100) %>%
@@ -1627,11 +1627,11 @@ table_variance
 
 Composite        Total Variance (%)   Variance due to General Factor (%)   Variance due to Group Factor (%)
 --------------  -------------------  -----------------------------------  ---------------------------------
-All items                        84                                   43                                 46
-Frequency                        91                                   56                                 35
-Ability                          87                                   31                                 56
-Negativity                       78                                   24                                 53
-Contextuality                    75                                   34                                 40
+All items                        84                                   39                                 50
+Ability                          92                                   49                                 43
+Frequency                        85                                   25                                 60
+Negativity                       78                                   29                                 49
+Contextuality                    77                                   34                                 43
 
 </div>
 
@@ -1657,7 +1657,7 @@ parameters::check_clusterstructure(lie, standardize = FALSE) %T>%
 ```
 > # Clustering tendency
 > 
-> The dataset is suitable for clustering (Hopkins' H = 0.22).
+> The dataset is suitable for clustering (Hopkins' H = 0.21).
 ```
 
 <img src="figures/unnamed-chunk-58-1.png" style="display: block; margin: auto;" />
@@ -1675,7 +1675,7 @@ parameters::n_clusters(lie, standardize = FALSE) %T>%
 ```
 > # Method Agreement Procedure:
 > 
-> The choice of 2 clusters is supported by 8 (28.57%) methods out of 28 (CH, DB, Silhouette, Beale, Ratkowsky, PtBiserial, McClain, SDindex).
+> The choice of 3 clusters is supported by 7 (25.00%) methods out of 28 (Scott, TrCovW, Friedman, Ratkowsky, Ball, SDindex, Mixture).
 ```
 
 <img src="figures/unnamed-chunk-59-1.png" style="display: block; margin: auto;" />
@@ -1698,10 +1698,10 @@ model_parameters(k2)
 
 <div class="kable-table">
 
-Cluster    n_Obs   Sum_Squares   LIE_Frequency   LIE_Ability   LIE_Negativity   LIE_Contextuality
---------  ------  ------------  --------------  ------------  ---------------  ------------------
-1            445          3125             1.6           1.1             -0.9                0.61
-2            350          2802            -2.0          -1.4              1.1               -0.78
+Cluster    n_Obs   Sum_Squares   LIE_Ability   LIE_Frequency   LIE_Negativity   LIE_Contextuality
+--------  ------  ------------  ------------  --------------  ---------------  ------------------
+1            450          2959           1.4            0.83            -0.66                0.38
+2            266          1813          -2.3           -1.40             1.12               -0.64
 
 </div>
 
@@ -1711,11 +1711,11 @@ model_parameters(k3)
 
 <div class="kable-table">
 
-Cluster    n_Obs   Sum_Squares   LIE_Frequency   LIE_Ability   LIE_Negativity   LIE_Contextuality
---------  ------  ------------  --------------  ------------  ---------------  ------------------
-1            243          1423            2.14          1.99            -1.42                0.89
-2            354          1913            0.28         -0.37             0.07                0.08
-3            198          1264           -3.12         -1.78             1.62               -1.23
+Cluster    n_Obs   Sum_Squares   LIE_Ability   LIE_Frequency   LIE_Negativity   LIE_Contextuality
+--------  ------  ------------  ------------  --------------  ---------------  ------------------
+1            308          1576           0.0           -0.41             0.18               -0.01
+2            258          1332           2.0            1.63            -1.12                0.55
+3            150           697          -3.4           -1.97             1.56               -0.93
 
 </div>
 
@@ -1729,7 +1729,7 @@ paste0("We applied k-means clustering, which revealed that grouping the particip
 ```
 
 ```
-> [1] "We applied k-means clustering, which revealed that grouping the participants in 2 and 3 clusters would account for 45.24% and 57.51% of the total variance of the four dimensions of the questionnaire, respectively. Thus, we decided to go ahead with the latter solution."
+> [1] "We applied k-means clustering, which revealed that grouping the participants in 2 and 3 clusters would account for 44.64% and 58.18% of the total variance of the four dimensions of the questionnaire, respectively. Thus, we decided to go ahead with the latter solution."
 ```
 
 
@@ -1784,7 +1784,7 @@ paste0('We then assigned each participant to its nearest cluster, labelling them
 ```
 
 ```
-> [1] "We then assigned each participant to its nearest cluster, labelling them as Average (30.57% of the sample; people that report an average lying ability, slightly lower than average frequency, average negativity and contextuality), Trickster (44.53%; people with high reported lying ability, frequency, low negative experience associated with deception and above-average flexibility in its implementation), and Virtuous (24.91%; people with very low reported lying ability and frequency, strong negative emotions and moral attitude associated with lying and high rigidity in their (non-)usage of deception)."
+> [1] "We then assigned each participant to its nearest cluster, labelling them as Average (43.02% of the sample; people that report an average lying ability, slightly lower than average frequency, average negativity and contextuality), Trickster (36.03%; people with high reported lying ability, frequency, low negative experience associated with deception and above-average flexibility in its implementation), and Virtuous (20.95%; people with very low reported lying ability and frequency, strong negative emotions and moral attitude associated with lying and high rigidity in their (non-)usage of deception)."
 ```
 
 
@@ -1823,7 +1823,7 @@ p_profiles <- lie %>%
   pivot_longer(-LIE_Profile, names_to = "Dimension", values_to = "Score") %>%
   mutate(LIE_Profile = fct_relevel(LIE_Profile, "Trickster", "Average", "Virtuous"),
          Dimension = str_remove(Dimension, "LIE_"),
-         Dimension = fct_relevel(Dimension, "Frequency", "Ability", "Negativity", "Contextuality")) %>% 
+         Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality")) %>% 
   group_by(LIE_Profile, Dimension) %>% 
   summarise_all(mean) %>%
   rename(Profile = LIE_Profile) %>% 
@@ -1886,8 +1886,8 @@ performance::compare_performance(model_dimensional, model_profile, metrics = c("
 
 Model               Type       ELPD   ELPD_SE   LOOIC   LOOIC_SE     R2
 ------------------  --------  -----  --------  ------  ---------  -----
-model_dimensional   stanreg    -536       6.3    1072         13   0.04
-model_profile       stanreg    -539       5.5    1077         11   0.02
+model_dimensional   stanreg    -486       5.6     971         11   0.03
+model_profile       stanreg    -486       5.2     971         10   0.03
 
 </div>
 
@@ -1899,9 +1899,9 @@ parameters::parameters_table(model_parameters(model_profile))
 
 Parameter                 Median   89% CI           pd       % in ROPE   Rhat    ESS    Prior               
 ------------------------  -------  ---------------  -------  ----------  ------  -----  --------------------
-(Intercept)               0.09     [-0.11,  0.28]   76.98%   75.70%      1.000   2775   Normal (0 +- 10.00) 
-LIE_Profile [Trickster]   -0.33    [-0.59, -0.07]   97.72%   17.72%      1.000   2701   Normal (0 +- 2.50)  
-LIE_Profile [Virtuous]    -0.83    [-1.12, -0.50]   100%     0.05%       1.001   2736   Normal (0 +- 2.50)  
+(Intercept)               -0.37    [-0.54, -0.18]   99.95%   4.38%       0.999   3016   Normal (0 +- 10.00) 
+LIE_Profile [Trickster]   0.53     [ 0.26,  0.80]   99.95%   2.08%       1.000   3258   Normal (0 +- 2.50)  
+LIE_Profile [Virtuous]    -0.31    [-0.62,  0.06]   92.00%   27.38%      1.000   3034   Normal (0 +- 2.50)  
 
 </div>
 
@@ -1913,11 +1913,11 @@ parameters::parameters_table(model_parameters(model_dimensional))
 
      Parameter           Median   89% CI           pd       % in ROPE   Rhat    ESS    Prior               
 ---  ------------------  -------  ---------------  -------  ----------  ------  -----  --------------------
-1    (Intercept)         -0.27    [-0.39, -0.15]   100%     13.03%      1.001   3293   Normal (0 +- 10.00) 
-2    LIE_Ability         0.03     [-0.05,  0.11]   73.35%   99.75%      1.000   3293   Normal (0 +- 1.30)  
-4    LIE_Frequency       0.06     [-0.01,  0.14]   91.27%   99.65%      1.002   3073   Normal (0 +- 1.07)  
-3    LIE_Contextuality   -0.03    [-0.13,  0.07]   68.83%   98.72%      1.000   3135   Normal (0 +- 1.75)  
-5    LIE_Negativity      -0.17    [-0.29, -0.05]   98.52%   58.33%      1.000   3152   Normal (0 +- 1.63)  
+1    (Intercept)         -0.24    [-0.36, -0.11]   99.83%   20.70%      1.000   3682   Normal (0 +- 10.00) 
+2    LIE_Ability         0.11     [ 0.04,  0.18]   99.20%   96.25%      1.001   2811   Normal (0 +- 1.05)  
+4    LIE_Frequency       0.08     [-0.01,  0.17]   93.62%   95.85%      1.002   3291   Normal (0 +- 1.35)  
+3    LIE_Contextuality   -0.10    [-0.25,  0.06]   84.60%   79.33%      1.000   2988   Normal (0 +- 2.49)  
+5    LIE_Negativity      -0.06    [-0.19,  0.07]   74.28%   93.00%      1.001   2755   Normal (0 +- 1.78)  
 
 </div>
 
@@ -1942,7 +1942,7 @@ df %>%
   select(Participant, Sex, starts_with("LIE_"), -LIE_Profile) %>%
   pivot_longer(-c(Sex, Participant), names_to = "Dimension", values_to = "Score") %>%
   mutate(Dimension = str_remove(Dimension, "LIE_"),
-         Dimension = fct_relevel(Dimension, "Frequency", "Ability", "Negativity", "Contextuality")) %>%
+         Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality")) %>%
   ggplot(aes(x = Dimension, y = Score)) +
   geom_boxplot(aes(fill = Sex, color = Sex)) +
   scale_fill_manual(values = c("Male" = "#2196F3", "Female" = "#F06292")) +
@@ -1964,7 +1964,7 @@ sig <- model_parameters(model_dimensional)[-1,] %>%
            select(one_of(Parameter)) %>%
            summarise_all(function(x) {mean(range(x))}) %>%
            t()) %>%
-  mutate(Dimension = fct_relevel(Dimension, "Frequency", "Ability", "Negativity", "Contextuality"))
+  mutate(Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality"))
 
 p_sex <- rbind(estimate_link(model_dimensional, target="LIE_Ability") %>%
         mutate(LIE_Frequency = NA, LIE_Contextuality=NA, LIE_Negativity=NA),
@@ -1976,7 +1976,7 @@ p_sex <- rbind(estimate_link(model_dimensional, target="LIE_Ability") %>%
         mutate(LIE_Frequency = NA, LIE_Contextuality=NA, LIE_Ability=NA)) %>%
   pivot_longer(cols=starts_with("LIE_"), names_to="Dimension", values_to = "Score") %>%
   mutate(Dimension = str_remove(Dimension, "LIE_"),
-         Dimension = fct_relevel(Dimension, "Frequency", "Ability", "Negativity", "Contextuality")) %>%
+         Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality")) %>%
   ggplot(aes(x = Score, y = Predicted)) +
   geom_ribbon(aes(ymin=CI_low, ymax=CI_high, fill=Dimension), alpha=0.1) +
   geom_line(aes(color=Dimension), size = 1) +
@@ -2009,8 +2009,8 @@ performance::compare_performance(model_dimensional, model_profile)
 
 Model               Type        ELPD   ELPD_SE   LOOIC   LOOIC_SE   WAIC     R2   R2_marginal   R2_adjusted   RMSE
 ------------------  --------  ------  --------  ------  ---------  -----  -----  ------------  ------------  -----
-model_dimensional   stanreg    -2282        38    4564         76   4564   0.26          0.26          0.23    6.6
-model_profile       stanreg    -2279        38    4558         75   4558   0.26          0.26          0.23    6.6
+model_dimensional   stanreg    -1979        40    3958         79   3958   0.27          0.27          0.24    5.9
+model_profile       stanreg    -1980        40    3961         80   3961   0.26          0.26          0.24    6.0
 
 </div>
 
@@ -2022,11 +2022,11 @@ parameters::parameters_table(model_parameters(model_profile))
 
      Parameter                 Median     89% CI           pd       % in ROPE   Rhat    ESS    Prior               
 ---  ------------------------  ---------  ---------------  -------  ----------  ------  -----  --------------------
-1    (Intercept)               30.78      [28.40, 32.75]   100%     0%          1.003   880    Normal (0 +- 76.59) 
-4    LIE_Profile [Trickster]   0.31       [-0.65,  1.22]   69.92%   75.15%      1.001   2842   Normal (0 +- 19.15) 
-5    LIE_Profile [Virtuous]    3.10       [ 2.05,  4.18]   100%     0.02%       1.000   2643   Normal (0 +- 19.15) 
-3    Income                    1.76e-04   [ 0.00,  0.00]   99.92%   100%        1.000   3327   Normal (0 +- 0.00)  
-2    Education                 -1.90      [-2.11, -1.68]   100%     0%          1.000   3051   Normal (0 +- 9.61)  
+1    (Intercept)               31.12      [29.10, 33.39]   100%     0%          1.004   789    Normal (0 +- 69.26) 
+4    LIE_Profile [Trickster]   -0.55      [-1.37,  0.36]   83.33%   59.25%      1.000   2883   Normal (0 +- 17.31) 
+5    LIE_Profile [Virtuous]    1.56       [ 0.58,  2.65]   99.20%   8.75%       1.000   3199   Normal (0 +- 17.31) 
+3    Income                    1.41e-04   [ 0.00,  0.00]   99.20%   100%        1.000   3744   Normal (0 +- 0.00)  
+2    Education                 -1.84      [-2.06, -1.65]   100%     0%          1.001   3527   Normal (0 +- 8.97)  
 
 </div>
 
@@ -2038,13 +2038,13 @@ parameters::parameters_table(model_parameters(model_dimensional))
 
      Parameter           Median     89% CI           pd       % in ROPE   Rhat    ESS    Prior               
 ---  ------------------  ---------  ---------------  -------  ----------  ------  -----  --------------------
-1    (Intercept)         31.60      [29.62, 33.21]   100%     0%          1.008   678    Normal (0 +- 76.59) 
-4    LIE_Ability         -0.12      [-0.41,  0.19]   72.55%   100%        1.000   3271   Normal (0 +- 9.83)  
-6    LIE_Frequency       -0.37      [-0.61, -0.12]   98.83%   99.52%      1.000   3209   Normal (0 +- 8.25)  
-5    LIE_Contextuality   -0.17      [-0.51,  0.17]   78.38%   99.60%      1.000   3042   Normal (0 +- 13.41) 
-7    LIE_Negativity      0.07       [-0.35,  0.52]   59.35%   99.10%      1.000   2508   Normal (0 +- 12.30) 
-3    Income              1.76e-04   [ 0.00,  0.00]   99.70%   100%        1.000   4242   Normal (0 +- 0.00)  
-2    Education           -1.87      [-2.07, -1.66]   100%     0%          1.000   3851   Normal (0 +- 9.61)  
+1    (Intercept)         31.12      [28.44, 33.71]   100%     0%          1.090   38     Normal (0 +- 69.26) 
+4    LIE_Ability         -0.23      [-0.47, -0.01]   95.15%   99.95%      1.008   429    Normal (0 +- 7.41)  
+6    LIE_Frequency       0.04       [-0.26,  0.30]   60.15%   100%        1.002   2222   Normal (0 +- 9.29)  
+5    LIE_Contextuality   -0.61      [-1.11, -0.13]   96.83%   60.82%      1.003   1250   Normal (0 +- 17.30) 
+7    LIE_Negativity      0.00       [-0.40,  0.42]   50.85%   99.35%      1.002   1312   Normal (0 +- 12.30) 
+3    Income              1.40e-04   [ 0.00,  0.00]   99.45%   100%        1.002   2341   Normal (0 +- 0.00)  
+2    Education           -1.82      [-2.01, -1.62]   100%     0%          1.004   1616   Normal (0 +- 8.97)  
 
 </div>
 
@@ -2075,7 +2075,7 @@ sig <- model_parameters(model_dimensional)[2:5,] %>%
            select(one_of(Parameter)) %>%
            summarise_all(function(x) {mean(range(x))}) %>%
            t()) %>%
-  mutate(Dimension = fct_relevel(Dimension, "Frequency", "Ability", "Negativity", "Contextuality"))
+  mutate(Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality"))
 
 p_age <- rbind(estimate_link(model_dimensional, target="LIE_Frequency") %>%
         mutate(LIE_Ability = NA, LIE_Contextuality=NA, LIE_Negativity=NA),
@@ -2087,7 +2087,7 @@ p_age <- rbind(estimate_link(model_dimensional, target="LIE_Frequency") %>%
         mutate(LIE_Frequency = NA, LIE_Contextuality=NA, LIE_Ability=NA)) %>%
   pivot_longer(cols=starts_with("LIE_"), names_to="Dimension", values_to = "Score") %>%
   mutate(Dimension = str_remove(Dimension, "LIE_"),
-         Dimension = fct_relevel(Dimension, "Frequency", "Ability", "Negativity", "Contextuality")) %>%
+         Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality")) %>%
   ggplot(aes(x = Score, y = Predicted)) +
   geom_ribbon(aes(ymin=CI_low, ymax=CI_high, fill=Dimension), alpha=0.1) +
   geom_line(aes(color=Dimension), size = 1) +
@@ -2121,8 +2121,8 @@ performance::compare_performance(model_dimensional, model_profile)
 
 Model               Type        ELPD   ELPD_SE   LOOIC   LOOIC_SE   WAIC     R2   R2_marginal   R2_adjusted   RMSE
 ------------------  --------  ------  --------  ------  ---------  -----  -----  ------------  ------------  -----
-model_dimensional   stanreg    -1564        33    3128         66   3128   0.24          0.24          0.22    1.7
-model_profile       stanreg    -1562        33    3124         65   3124   0.22          0.22          0.23    1.8
+model_dimensional   stanreg    -1388        34    2775         68   2775   0.26          0.26          0.24    1.7
+model_profile       stanreg    -1384        34    2768         68   2768   0.26          0.26          0.24    1.7
 
 </div>
 
@@ -2132,12 +2132,12 @@ parameters::parameters_table(model_parameters(model_profile))
 
 <div class="kable-table">
 
-     Parameter                 Median   89% CI           pd       % in ROPE   Rhat    ESS   Prior               
----  ------------------------  -------  ---------------  -------  ----------  ------  ----  --------------------
-1    (Intercept)               7.00     [ 6.14, 10.68]   100%     0%          4.344   2     Normal (0 +- 19.95) 
-3    LIE_Profile [Trickster]   0.27     [ 0.06,  0.44]   97.12%   30.35%      1.079   21    Normal (0 +- 4.99)  
-4    LIE_Profile [Virtuous]    0.63     [ 0.44,  0.89]   100%     0.27%       1.023   297   Normal (0 +- 4.99)  
-2    Age                       -0.12    [-0.14, -0.11]   100%     100%        1.096   15    Normal (0 +- 0.65)  
+     Parameter                 Median   89% CI           pd       % in ROPE   Rhat    ESS    Prior               
+---  ------------------------  -------  ---------------  -------  ----------  ------  -----  --------------------
+1    (Intercept)               7.07     [ 6.28,  7.75]   100%     0%          1.005   788    Normal (0 +- 19.53) 
+3    LIE_Profile [Trickster]   -0.45    [-0.69, -0.22]   99.85%   3.72%       1.000   3087   Normal (0 +- 4.88)  
+4    LIE_Profile [Virtuous]    0.22     [-0.05,  0.50]   90.30%   42.70%      1.000   2926   Normal (0 +- 4.88)  
+2    Age                       -0.14    [-0.15, -0.12]   100%     100%        1.000   3443   Normal (0 +- 0.69)  
 
 </div>
 
@@ -2149,12 +2149,12 @@ parameters::parameters_table(model_parameters(model_dimensional))
 
      Parameter           Median   89% CI           pd       % in ROPE   Rhat    ESS    Prior               
 ---  ------------------  -------  ---------------  -------  ----------  ------  -----  --------------------
-1    (Intercept)         6.66     [ 5.99,  7.30]   100%     0%          1.003   1034   Normal (0 +- 19.95) 
-3    LIE_Ability         -0.10    [-0.17, -0.03]   98.62%   98.42%      1.000   2808   Normal (0 +- 2.58)  
-5    LIE_Frequency       -0.08    [-0.14, -0.02]   98.02%   99.75%      1.000   3050   Normal (0 +- 2.13)  
-4    LIE_Contextuality   0.09     [ 0.00,  0.17]   96.67%   97.50%      1.002   2998   Normal (0 +- 3.49)  
-6    LIE_Negativity      -0.02    [-0.12,  0.08]   59.40%   99.70%      1.000   2729   Normal (0 +- 3.26)  
-2    Age                 -0.12    [-0.14, -0.11]   100%     100%        1.000   3825   Normal (0 +- 0.65)  
+1    (Intercept)         6.95     [ 6.24,  7.73]   100%     0%          1.013   444    Normal (0 +- 19.53) 
+3    LIE_Ability         -0.05    [-0.10,  0.01]   91.38%   100%        0.999   3180   Normal (0 +- 2.06)  
+5    LIE_Frequency       -0.11    [-0.18, -0.04]   99.40%   96.67%      0.999   3052   Normal (0 +- 2.63)  
+4    LIE_Contextuality   0.02     [-0.10,  0.16]   60.98%   97.82%      1.000   2934   Normal (0 +- 4.87)  
+6    LIE_Negativity      -0.03    [-0.14,  0.08]   67.05%   98.92%      1.000   2748   Normal (0 +- 3.50)  
+2    Age                 -0.14    [-0.15, -0.12]   100%     100%        1.000   3461   Normal (0 +- 0.69)  
 
 </div>
 
@@ -2189,8 +2189,8 @@ performance::compare_performance(model_dimensional, model_profile)
 
 Model               Type        ELPD   ELPD_SE   LOOIC   LOOIC_SE    WAIC     R2   R2_marginal   R2_adjusted   RMSE
 ------------------  --------  ------  --------  ------  ---------  ------  -----  ------------  ------------  -----
-model_dimensional   stanreg    -6733       143   13466        286   13476   0.04          0.04          0.02   4239
-model_profile       stanreg    -6732       143   13464        286   13479   0.04          0.04          0.02   4238
+model_dimensional   stanreg    -6044       139   12087        278   12107   0.05          0.05          0.01   4259
+model_profile       stanreg    -6043       138   12086        275   12110   0.04          0.04          0.01   4278
 
 </div>
 
@@ -2202,11 +2202,11 @@ parameters::parameters_table(model_parameters(model_profile))
 
      Parameter                 Median    89% CI                pd       % in ROPE   Rhat    ESS    Prior                  
 ---  ------------------------  --------  --------------------  -------  ----------  ------  -----  -----------------------
-1    (Intercept)               -134.04   [-1914.68, 1565.71]   55.40%   32.40%      1.001   884    Normal (0 +- 43107.16) 
-4    LIE_Profile [Trickster]   -349.50   [ -969.57,  228.00]   82.40%   56.73%      1.003   2276   Normal (0 +- 10776.79) 
-5    LIE_Profile [Virtuous]    -822.22   [-1540.40, -128.53]   96.88%   19.53%      1.003   1967   Normal (0 +- 10776.79) 
-2    Age                       71.97     [   34.30,  111.47]   99.90%   100%        1.000   2673   Normal (0 +- 1407.05)  
-3    Education                 420.20    [  267.51,  568.71]   100%     55.20%      1.000   2194   Normal (0 +- 5411.03)  
+1    (Intercept)               -813.36   [-2819.17, 1085.59]   75.10%   22.90%      1.002   1099   Normal (0 +- 43583.53) 
+4    LIE_Profile [Trickster]   274.76    [ -352.58,  913.93]   75.17%   62.28%      1.000   2343   Normal (0 +- 10895.88) 
+5    LIE_Profile [Virtuous]    -400.26   [-1139.97,  376.44]   80.00%   48.90%      1.001   2861   Normal (0 +- 10895.88) 
+2    Age                       73.48     [   28.81,  120.61]   99.62%   100%        1.002   2271   Normal (0 +- 1573.27)  
+3    Education                 487.09    [  318.65,  652.46]   100%     30.73%      1.002   2248   Normal (0 +- 5643.76)  
 
 </div>
 
@@ -2216,15 +2216,15 @@ parameters::parameters_table(model_parameters(model_dimensional))
 
 <div class="kable-table">
 
-     Parameter           Median    89% CI               pd       % in ROPE   Rhat    ESS    Prior                  
----  ------------------  --------  -------------------  -------  ----------  ------  -----  -----------------------
-1    (Intercept)         -733.23   [-4837.80, 928.90]   73.90%   24.93%      1.498   12     Normal (0 +- 43107.16) 
-4    LIE_Ability         53.89     [ -134.89, 234.82]   66.62%   99.92%      1.088   55     Normal (0 +- 5535.29)  
-6    LIE_Frequency       171.63    [   11.85, 322.64]   97.25%   99.33%      1.109   35     Normal (0 +- 4645.68)  
-5    LIE_Contextuality   -160.55   [ -367.78,  60.56]   89.22%   97.62%      1.001   2028   Normal (0 +- 7547.41)  
-7    LIE_Negativity      38.94     [ -232.19, 291.87]   61.05%   98.90%      1.004   3006   Normal (0 +- 6922.59)  
-2    Age                 68.29     [   35.96, 109.18]   99.90%   100%        1.043   153    Normal (0 +- 1407.05)  
-3    Education           438.29    [  287.69, 567.29]   100%     47.12%      1.029   251    Normal (0 +- 5411.03)  
+     Parameter           Median    89% CI                pd       % in ROPE   Rhat    ESS    Prior                  
+---  ------------------  --------  --------------------  -------  ----------  ------  -----  -----------------------
+1    (Intercept)         -716.13   [-2961.26, 1368.37]   72.80%   21.80%      1.071   69     Normal (0 +- 43583.53) 
+4    LIE_Ability         222.05    [   66.74,  378.14]   99.12%   98.15%      1.003   1550   Normal (0 +- 4661.19)  
+6    LIE_Frequency       58.29     [ -130.90,  255.33]   68.73%   99.90%      1.011   1166   Normal (0 +- 5845.00)  
+5    LIE_Contextuality   -349.29   [ -688.72,   18.94]   93.67%   66.47%      1.001   2201   Normal (0 +- 10890.12) 
+7    LIE_Negativity      9.28      [ -260.48,  293.86]   52.10%   98.40%      1.004   1246   Normal (0 +- 7742.93)  
+2    Age                 71.32     [   27.95,  117.46]   99.65%   100%        1.004   1885   Normal (0 +- 1573.27)  
+3    Education           484.19    [  316.44,  636.12]   100%     33.58%      1.010   653    Normal (0 +- 5643.76)  
 
 </div>
 
@@ -2254,7 +2254,7 @@ sig <- model_parameters(model_dimensional)[2:5,] %>%
            select(one_of(Parameter)) %>%
            summarise_all(function(x) {mean(range(x))}) %>%
            t()) %>%
-  mutate(Dimension = fct_relevel(Dimension, "Frequency", "Ability", "Negativity", "Contextuality"))
+  mutate(Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality"))
 
 p_income <- rbind(estimate_link(model_dimensional, target="LIE_Ability") %>%
         mutate(LIE_Frequency = NA, LIE_Contextuality=NA, LIE_Negativity=NA),
@@ -2266,7 +2266,7 @@ p_income <- rbind(estimate_link(model_dimensional, target="LIE_Ability") %>%
         mutate(LIE_Frequency = NA, LIE_Contextuality=NA, LIE_Ability=NA)) %>%
   pivot_longer(cols=starts_with("LIE_"), names_to="Dimension", values_to = "Score") %>%
   mutate(Dimension = str_remove(Dimension, "LIE_"),
-         Dimension = fct_relevel(Dimension, "Frequency", "Ability", "Negativity", "Contextuality")) %>%
+         Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality")) %>%
   ggplot(aes(x = Score, y = Predicted)) +
   geom_ribbon(aes(ymin=CI_low, ymax=CI_high, fill=Dimension), alpha=0.1) +
   geom_line(aes(color=Dimension), size = 1) +
@@ -2305,8 +2305,8 @@ performance::compare_performance(model_dimensional, model_profile)
 
 Model               Type        ELPD   ELPD_SE   LOOIC   LOOIC_SE   WAIC     R2   R2_marginal   R2_adjusted   RMSE
 ------------------  --------  ------  --------  ------  ---------  -----  -----  ------------  ------------  -----
-model_dimensional   stanreg    -1713        18    3426         35   3426   0.40          0.07          0.38    2.3
-model_profile       stanreg    -1727        17    3455         35   3455   0.37          0.02          0.36    2.4
+model_dimensional   stanreg    -1534        16    3068         33   3068   0.39          0.08          0.37    2.3
+model_profile       stanreg    -1548        16    3097         32   3097   0.36          0.02          0.35    2.3
 
 </div>
 
@@ -2316,11 +2316,11 @@ parameters::parameters_table(model_parameters(model_profile))
 
 <div class="kable-table">
 
-Parameter                 Median   89% CI         pd       % in ROPE   Rhat    ESS    Prior               
-------------------------  -------  -------------  -------  ----------  ------  -----  --------------------
-(Intercept)               3.96     [2.63, 5.19]   100%     0.02%       1.002   1024   Normal (0 +- 29.74) 
-LIE_Profile [Trickster]   0.37     [0.05, 0.69]   96.43%   35.93%      0.999   3273   Normal (0 +- 7.44)  
-LIE_Profile [Virtuous]    0.89     [0.50, 1.23]   99.98%   0.73%       1.000   2777   Normal (0 +- 7.44)  
+Parameter                 Median   89% CI           pd       % in ROPE   Rhat    ESS    Prior               
+------------------------  -------  ---------------  -------  ----------  ------  -----  --------------------
+(Intercept)               4.40     [ 3.09,  5.68]   100%     0%          1.003   843    Normal (0 +- 29.28) 
+LIE_Profile [Trickster]   -0.38    [-0.68, -0.05]   97.15%   32.88%      1.001   3755   Normal (0 +- 7.32)  
+LIE_Profile [Virtuous]    0.47     [ 0.08,  0.86]   97.22%   22.55%      1.003   3302   Normal (0 +- 7.32)  
 
 </div>
 
@@ -2332,11 +2332,11 @@ parameters::parameters_table(model_parameters(model_dimensional))
 
      Parameter           Median   89% CI           pd       % in ROPE   Rhat    ESS    Prior               
 ---  ------------------  -------  ---------------  -------  ----------  ------  -----  --------------------
-1    (Intercept)         4.32     [ 3.11,  5.56]   99.90%   0.05%       1.004   848    Normal (0 +- 29.74) 
-2    LIE_Ability         0.17     [ 0.07,  0.26]   99.42%   98.55%      1.001   3274   Normal (0 +- 3.85)  
-4    LIE_Frequency       0.07     [-0.02,  0.15]   90.85%   100%        1.002   3397   Normal (0 +- 3.20)  
-3    LIE_Contextuality   -0.28    [-0.40, -0.16]   100%     60.22%      1.000   3897   Normal (0 +- 5.16)  
-5    LIE_Negativity      0.38     [ 0.25,  0.53]   100%     16.02%      1.000   3051   Normal (0 +- 4.83)  
+1    (Intercept)         4.32     [ 3.06,  5.40]   100%     0%          1.001   1168   Normal (0 +- 29.28) 
+2    LIE_Ability         0.00     [-0.07,  0.09]   53.65%   100%        1.002   3441   Normal (0 +- 3.12)  
+4    LIE_Frequency       0.20     [ 0.10,  0.30]   99.78%   93.33%      1.000   3197   Normal (0 +- 3.95)  
+3    LIE_Contextuality   -0.38    [-0.58, -0.20]   99.90%   23.10%      1.002   3356   Normal (0 +- 7.27)  
+5    LIE_Negativity      0.36     [ 0.21,  0.52]   99.98%   23.08%      1.000   3081   Normal (0 +- 5.22)  
 
 </div>
 
@@ -2366,7 +2366,7 @@ sig <- model_parameters(model_dimensional)[-1,] %>%
            select(one_of(Parameter)) %>%
            summarise_all(function(x) {mean(range(x))}) %>%
            t()) %>%
-  mutate(Dimension = fct_relevel(Dimension, "Frequency", "Ability", "Negativity", "Contextuality"))
+  mutate(Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality"))
 
 
 p_religion <- rbind(estimate_link(model_dimensional, target="LIE_Ability") %>%
@@ -2379,7 +2379,7 @@ p_religion <- rbind(estimate_link(model_dimensional, target="LIE_Ability") %>%
         mutate(LIE_Frequency = NA, LIE_Contextuality=NA, LIE_Ability=NA)) %>%
   pivot_longer(cols=starts_with("LIE_"), names_to="Dimension", values_to = "Score") %>%
   mutate(Dimension = str_remove(Dimension, "LIE_"),
-         Dimension = fct_relevel(Dimension, "Frequency", "Ability", "Negativity", "Contextuality")) %>%
+         Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality")) %>%
   ggplot(aes(x = Score, y = Predicted)) +
   geom_ribbon(aes(ymin=CI_low, ymax=CI_high, fill=Dimension), alpha=0.1) +
   geom_line(aes(color=Dimension), size = 1) +
@@ -2467,8 +2467,8 @@ performance::compare_performance(model_dimensional, model_profile)
 
 Model               Type       ELPD   ELPD_SE   LOOIC   LOOIC_SE   WAIC     R2   R2_adjusted   RMSE
 ------------------  --------  -----  --------  ------  ---------  -----  -----  ------------  -----
-model_dimensional   stanreg    -944        22    1887         45   1887   0.17          0.16   0.87
-model_profile       stanreg    -966        22    1933         44   1933   0.11          0.10   0.90
+model_dimensional   stanreg    -832        21    1664         41   1664   0.13          0.11   0.85
+model_profile       stanreg    -839        20    1678         40   1678   0.10          0.09   0.86
 
 </div>
 
@@ -2480,9 +2480,9 @@ parameters::parameters_table(model_parameters(model_profile))
 
 Parameter                 Median   89% CI           pd     % in ROPE   Rhat    ESS    Prior              
 ------------------------  -------  ---------------  -----  ----------  ------  -----  -------------------
-(Intercept)               1.63     [ 1.53,  1.74]   100%   0%          1.000   3576   Normal (0 +- 9.58) 
-LIE_Profile [Trickster]   -0.51    [-0.64, -0.38]   100%   0%          1.000   3568   Normal (0 +- 2.39) 
-LIE_Profile [Virtuous]    -0.86    [-1.01, -0.72]   100%   0%          1.000   3564   Normal (0 +- 2.39) 
+(Intercept)               1.13     [ 1.04,  1.21]   100%   0%          1.000   4028   Normal (0 +- 9.09) 
+LIE_Profile [Trickster]   0.37     [ 0.25,  0.50]   100%   0.02%       0.999   4112   Normal (0 +- 2.27) 
+LIE_Profile [Virtuous]    -0.41    [-0.55, -0.27]   100%   0.05%       1.000   4117   Normal (0 +- 2.27) 
 
 </div>
 
@@ -2494,11 +2494,11 @@ parameters::parameters_table(model_parameters(model_dimensional))
 
      Parameter           Median   89% CI          pd       % in ROPE   Rhat    ESS    Prior              
 ---  ------------------  -------  --------------  -------  ----------  ------  -----  -------------------
-1    (Intercept)         1.20     [ 1.16, 1.26]   100%     0%          1.001   4269   Normal (0 +- 9.58) 
-2    LIE_Ability         0.17     [ 0.14, 0.22]   100%     0.02%       1.000   3568   Normal (0 +- 1.30) 
-4    LIE_Frequency       0.00     [-0.03, 0.03]   55.12%   100%        1.000   3992   Normal (0 +- 1.03) 
-3    LIE_Contextuality   0.05     [ 0.01, 0.09]   96.45%   95.88%      1.001   3511   Normal (0 +- 1.67) 
-5    LIE_Negativity      -0.03    [-0.08, 0.02]   83.45%   97.32%      1.000   3316   Normal (0 +- 1.62) 
+1    (Intercept)         1.18     [ 1.13, 1.24]   100%     0%          1.000   3696   Normal (0 +- 9.09) 
+2    LIE_Ability         0.02     [-0.01, 0.05]   90.53%   99.95%      1.001   3571   Normal (0 +- 0.96) 
+4    LIE_Frequency       0.12     [ 0.09, 0.16]   100%     9.72%       1.001   3597   Normal (0 +- 1.25) 
+3    LIE_Contextuality   0.05     [-0.01, 0.12]   88.52%   83.30%      1.000   3678   Normal (0 +- 2.26) 
+5    LIE_Negativity      -0.04    [-0.10, 0.01]   89.18%   92.42%      1.001   3211   Normal (0 +- 1.66) 
 
 </div>
 
@@ -2588,8 +2588,8 @@ performance::compare_performance(model_dimensional, model_profile)
 
 Model               Type       ELPD   ELPD_SE   LOOIC   LOOIC_SE   WAIC     R2   R2_adjusted   RMSE
 ------------------  --------  -----  --------  ------  ---------  -----  -----  ------------  -----
-model_dimensional   stanreg    -954        22    1909         44   1909   0.10          0.09   0.89
-model_profile       stanreg    -965        22    1930         44   1930   0.07          0.06   0.90
+model_dimensional   stanreg    -837        20    1675         41   1675   0.08          0.06   0.86
+model_profile       stanreg    -839        20    1678         40   1678   0.07          0.06   0.86
 
 </div>
 
@@ -2601,9 +2601,9 @@ parameters::parameters_table(model_parameters(model_profile))
 
 Parameter                 Median   89% CI           pd     % in ROPE   Rhat    ESS    Prior              
 ------------------------  -------  ---------------  -----  ----------  ------  -----  -------------------
-(Intercept)               1.93     [ 1.83,  2.03]   100%   0%          0.999   2713   Normal (0 +- 9.34) 
-LIE_Profile [Trickster]   -0.39    [-0.52, -0.27]   100%   0%          1.000   2844   Normal (0 +- 2.33) 
-LIE_Profile [Virtuous]    -0.65    [-0.81, -0.52]   100%   0%          1.000   2890   Normal (0 +- 2.33) 
+(Intercept)               1.43     [ 1.35,  1.51]   100%   0%          1.000   3883   Normal (0 +- 8.93) 
+LIE_Profile [Trickster]   0.29     [ 0.17,  0.41]   100%   0.50%       1.000   4111   Normal (0 +- 2.23) 
+LIE_Profile [Virtuous]    -0.34    [-0.48, -0.20]   100%   0.12%       1.000   4081   Normal (0 +- 2.23) 
 
 </div>
 
@@ -2615,11 +2615,11 @@ parameters::parameters_table(model_parameters(model_dimensional))
 
      Parameter           Median   89% CI          pd       % in ROPE   Rhat    ESS    Prior              
 ---  ------------------  -------  --------------  -------  ----------  ------  -----  -------------------
-1    (Intercept)         1.60     [ 1.55, 1.66]   100%     0%          1.000   4267   Normal (0 +- 9.34) 
-2    LIE_Ability         0.14     [ 0.10, 0.18]   100%     3.55%       1.000   3489   Normal (0 +- 1.26) 
-4    LIE_Frequency       0.01     [-0.02, 0.04]   71.15%   100%        1.000   3652   Normal (0 +- 1.01) 
-3    LIE_Contextuality   0.01     [-0.03, 0.05]   64.40%   99.75%      1.000   3917   Normal (0 +- 1.63) 
-5    LIE_Negativity      -0.02    [-0.07, 0.04]   68.58%   98.75%      1.000   3452   Normal (0 +- 1.58) 
+1    (Intercept)         1.47     [ 1.41, 1.52]   100%     0%          1.000   3402   Normal (0 +- 8.93) 
+2    LIE_Ability         0.03     [ 0.00, 0.06]   95.58%   99.88%      1.000   3159   Normal (0 +- 0.95) 
+4    LIE_Frequency       0.10     [ 0.06, 0.13]   100%     38.15%      1.000   3251   Normal (0 +- 1.23) 
+3    LIE_Contextuality   0.00     [-0.06, 0.07]   55.15%   96.25%      1.000   3780   Normal (0 +- 2.22) 
+5    LIE_Negativity      -0.03    [-0.08, 0.03]   77.20%   95.83%      0.999   3120   Normal (0 +- 1.63) 
 
 </div>
 
@@ -2726,21 +2726,21 @@ parameters::parameters_table(cor_bidr)
 
 Parameter1                      Parameter2                      r       95% CI           t        df    p        Method    n_Obs 
 ------------------------------  ------------------------------  ------  ---------------  -------  ----  -------  --------  ------
-LIE_Frequency                   LIE_Ability                     0.19    [ 0.12,  0.26]   5.50     793   < .001   Pearson   795   
-LIE_Frequency                   LIE_Negativity                  -0.33   [-0.39, -0.27]   -9.85    793   < .001   Pearson   795   
-LIE_Frequency                   LIE_Contextuality               0.33    [ 0.27,  0.39]   9.85     793   < .001   Pearson   795   
-LIE_Frequency                   BIDR_SelfDeceptiveEnhancement   0.19    [ 0.13,  0.26]   5.59     793   < .001   Pearson   795   
-LIE_Frequency                   BIDR_ImpressionManagement       -0.06   [-0.13,  0.01]   -1.75    793   0.081    Pearson   795   
-LIE_Ability                     LIE_Negativity                  -0.49   [-0.54, -0.43]   -15.81   793   < .001   Pearson   795   
-LIE_Ability                     LIE_Contextuality               -0.07   [-0.14,  0.00]   -2.08    793   0.038    Pearson   795   
-LIE_Ability                     BIDR_SelfDeceptiveEnhancement   -0.23   [-0.30, -0.16]   -6.67    793   < .001   Pearson   795   
-LIE_Ability                     BIDR_ImpressionManagement       -0.14   [-0.21, -0.08]   -4.13    793   < .001   Pearson   795   
-LIE_Negativity                  LIE_Contextuality               -0.18   [-0.25, -0.12]   -5.28    793   < .001   Pearson   795   
-LIE_Negativity                  BIDR_SelfDeceptiveEnhancement   -0.12   [-0.19, -0.05]   -3.39    793   < .001   Pearson   795   
-LIE_Negativity                  BIDR_ImpressionManagement       0.12    [ 0.05,  0.19]   3.51     793   < .001   Pearson   795   
-LIE_Contextuality               BIDR_SelfDeceptiveEnhancement   -0.12   [-0.19, -0.05]   -3.46    793   < .001   Pearson   795   
-LIE_Contextuality               BIDR_ImpressionManagement       -0.16   [-0.23, -0.10]   -4.67    793   < .001   Pearson   795   
-BIDR_SelfDeceptiveEnhancement   BIDR_ImpressionManagement       0.25    [ 0.18,  0.31]   7.15     793   < .001   Pearson   795   
+LIE_Ability                     LIE_Frequency                   0.24    [ 0.17,  0.31]   6.68     714   < .001   Pearson   716   
+LIE_Ability                     LIE_Negativity                  -0.19   [-0.26, -0.12]   -5.12    714   < .001   Pearson   716   
+LIE_Ability                     LIE_Contextuality               0.38    [ 0.31,  0.44]   10.93    714   < .001   Pearson   716   
+LIE_Ability                     BIDR_SelfDeceptiveEnhancement   0.22    [ 0.15,  0.29]   6.17     714   < .001   Pearson   716   
+LIE_Ability                     BIDR_ImpressionManagement       -0.06   [-0.13,  0.01]   -1.63    714   0.103    Pearson   716   
+LIE_Frequency                   LIE_Negativity                  -0.47   [-0.53, -0.41]   -14.34   714   < .001   Pearson   716   
+LIE_Frequency                   LIE_Contextuality               -0.13   [-0.20, -0.06]   -3.55    714   < .001   Pearson   716   
+LIE_Frequency                   BIDR_SelfDeceptiveEnhancement   -0.21   [-0.28, -0.14]   -5.80    714   < .001   Pearson   716   
+LIE_Frequency                   BIDR_ImpressionManagement       -0.12   [-0.19, -0.05]   -3.22    714   0.001    Pearson   716   
+LIE_Negativity                  LIE_Contextuality               -0.29   [-0.36, -0.22]   -8.17    714   < .001   Pearson   716   
+LIE_Negativity                  BIDR_SelfDeceptiveEnhancement   -0.07   [-0.14,  0.00]   -1.89    714   0.059    Pearson   716   
+LIE_Negativity                  BIDR_ImpressionManagement       0.13    [ 0.06,  0.20]   3.57     714   < .001   Pearson   716   
+LIE_Contextuality               BIDR_SelfDeceptiveEnhancement   -0.12   [-0.19, -0.05]   -3.26    714   0.001    Pearson   716   
+LIE_Contextuality               BIDR_ImpressionManagement       -0.17   [-0.24, -0.10]   -4.54    714   < .001   Pearson   716   
+BIDR_SelfDeceptiveEnhancement   BIDR_ImpressionManagement       0.24    [ 0.17,  0.31]   6.74     714   < .001   Pearson   716   
 
 </div>
 
@@ -2794,29 +2794,29 @@ parameters::parameters_table(cor_trimp)
 
 <div class="kable-table">
 
-Parameter1          Parameter2            r           95% CI           t        df    p        Method    n_Obs 
-------------------  --------------------  ----------  ---------------  -------  ----  -------  --------  ------
-LIE_Frequency       LIE_Ability           0.19        [ 0.12,  0.25]   5.39     787   < .001   Pearson   789   
-LIE_Frequency       LIE_Negativity        -0.30       [-0.37, -0.24]   -8.93    787   < .001   Pearson   789   
-LIE_Frequency       LIE_Contextuality     0.34        [ 0.27,  0.40]   10.01    787   < .001   Pearson   789   
-LIE_Frequency       TRIMP_Boldness        0.23        [ 0.16,  0.30]   6.66     787   < .001   Pearson   789   
-LIE_Frequency       TRIMP_Meanness        -0.05       [-0.12,  0.02]   -1.37    787   0.170    Pearson   789   
-LIE_Frequency       TRIMP_Disinhibition   0.06        [-0.01,  0.13]   1.58     787   0.116    Pearson   789   
-LIE_Ability         LIE_Negativity        -0.47       [-0.52, -0.41]   -14.87   787   < .001   Pearson   789   
-LIE_Ability         LIE_Contextuality     -0.06       [-0.13,  0.01]   -1.82    787   0.070    Pearson   789   
-LIE_Ability         TRIMP_Boldness        -0.01       [-0.08,  0.06]   -0.15    787   0.880    Pearson   789   
-LIE_Ability         TRIMP_Meanness        -5.13e-04   [-0.07,  0.07]   -0.01    787   0.989    Pearson   789   
-LIE_Ability         TRIMP_Disinhibition   0.20        [ 0.14,  0.27]   5.85     787   < .001   Pearson   789   
-LIE_Negativity      LIE_Contextuality     -0.18       [-0.25, -0.12]   -5.27    787   < .001   Pearson   789   
-LIE_Negativity      TRIMP_Boldness        0.01        [-0.06,  0.08]   0.18     787   0.854    Pearson   789   
-LIE_Negativity      TRIMP_Meanness        -0.19       [-0.26, -0.12]   -5.45    787   < .001   Pearson   789   
-LIE_Negativity      TRIMP_Disinhibition   0.13        [ 0.06,  0.20]   3.73     787   < .001   Pearson   789   
-LIE_Contextuality   TRIMP_Boldness        -0.08       [-0.15, -0.01]   -2.20    787   0.028    Pearson   789   
-LIE_Contextuality   TRIMP_Meanness        -0.03       [-0.10,  0.04]   -0.85    787   0.396    Pearson   789   
-LIE_Contextuality   TRIMP_Disinhibition   0.00        [-0.07,  0.07]   -0.05    787   0.959    Pearson   789   
-TRIMP_Boldness      TRIMP_Meanness        0.27        [ 0.20,  0.33]   7.84     787   < .001   Pearson   789   
-TRIMP_Boldness      TRIMP_Disinhibition   -0.30       [-0.36, -0.23]   -8.77    787   < .001   Pearson   789   
-TRIMP_Meanness      TRIMP_Disinhibition   0.62        [ 0.57,  0.66]   22.11    787   < .001   Pearson   789   
+Parameter1          Parameter2            r       95% CI           t        df    p        Method    n_Obs 
+------------------  --------------------  ------  ---------------  -------  ----  -------  --------  ------
+LIE_Ability         LIE_Frequency         0.21    [ 0.14,  0.28]   5.85     708   < .001   Pearson   710   
+LIE_Ability         LIE_Negativity        -0.17   [-0.24, -0.10]   -4.68    708   < .001   Pearson   710   
+LIE_Ability         LIE_Contextuality     0.39    [ 0.32,  0.45]   11.17    708   < .001   Pearson   710   
+LIE_Ability         TRIMP_Boldness        0.26    [ 0.19,  0.33]   7.21     708   < .001   Pearson   710   
+LIE_Ability         TRIMP_Meanness        -0.03   [-0.11,  0.04]   -0.89    708   0.372    Pearson   710   
+LIE_Ability         TRIMP_Disinhibition   0.07    [ 0.00,  0.14]   1.86     708   0.063    Pearson   710   
+LIE_Frequency       LIE_Negativity        -0.46   [-0.52, -0.40]   -13.93   708   < .001   Pearson   710   
+LIE_Frequency       LIE_Contextuality     -0.11   [-0.18, -0.04]   -2.91    708   0.004    Pearson   710   
+LIE_Frequency       TRIMP_Boldness        0.02    [-0.05,  0.09]   0.52     708   0.602    Pearson   710   
+LIE_Frequency       TRIMP_Meanness        0.01    [-0.06,  0.09]   0.36     708   0.722    Pearson   710   
+LIE_Frequency       TRIMP_Disinhibition   0.24    [ 0.17,  0.30]   6.46     708   < .001   Pearson   710   
+LIE_Negativity      LIE_Contextuality     -0.29   [-0.35, -0.22]   -7.92    708   < .001   Pearson   710   
+LIE_Negativity      TRIMP_Boldness        0.04    [-0.03,  0.12]   1.17     708   0.241    Pearson   710   
+LIE_Negativity      TRIMP_Meanness        -0.18   [-0.25, -0.11]   -4.97    708   < .001   Pearson   710   
+LIE_Negativity      TRIMP_Disinhibition   0.18    [ 0.10,  0.25]   4.77     708   < .001   Pearson   710   
+LIE_Contextuality   TRIMP_Boldness        -0.10   [-0.17, -0.02]   -2.62    708   0.009    Pearson   710   
+LIE_Contextuality   TRIMP_Meanness        -0.03   [-0.10,  0.05]   -0.68    708   0.494    Pearson   710   
+LIE_Contextuality   TRIMP_Disinhibition   -0.01   [-0.09,  0.06]   -0.36    708   0.720    Pearson   710   
+TRIMP_Boldness      TRIMP_Meanness        0.27    [ 0.20,  0.34]   7.59     708   < .001   Pearson   710   
+TRIMP_Boldness      TRIMP_Disinhibition   -0.29   [-0.36, -0.22]   -8.09    708   < .001   Pearson   710   
+TRIMP_Meanness      TRIMP_Disinhibition   0.61    [ 0.56,  0.65]   20.35    708   < .001   Pearson   710   
 
 </div>
 
@@ -2855,84 +2855,84 @@ parameters::parameters_table(cor_ffni)
 
 Parameter1               Parameter2               r       95% CI           t        df    p        Method    n_Obs 
 -----------------------  -----------------------  ------  ---------------  -------  ----  -------  --------  ------
-LIE_Frequency            LIE_Ability              0.17    [ 0.10,  0.24]   4.84     787   < .001   Pearson   789   
-LIE_Frequency            LIE_Negativity           -0.33   [-0.39, -0.26]   -9.71    787   < .001   Pearson   789   
-LIE_Frequency            LIE_Contextuality        0.32    [ 0.25,  0.38]   9.33     787   < .001   Pearson   789   
-LIE_Frequency            FFNI_AcclaimSeeking      0.00    [-0.07,  0.07]   0.09     787   0.925    Pearson   789   
-LIE_Frequency            FFNI_Distrust            0.04    [-0.03,  0.11]   1.13     787   0.257    Pearson   789   
-LIE_Frequency            FFNI_Entitlement         0.00    [-0.07,  0.07]   -0.07    787   0.940    Pearson   789   
-LIE_Frequency            FFNI_Exploitativeness    -0.15   [-0.22, -0.08]   -4.21    787   < .001   Pearson   789   
-LIE_Frequency            FFNI_Indifference        0.03    [-0.04,  0.10]   0.75     787   0.452    Pearson   789   
-LIE_Frequency            FFNI_LackOfEmpathy       -0.05   [-0.12,  0.02]   -1.30    787   0.193    Pearson   789   
-LIE_Frequency            FFNI_Manipulativeness    0.36    [ 0.30,  0.42]   10.79    787   < .001   Pearson   789   
-LIE_Frequency            FFNI_NeedForAdmiration   0.06    [-0.01,  0.13]   1.59     787   0.113    Pearson   789   
-LIE_Frequency            FFNI_ThrillSeeking       0.00    [-0.07,  0.07]   -0.09    787   0.927    Pearson   789   
-LIE_Ability              LIE_Negativity           -0.47   [-0.53, -0.42]   -15.14   787   < .001   Pearson   789   
-LIE_Ability              LIE_Contextuality        -0.08   [-0.15, -0.01]   -2.23    787   0.026    Pearson   789   
-LIE_Ability              FFNI_AcclaimSeeking      0.02    [-0.05,  0.09]   0.47     787   0.640    Pearson   789   
-LIE_Ability              FFNI_Distrust            -0.02   [-0.09,  0.05]   -0.52    787   0.600    Pearson   789   
-LIE_Ability              FFNI_Entitlement         0.08    [ 0.01,  0.15]   2.15     787   0.032    Pearson   789   
-LIE_Ability              FFNI_Exploitativeness    0.00    [-0.07,  0.07]   0.12     787   0.901    Pearson   789   
-LIE_Ability              FFNI_Indifference        0.06    [-0.01,  0.13]   1.78     787   0.076    Pearson   789   
-LIE_Ability              FFNI_LackOfEmpathy       0.07    [ 0.00,  0.14]   2.08     787   0.038    Pearson   789   
-LIE_Ability              FFNI_Manipulativeness    -0.02   [-0.09,  0.05]   -0.61    787   0.543    Pearson   789   
-LIE_Ability              FFNI_NeedForAdmiration   0.09    [ 0.02,  0.15]   2.39     787   0.017    Pearson   789   
-LIE_Ability              FFNI_ThrillSeeking       0.05    [-0.02,  0.12]   1.32     787   0.189    Pearson   789   
-LIE_Negativity           LIE_Contextuality        -0.19   [-0.25, -0.12]   -5.30    787   < .001   Pearson   789   
-LIE_Negativity           FFNI_AcclaimSeeking      0.14    [ 0.07,  0.20]   3.87     787   < .001   Pearson   789   
-LIE_Negativity           FFNI_Distrust            -0.02   [-0.09,  0.05]   -0.50    787   0.615    Pearson   789   
-LIE_Negativity           FFNI_Entitlement         0.07    [ 0.00,  0.14]   2.00     787   0.046    Pearson   789   
-LIE_Negativity           FFNI_Exploitativeness    -0.10   [-0.17, -0.03]   -2.93    787   0.003    Pearson   789   
-LIE_Negativity           FFNI_Indifference        0.08    [ 0.01,  0.15]   2.38     787   0.018    Pearson   789   
-LIE_Negativity           FFNI_LackOfEmpathy       -0.04   [-0.11,  0.03]   -1.22    787   0.224    Pearson   789   
-LIE_Negativity           FFNI_Manipulativeness    0.05    [-0.02,  0.12]   1.31     787   0.190    Pearson   789   
-LIE_Negativity           FFNI_NeedForAdmiration   0.14    [ 0.07,  0.21]   4.07     787   < .001   Pearson   789   
-LIE_Negativity           FFNI_ThrillSeeking       -0.06   [-0.13,  0.01]   -1.64    787   0.102    Pearson   789   
-LIE_Contextuality        FFNI_AcclaimSeeking      0.09    [ 0.02,  0.16]   2.45     787   0.015    Pearson   789   
-LIE_Contextuality        FFNI_Distrust            0.01    [-0.06,  0.08]   0.25     787   0.804    Pearson   789   
-LIE_Contextuality        FFNI_Entitlement         -0.05   [-0.12,  0.02]   -1.48    787   0.140    Pearson   789   
-LIE_Contextuality        FFNI_Exploitativeness    0.05    [-0.02,  0.12]   1.36     787   0.174    Pearson   789   
-LIE_Contextuality        FFNI_Indifference        0.06    [-0.01,  0.13]   1.66     787   0.098    Pearson   789   
-LIE_Contextuality        FFNI_LackOfEmpathy       -0.01   [-0.08,  0.06]   -0.33    787   0.740    Pearson   789   
-LIE_Contextuality        FFNI_Manipulativeness    -0.09   [-0.16, -0.02]   -2.52    787   0.012    Pearson   789   
-LIE_Contextuality        FFNI_NeedForAdmiration   0.10    [ 0.03,  0.17]   2.75     787   0.006    Pearson   789   
-LIE_Contextuality        FFNI_ThrillSeeking       0.03    [-0.04,  0.10]   0.84     787   0.401    Pearson   789   
-FFNI_AcclaimSeeking      FFNI_Distrust            0.05    [-0.02,  0.12]   1.37     787   0.173    Pearson   789   
-FFNI_AcclaimSeeking      FFNI_Entitlement         0.16    [ 0.09,  0.23]   4.59     787   < .001   Pearson   789   
-FFNI_AcclaimSeeking      FFNI_Exploitativeness    -0.02   [-0.09,  0.05]   -0.44    787   0.663    Pearson   789   
-FFNI_AcclaimSeeking      FFNI_Indifference        0.02    [-0.05,  0.09]   0.66     787   0.513    Pearson   789   
-FFNI_AcclaimSeeking      FFNI_LackOfEmpathy       -0.14   [-0.21, -0.08]   -4.09    787   < .001   Pearson   789   
-FFNI_AcclaimSeeking      FFNI_Manipulativeness    0.23    [ 0.16,  0.29]   6.53     787   < .001   Pearson   789   
-FFNI_AcclaimSeeking      FFNI_NeedForAdmiration   -0.12   [-0.19, -0.05]   -3.33    787   < .001   Pearson   789   
-FFNI_AcclaimSeeking      FFNI_ThrillSeeking       0.18    [ 0.11,  0.25]   5.10     787   < .001   Pearson   789   
-FFNI_Distrust            FFNI_Entitlement         0.06    [-0.01,  0.13]   1.61     787   0.108    Pearson   789   
-FFNI_Distrust            FFNI_Exploitativeness    0.15    [ 0.08,  0.21]   4.13     787   < .001   Pearson   789   
-FFNI_Distrust            FFNI_Indifference        0.10    [ 0.03,  0.17]   2.79     787   0.005    Pearson   789   
-FFNI_Distrust            FFNI_LackOfEmpathy       0.08    [ 0.01,  0.15]   2.31     787   0.021    Pearson   789   
-FFNI_Distrust            FFNI_Manipulativeness    -0.03   [-0.09,  0.04]   -0.71    787   0.478    Pearson   789   
-FFNI_Distrust            FFNI_NeedForAdmiration   0.15    [ 0.08,  0.22]   4.25     787   < .001   Pearson   789   
-FFNI_Distrust            FFNI_ThrillSeeking       -0.04   [-0.11,  0.03]   -1.13    787   0.258    Pearson   789   
-FFNI_Entitlement         FFNI_Exploitativeness    0.31    [ 0.24,  0.37]   9.06     787   < .001   Pearson   789   
-FFNI_Entitlement         FFNI_Indifference        -0.03   [-0.10,  0.04]   -0.85    787   0.398    Pearson   789   
-FFNI_Entitlement         FFNI_LackOfEmpathy       0.22    [ 0.15,  0.29]   6.39     787   < .001   Pearson   789   
-FFNI_Entitlement         FFNI_Manipulativeness    0.05    [-0.02,  0.12]   1.47     787   0.143    Pearson   789   
-FFNI_Entitlement         FFNI_NeedForAdmiration   0.14    [ 0.07,  0.21]   4.02     787   < .001   Pearson   789   
-FFNI_Entitlement         FFNI_ThrillSeeking       0.07    [ 0.00,  0.14]   2.06     787   0.040    Pearson   789   
-FFNI_Exploitativeness    FFNI_Indifference        -0.02   [-0.09,  0.05]   -0.66    787   0.510    Pearson   789   
-FFNI_Exploitativeness    FFNI_LackOfEmpathy       0.25    [ 0.18,  0.31]   7.17     787   < .001   Pearson   789   
-FFNI_Exploitativeness    FFNI_Manipulativeness    0.40    [ 0.34,  0.46]   12.19    787   < .001   Pearson   789   
-FFNI_Exploitativeness    FFNI_NeedForAdmiration   0.11    [ 0.04,  0.18]   3.14     787   0.002    Pearson   789   
-FFNI_Exploitativeness    FFNI_ThrillSeeking       0.05    [-0.02,  0.12]   1.49     787   0.137    Pearson   789   
-FFNI_Indifference        FFNI_LackOfEmpathy       0.33    [ 0.27,  0.39]   9.84     787   < .001   Pearson   789   
-FFNI_Indifference        FFNI_Manipulativeness    0.13    [ 0.06,  0.20]   3.75     787   < .001   Pearson   789   
-FFNI_Indifference        FFNI_NeedForAdmiration   -0.48   [-0.53, -0.42]   -15.17   787   < .001   Pearson   789   
-FFNI_Indifference        FFNI_ThrillSeeking       0.18    [ 0.12,  0.25]   5.24     787   < .001   Pearson   789   
-FFNI_LackOfEmpathy       FFNI_Manipulativeness    -0.03   [-0.10,  0.04]   -0.83    787   0.405    Pearson   789   
-FFNI_LackOfEmpathy       FFNI_NeedForAdmiration   0.01    [-0.06,  0.08]   0.15     787   0.879    Pearson   789   
-FFNI_LackOfEmpathy       FFNI_ThrillSeeking       0.06    [ 0.00,  0.13]   1.82     787   0.069    Pearson   789   
-FFNI_Manipulativeness    FFNI_NeedForAdmiration   -0.03   [-0.10,  0.04]   -0.78    787   0.434    Pearson   789   
-FFNI_Manipulativeness    FFNI_ThrillSeeking       0.10    [ 0.03,  0.16]   2.70     787   0.007    Pearson   789   
-FFNI_NeedForAdmiration   FFNI_ThrillSeeking       0.10    [ 0.03,  0.17]   2.74     787   0.006    Pearson   789   
+LIE_Ability              LIE_Frequency            0.21    [ 0.14,  0.28]   5.83     708   < .001   Pearson   710   
+LIE_Ability              LIE_Negativity           -0.20   [-0.27, -0.13]   -5.51    708   < .001   Pearson   710   
+LIE_Ability              LIE_Contextuality        0.35    [ 0.29,  0.41]   9.99     708   < .001   Pearson   710   
+LIE_Ability              FFNI_AcclaimSeeking      0.02    [-0.06,  0.09]   0.46     708   0.648    Pearson   710   
+LIE_Ability              FFNI_Distrust            0.06    [-0.01,  0.13]   1.61     708   0.107    Pearson   710   
+LIE_Ability              FFNI_Entitlement         -0.06   [-0.14,  0.01]   -1.66    708   0.098    Pearson   710   
+LIE_Ability              FFNI_Exploitativeness    -0.15   [-0.22, -0.08]   -4.14    708   < .001   Pearson   710   
+LIE_Ability              FFNI_Indifference        0.00    [-0.07,  0.08]   0.10     708   0.923    Pearson   710   
+LIE_Ability              FFNI_LackOfEmpathy       -0.02   [-0.09,  0.06]   -0.42    708   0.677    Pearson   710   
+LIE_Ability              FFNI_Manipulativeness    0.37    [ 0.31,  0.44]   10.74    708   < .001   Pearson   710   
+LIE_Ability              FFNI_NeedForAdmiration   0.03    [-0.04,  0.10]   0.82     708   0.411    Pearson   710   
+LIE_Ability              FFNI_ThrillSeeking       0.03    [-0.05,  0.10]   0.76     708   0.446    Pearson   710   
+LIE_Frequency            LIE_Negativity           -0.46   [-0.51, -0.40]   -13.73   708   < .001   Pearson   710   
+LIE_Frequency            LIE_Contextuality        -0.13   [-0.20, -0.05]   -3.42    708   < .001   Pearson   710   
+LIE_Frequency            FFNI_AcclaimSeeking      -0.01   [-0.08,  0.07]   -0.16    708   0.876    Pearson   710   
+LIE_Frequency            FFNI_Distrust            0.00    [-0.08,  0.07]   -0.11    708   0.916    Pearson   710   
+LIE_Frequency            FFNI_Entitlement         0.08    [ 0.01,  0.15]   2.15     708   0.032    Pearson   710   
+LIE_Frequency            FFNI_Exploitativeness    0.02    [-0.05,  0.10]   0.63     708   0.526    Pearson   710   
+LIE_Frequency            FFNI_Indifference        0.02    [-0.05,  0.10]   0.65     708   0.516    Pearson   710   
+LIE_Frequency            FFNI_LackOfEmpathy       0.14    [ 0.07,  0.21]   3.77     708   < .001   Pearson   710   
+LIE_Frequency            FFNI_Manipulativeness    -0.03   [-0.10,  0.05]   -0.70    708   0.486    Pearson   710   
+LIE_Frequency            FFNI_NeedForAdmiration   0.06    [-0.02,  0.13]   1.50     708   0.133    Pearson   710   
+LIE_Frequency            FFNI_ThrillSeeking       0.08    [ 0.00,  0.15]   2.08     708   0.038    Pearson   710   
+LIE_Negativity           LIE_Contextuality        -0.29   [-0.36, -0.22]   -8.05    708   < .001   Pearson   710   
+LIE_Negativity           FFNI_AcclaimSeeking      0.12    [ 0.05,  0.19]   3.28     708   0.001    Pearson   710   
+LIE_Negativity           FFNI_Distrust            0.01    [-0.06,  0.09]   0.33     708   0.743    Pearson   710   
+LIE_Negativity           FFNI_Entitlement         0.03    [-0.04,  0.11]   0.93     708   0.353    Pearson   710   
+LIE_Negativity           FFNI_Exploitativeness    -0.11   [-0.18, -0.04]   -2.95    708   0.003    Pearson   710   
+LIE_Negativity           FFNI_Indifference        0.00    [-0.07,  0.08]   0.10     708   0.924    Pearson   710   
+LIE_Negativity           FFNI_LackOfEmpathy       0.03    [-0.04,  0.11]   0.88     708   0.379    Pearson   710   
+LIE_Negativity           FFNI_Manipulativeness    0.07    [ 0.00,  0.14]   1.83     708   0.067    Pearson   710   
+LIE_Negativity           FFNI_NeedForAdmiration   0.10    [ 0.03,  0.17]   2.64     708   0.009    Pearson   710   
+LIE_Negativity           FFNI_ThrillSeeking       0.01    [-0.06,  0.09]   0.35     708   0.730    Pearson   710   
+LIE_Contextuality        FFNI_AcclaimSeeking      0.05    [-0.02,  0.12]   1.36     708   0.175    Pearson   710   
+LIE_Contextuality        FFNI_Distrust            -0.01   [-0.08,  0.06]   -0.28    708   0.780    Pearson   710   
+LIE_Contextuality        FFNI_Entitlement         -0.03   [-0.10,  0.05]   -0.71    708   0.475    Pearson   710   
+LIE_Contextuality        FFNI_Exploitativeness    0.04    [-0.04,  0.11]   0.94     708   0.346    Pearson   710   
+LIE_Contextuality        FFNI_Indifference        0.06    [-0.02,  0.13]   1.50     708   0.134    Pearson   710   
+LIE_Contextuality        FFNI_LackOfEmpathy       -0.01   [-0.08,  0.06]   -0.29    708   0.769    Pearson   710   
+LIE_Contextuality        FFNI_Manipulativeness    -0.06   [-0.13,  0.01]   -1.61    708   0.109    Pearson   710   
+LIE_Contextuality        FFNI_NeedForAdmiration   0.10    [ 0.03,  0.17]   2.64     708   0.009    Pearson   710   
+LIE_Contextuality        FFNI_ThrillSeeking       0.02    [-0.06,  0.09]   0.44     708   0.659    Pearson   710   
+FFNI_AcclaimSeeking      FFNI_Distrust            0.04    [-0.04,  0.11]   0.96     708   0.335    Pearson   710   
+FFNI_AcclaimSeeking      FFNI_Entitlement         0.17    [ 0.10,  0.24]   4.60     708   < .001   Pearson   710   
+FFNI_AcclaimSeeking      FFNI_Exploitativeness    -0.02   [-0.09,  0.06]   -0.43    708   0.666    Pearson   710   
+FFNI_AcclaimSeeking      FFNI_Indifference        0.02    [-0.05,  0.10]   0.62     708   0.539    Pearson   710   
+FFNI_AcclaimSeeking      FFNI_LackOfEmpathy       -0.16   [-0.23, -0.09]   -4.27    708   < .001   Pearson   710   
+FFNI_AcclaimSeeking      FFNI_Manipulativeness    0.23    [ 0.15,  0.29]   6.15     708   < .001   Pearson   710   
+FFNI_AcclaimSeeking      FFNI_NeedForAdmiration   -0.09   [-0.16, -0.02]   -2.45    708   0.015    Pearson   710   
+FFNI_AcclaimSeeking      FFNI_ThrillSeeking       0.17    [ 0.09,  0.24]   4.50     708   < .001   Pearson   710   
+FFNI_Distrust            FFNI_Entitlement         0.07    [-0.01,  0.14]   1.78     708   0.076    Pearson   710   
+FFNI_Distrust            FFNI_Exploitativeness    0.17    [ 0.10,  0.24]   4.68     708   < .001   Pearson   710   
+FFNI_Distrust            FFNI_Indifference        0.11    [ 0.04,  0.18]   2.93     708   0.003    Pearson   710   
+FFNI_Distrust            FFNI_LackOfEmpathy       0.05    [-0.02,  0.13]   1.44     708   0.152    Pearson   710   
+FFNI_Distrust            FFNI_Manipulativeness    -0.02   [-0.10,  0.05]   -0.65    708   0.518    Pearson   710   
+FFNI_Distrust            FFNI_NeedForAdmiration   0.17    [ 0.10,  0.24]   4.53     708   < .001   Pearson   710   
+FFNI_Distrust            FFNI_ThrillSeeking       -0.05   [-0.13,  0.02]   -1.40    708   0.163    Pearson   710   
+FFNI_Entitlement         FFNI_Exploitativeness    0.28    [ 0.21,  0.34]   7.65     708   < .001   Pearson   710   
+FFNI_Entitlement         FFNI_Indifference        -0.04   [-0.12,  0.03]   -1.13    708   0.257    Pearson   710   
+FFNI_Entitlement         FFNI_LackOfEmpathy       0.25    [ 0.18,  0.32]   6.79     708   < .001   Pearson   710   
+FFNI_Entitlement         FFNI_Manipulativeness    0.07    [ 0.00,  0.15]   1.93     708   0.054    Pearson   710   
+FFNI_Entitlement         FFNI_NeedForAdmiration   0.11    [ 0.04,  0.18]   3.00     708   0.003    Pearson   710   
+FFNI_Entitlement         FFNI_ThrillSeeking       0.09    [ 0.02,  0.16]   2.39     708   0.017    Pearson   710   
+FFNI_Exploitativeness    FFNI_Indifference        -0.02   [-0.10,  0.05]   -0.61    708   0.541    Pearson   710   
+FFNI_Exploitativeness    FFNI_LackOfEmpathy       0.23    [ 0.16,  0.30]   6.34     708   < .001   Pearson   710   
+FFNI_Exploitativeness    FFNI_Manipulativeness    0.41    [ 0.35,  0.47]   11.94    708   < .001   Pearson   710   
+FFNI_Exploitativeness    FFNI_NeedForAdmiration   0.10    [ 0.03,  0.17]   2.68     708   0.007    Pearson   710   
+FFNI_Exploitativeness    FFNI_ThrillSeeking       0.05    [-0.02,  0.13]   1.40     708   0.163    Pearson   710   
+FFNI_Indifference        FFNI_LackOfEmpathy       0.31    [ 0.25,  0.38]   8.77     708   < .001   Pearson   710   
+FFNI_Indifference        FFNI_Manipulativeness    0.14    [ 0.07,  0.21]   3.86     708   < .001   Pearson   710   
+FFNI_Indifference        FFNI_NeedForAdmiration   -0.49   [-0.54, -0.43]   -14.77   708   < .001   Pearson   710   
+FFNI_Indifference        FFNI_ThrillSeeking       0.20    [ 0.13,  0.27]   5.48     708   < .001   Pearson   710   
+FFNI_LackOfEmpathy       FFNI_Manipulativeness    -0.04   [-0.11,  0.03]   -1.06    708   0.288    Pearson   710   
+FFNI_LackOfEmpathy       FFNI_NeedForAdmiration   0.01    [-0.06,  0.09]   0.38     708   0.700    Pearson   710   
+FFNI_LackOfEmpathy       FFNI_ThrillSeeking       0.07    [ 0.00,  0.14]   1.91     708   0.057    Pearson   710   
+FFNI_Manipulativeness    FFNI_NeedForAdmiration   -0.02   [-0.10,  0.05]   -0.65    708   0.516    Pearson   710   
+FFNI_Manipulativeness    FFNI_ThrillSeeking       0.09    [ 0.01,  0.16]   2.28     708   0.023    Pearson   710   
+FFNI_NeedForAdmiration   FFNI_ThrillSeeking       0.09    [ 0.01,  0.16]   2.36     708   0.019    Pearson   710   
 
 </div>
 
@@ -2974,51 +2974,51 @@ parameters::parameters_table(cor_ipip)
 
 Parameter1                Parameter2                r       95% CI           t        df    p        Method    n_Obs 
 ------------------------  ------------------------  ------  ---------------  -------  ----  -------  --------  ------
-LIE_Frequency             LIE_Ability               0.20    [ 0.14,  0.27]   5.85     787   < .001   Pearson   789   
-LIE_Frequency             LIE_Negativity            -0.31   [-0.37, -0.25]   -9.20    787   < .001   Pearson   789   
-LIE_Frequency             LIE_Contextuality         0.32    [ 0.26,  0.38]   9.59     787   < .001   Pearson   789   
-LIE_Frequency             IPIP6_Extraversion        0.09    [ 0.02,  0.16]   2.54     787   0.011    Pearson   789   
-LIE_Frequency             IPIP6_Agreableness        0.05    [-0.02,  0.12]   1.37     787   0.171    Pearson   789   
-LIE_Frequency             IPIP6_Conscientiousness   0.04    [-0.03,  0.11]   1.18     787   0.239    Pearson   789   
-LIE_Frequency             IPIP6_Neuroticism         -0.04   [-0.11,  0.03]   -1.20    787   0.229    Pearson   789   
-LIE_Frequency             IPIP6_Openeness           0.13    [ 0.06,  0.20]   3.77     787   < .001   Pearson   789   
-LIE_Frequency             IPIP6_HonestyHumility     -0.10   [-0.17, -0.03]   -2.90    787   0.004    Pearson   789   
-LIE_Ability               LIE_Negativity            -0.46   [-0.52, -0.41]   -14.71   787   < .001   Pearson   789   
-LIE_Ability               LIE_Contextuality         -0.07   [-0.14,  0.00]   -1.86    787   0.064    Pearson   789   
-LIE_Ability               IPIP6_Extraversion        0.00    [-0.07,  0.07]   0.08     787   0.940    Pearson   789   
-LIE_Ability               IPIP6_Agreableness        -0.08   [-0.15, -0.01]   -2.26    787   0.024    Pearson   789   
-LIE_Ability               IPIP6_Conscientiousness   -0.08   [-0.15, -0.01]   -2.29    787   0.022    Pearson   789   
-LIE_Ability               IPIP6_Neuroticism         0.07    [ 0.00,  0.14]   2.01     787   0.045    Pearson   789   
-LIE_Ability               IPIP6_Openeness           -0.09   [-0.16, -0.02]   -2.45    787   0.015    Pearson   789   
-LIE_Ability               IPIP6_HonestyHumility     -0.09   [-0.16, -0.02]   -2.58    787   0.010    Pearson   789   
-LIE_Negativity            LIE_Contextuality         -0.19   [-0.26, -0.12]   -5.44    787   < .001   Pearson   789   
-LIE_Negativity            IPIP6_Extraversion        -0.11   [-0.17, -0.04]   -2.97    787   0.003    Pearson   789   
-LIE_Negativity            IPIP6_Agreableness        0.15    [ 0.08,  0.21]   4.17     787   < .001   Pearson   789   
-LIE_Negativity            IPIP6_Conscientiousness   0.09    [ 0.02,  0.15]   2.40     787   0.016    Pearson   789   
-LIE_Negativity            IPIP6_Neuroticism         0.02    [-0.04,  0.09]   0.70     787   0.483    Pearson   789   
-LIE_Negativity            IPIP6_Openeness           -0.03   [-0.10,  0.04]   -0.88    787   0.377    Pearson   789   
-LIE_Negativity            IPIP6_HonestyHumility     -0.15   [-0.22, -0.08]   -4.30    787   < .001   Pearson   789   
-LIE_Contextuality         IPIP6_Extraversion        -0.11   [-0.17, -0.04]   -2.98    787   0.003    Pearson   789   
-LIE_Contextuality         IPIP6_Agreableness        0.02    [-0.05,  0.09]   0.51     787   0.609    Pearson   789   
-LIE_Contextuality         IPIP6_Conscientiousness   0.05    [-0.02,  0.12]   1.29     787   0.199    Pearson   789   
-LIE_Contextuality         IPIP6_Neuroticism         0.00    [-0.07,  0.07]   -0.06    787   0.953    Pearson   789   
-LIE_Contextuality         IPIP6_Openeness           0.02    [-0.05,  0.09]   0.51     787   0.607    Pearson   789   
-LIE_Contextuality         IPIP6_HonestyHumility     -0.04   [-0.11,  0.03]   -1.25    787   0.211    Pearson   789   
-IPIP6_Extraversion        IPIP6_Agreableness        0.29    [ 0.23,  0.36]   8.66     787   < .001   Pearson   789   
-IPIP6_Extraversion        IPIP6_Conscientiousness   -0.09   [-0.16, -0.02]   -2.55    787   0.011    Pearson   789   
-IPIP6_Extraversion        IPIP6_Neuroticism         -0.14   [-0.21, -0.07]   -4.00    787   < .001   Pearson   789   
-IPIP6_Extraversion        IPIP6_Openeness           0.11    [ 0.04,  0.18]   3.18     787   0.002    Pearson   789   
-IPIP6_Extraversion        IPIP6_HonestyHumility     -0.28   [-0.35, -0.22]   -8.30    787   < .001   Pearson   789   
-IPIP6_Agreableness        IPIP6_Conscientiousness   0.10    [ 0.03,  0.17]   2.76     787   0.006    Pearson   789   
-IPIP6_Agreableness        IPIP6_Neuroticism         0.11    [ 0.04,  0.18]   3.03     787   0.003    Pearson   789   
-IPIP6_Agreableness        IPIP6_Openeness           0.18    [ 0.11,  0.25]   5.12     787   < .001   Pearson   789   
-IPIP6_Agreableness        IPIP6_HonestyHumility     0.22    [ 0.15,  0.28]   6.25     787   < .001   Pearson   789   
-IPIP6_Conscientiousness   IPIP6_Neuroticism         -0.16   [-0.22, -0.09]   -4.43    787   < .001   Pearson   789   
-IPIP6_Conscientiousness   IPIP6_Openeness           -0.10   [-0.17, -0.03]   -2.85    787   0.005    Pearson   789   
-IPIP6_Conscientiousness   IPIP6_HonestyHumility     0.01    [-0.06,  0.08]   0.36     787   0.722    Pearson   789   
-IPIP6_Neuroticism         IPIP6_Openeness           -0.01   [-0.08,  0.06]   -0.17    787   0.869    Pearson   789   
-IPIP6_Neuroticism         IPIP6_HonestyHumility     -0.18   [-0.24, -0.11]   -5.03    787   < .001   Pearson   789   
-IPIP6_Openeness           IPIP6_HonestyHumility     0.09    [ 0.02,  0.16]   2.43     787   0.015    Pearson   789   
+LIE_Ability               LIE_Frequency             0.24    [ 0.17,  0.31]   6.69     708   < .001   Pearson   710   
+LIE_Ability               LIE_Negativity            -0.17   [-0.24, -0.09]   -4.48    708   < .001   Pearson   710   
+LIE_Ability               LIE_Contextuality         0.37    [ 0.31,  0.44]   10.76    708   < .001   Pearson   710   
+LIE_Ability               IPIP6_Extraversion        0.12    [ 0.04,  0.19]   3.10     708   0.002    Pearson   710   
+LIE_Ability               IPIP6_Agreableness        0.01    [-0.07,  0.08]   0.18     708   0.857    Pearson   710   
+LIE_Ability               IPIP6_Conscientiousness   0.00    [-0.07,  0.08]   0.06     708   0.949    Pearson   710   
+LIE_Ability               IPIP6_Neuroticism         -0.02   [-0.10,  0.05]   -0.63    708   0.528    Pearson   710   
+LIE_Ability               IPIP6_Openeness           0.19    [ 0.11,  0.26]   5.04     708   < .001   Pearson   710   
+LIE_Ability               IPIP6_HonestyHumility     -0.04   [-0.11,  0.03]   -1.05    708   0.292    Pearson   710   
+LIE_Frequency             LIE_Negativity            -0.45   [-0.51, -0.39]   -13.55   708   < .001   Pearson   710   
+LIE_Frequency             LIE_Contextuality         -0.12   [-0.19, -0.04]   -3.09    708   0.002    Pearson   710   
+LIE_Frequency             IPIP6_Extraversion        0.04    [-0.03,  0.11]   1.04     708   0.299    Pearson   710   
+LIE_Frequency             IPIP6_Agreableness        -0.11   [-0.18, -0.03]   -2.86    708   0.004    Pearson   710   
+LIE_Frequency             IPIP6_Conscientiousness   -0.11   [-0.18, -0.04]   -2.91    708   0.004    Pearson   710   
+LIE_Frequency             IPIP6_Neuroticism         0.06    [-0.02,  0.13]   1.56     708   0.119    Pearson   710   
+LIE_Frequency             IPIP6_Openeness           -0.09   [-0.16, -0.02]   -2.41    708   0.016    Pearson   710   
+LIE_Frequency             IPIP6_HonestyHumility     -0.14   [-0.21, -0.07]   -3.76    708   < .001   Pearson   710   
+LIE_Negativity            LIE_Contextuality         -0.30   [-0.36, -0.23]   -8.35    708   < .001   Pearson   710   
+LIE_Negativity            IPIP6_Extraversion        -0.07   [-0.15,  0.00]   -1.93    708   0.054    Pearson   710   
+LIE_Negativity            IPIP6_Agreableness        0.12    [ 0.05,  0.19]   3.24     708   0.001    Pearson   710   
+LIE_Negativity            IPIP6_Conscientiousness   0.07    [-0.01,  0.14]   1.75     708   0.080    Pearson   710   
+LIE_Negativity            IPIP6_Neuroticism         0.03    [-0.05,  0.10]   0.73     708   0.464    Pearson   710   
+LIE_Negativity            IPIP6_Openeness           -0.03   [-0.10,  0.05]   -0.74    708   0.458    Pearson   710   
+LIE_Negativity            IPIP6_HonestyHumility     -0.17   [-0.24, -0.10]   -4.59    708   < .001   Pearson   710   
+LIE_Contextuality         IPIP6_Extraversion        -0.09   [-0.17, -0.02]   -2.54    708   0.011    Pearson   710   
+LIE_Contextuality         IPIP6_Agreableness        0.03    [-0.04,  0.10]   0.81     708   0.416    Pearson   710   
+LIE_Contextuality         IPIP6_Conscientiousness   0.07    [ 0.00,  0.15]   1.93     708   0.054    Pearson   710   
+LIE_Contextuality         IPIP6_Neuroticism         -0.01   [-0.09,  0.06]   -0.37    708   0.712    Pearson   710   
+LIE_Contextuality         IPIP6_Openeness           -0.02   [-0.09,  0.05]   -0.53    708   0.599    Pearson   710   
+LIE_Contextuality         IPIP6_HonestyHumility     -0.07   [-0.14,  0.01]   -1.83    708   0.068    Pearson   710   
+IPIP6_Extraversion        IPIP6_Agreableness        0.30    [ 0.23,  0.37]   8.42     708   < .001   Pearson   710   
+IPIP6_Extraversion        IPIP6_Conscientiousness   -0.09   [-0.16, -0.01]   -2.32    708   0.021    Pearson   710   
+IPIP6_Extraversion        IPIP6_Neuroticism         -0.15   [-0.22, -0.08]   -4.14    708   < .001   Pearson   710   
+IPIP6_Extraversion        IPIP6_Openeness           0.10    [ 0.03,  0.17]   2.71     708   0.007    Pearson   710   
+IPIP6_Extraversion        IPIP6_HonestyHumility     -0.30   [-0.36, -0.23]   -8.33    708   < .001   Pearson   710   
+IPIP6_Agreableness        IPIP6_Conscientiousness   0.08    [ 0.01,  0.16]   2.24     708   0.025    Pearson   710   
+IPIP6_Agreableness        IPIP6_Neuroticism         0.10    [ 0.03,  0.18]   2.78     708   0.006    Pearson   710   
+IPIP6_Agreableness        IPIP6_Openeness           0.21    [ 0.14,  0.28]   5.67     708   < .001   Pearson   710   
+IPIP6_Agreableness        IPIP6_HonestyHumility     0.19    [ 0.12,  0.26]   5.28     708   < .001   Pearson   710   
+IPIP6_Conscientiousness   IPIP6_Neuroticism         -0.15   [-0.22, -0.08]   -4.03    708   < .001   Pearson   710   
+IPIP6_Conscientiousness   IPIP6_Openeness           -0.07   [-0.14,  0.01]   -1.82    708   0.069    Pearson   710   
+IPIP6_Conscientiousness   IPIP6_HonestyHumility     0.01    [-0.07,  0.08]   0.23     708   0.821    Pearson   710   
+IPIP6_Neuroticism         IPIP6_Openeness           -0.01   [-0.08,  0.07]   -0.22    708   0.823    Pearson   710   
+IPIP6_Neuroticism         IPIP6_HonestyHumility     -0.18   [-0.25, -0.11]   -4.80    708   < .001   Pearson   710   
+IPIP6_Openeness           IPIP6_HonestyHumility     0.07    [-0.01,  0.14]   1.81     708   0.071    Pearson   710   
 
 </div>
 
@@ -3056,42 +3056,42 @@ parameters::parameters_table(cor_pid)
 
 Parameter1            Parameter2            r       95% CI           t        df    p        Method    n_Obs 
 --------------------  --------------------  ------  ---------------  -------  ----  -------  --------  ------
-LIE_Frequency         LIE_Ability           0.19    [ 0.12,  0.25]   5.30     787   < .001   Pearson   789   
-LIE_Frequency         LIE_Negativity        -0.31   [-0.37, -0.24]   -9.11    787   < .001   Pearson   789   
-LIE_Frequency         LIE_Contextuality     0.33    [ 0.27,  0.39]   9.88     787   < .001   Pearson   789   
-LIE_Frequency         PID5_NegativeAffect   -0.01   [-0.08,  0.06]   -0.29    787   0.773    Pearson   789   
-LIE_Frequency         PID5_Detachment       -0.06   [-0.13,  0.01]   -1.71    787   0.089    Pearson   789   
-LIE_Frequency         PID5_Antagonism       0.19    [ 0.13,  0.26]   5.53     787   < .001   Pearson   789   
-LIE_Frequency         PID5_Disinhibition    -0.07   [-0.14,  0.00]   -1.91    787   0.057    Pearson   789   
-LIE_Frequency         PID5_Psychoticism     -0.02   [-0.09,  0.05]   -0.51    787   0.607    Pearson   789   
-LIE_Ability           LIE_Negativity        -0.47   [-0.53, -0.42]   -15.10   787   < .001   Pearson   789   
-LIE_Ability           LIE_Contextuality     -0.07   [-0.14,  0.00]   -2.00    787   0.046    Pearson   789   
-LIE_Ability           PID5_NegativeAffect   0.02    [-0.05,  0.09]   0.65     787   0.514    Pearson   789   
-LIE_Ability           PID5_Detachment       0.06    [-0.01,  0.13]   1.73     787   0.085    Pearson   789   
-LIE_Ability           PID5_Antagonism       0.05    [-0.02,  0.12]   1.54     787   0.124    Pearson   789   
-LIE_Ability           PID5_Disinhibition    0.09    [ 0.02,  0.16]   2.43     787   0.015    Pearson   789   
-LIE_Ability           PID5_Psychoticism     0.05    [-0.02,  0.12]   1.31     787   0.190    Pearson   789   
-LIE_Negativity        LIE_Contextuality     -0.19   [-0.25, -0.12]   -5.39    787   < .001   Pearson   789   
-LIE_Negativity        PID5_NegativeAffect   0.13    [ 0.06,  0.20]   3.60     787   < .001   Pearson   789   
-LIE_Negativity        PID5_Detachment       -0.02   [-0.09,  0.05]   -0.56    787   0.574    Pearson   789   
-LIE_Negativity        PID5_Antagonism       -0.02   [-0.09,  0.05]   -0.52    787   0.601    Pearson   789   
-LIE_Negativity        PID5_Disinhibition    -0.07   [-0.14,  0.00]   -1.91    787   0.057    Pearson   789   
-LIE_Negativity        PID5_Psychoticism     0.04    [-0.03,  0.11]   1.00     787   0.318    Pearson   789   
-LIE_Contextuality     PID5_NegativeAffect   0.05    [-0.02,  0.12]   1.35     787   0.178    Pearson   789   
-LIE_Contextuality     PID5_Detachment       0.02    [-0.05,  0.09]   0.69     787   0.492    Pearson   789   
-LIE_Contextuality     PID5_Antagonism       -0.07   [-0.14,  0.00]   -2.00    787   0.046    Pearson   789   
-LIE_Contextuality     PID5_Disinhibition    -0.05   [-0.12,  0.02]   -1.41    787   0.160    Pearson   789   
-LIE_Contextuality     PID5_Psychoticism     0.06    [-0.01,  0.13]   1.82     787   0.070    Pearson   789   
-PID5_NegativeAffect   PID5_Detachment       0.18    [ 0.12,  0.25]   5.23     787   < .001   Pearson   789   
-PID5_NegativeAffect   PID5_Antagonism       0.16    [ 0.09,  0.23]   4.50     787   < .001   Pearson   789   
-PID5_NegativeAffect   PID5_Disinhibition    0.13    [ 0.07,  0.20]   3.80     787   < .001   Pearson   789   
-PID5_NegativeAffect   PID5_Psychoticism     0.23    [ 0.17,  0.30]   6.70     787   < .001   Pearson   789   
-PID5_Detachment       PID5_Antagonism       0.13    [ 0.06,  0.19]   3.57     787   < .001   Pearson   789   
-PID5_Detachment       PID5_Disinhibition    0.07    [ 0.00,  0.14]   1.98     787   0.048    Pearson   789   
-PID5_Detachment       PID5_Psychoticism     0.27    [ 0.20,  0.33]   7.89     787   < .001   Pearson   789   
-PID5_Antagonism       PID5_Disinhibition    0.22    [ 0.16,  0.29]   6.47     787   < .001   Pearson   789   
-PID5_Antagonism       PID5_Psychoticism     0.12    [ 0.05,  0.19]   3.46     787   < .001   Pearson   789   
-PID5_Disinhibition    PID5_Psychoticism     0.37    [ 0.31,  0.43]   11.10    787   < .001   Pearson   789   
+LIE_Ability           LIE_Frequency         0.23    [ 0.16,  0.29]   6.17     708   < .001   Pearson   710   
+LIE_Ability           LIE_Negativity        -0.17   [-0.24, -0.10]   -4.59    708   < .001   Pearson   710   
+LIE_Ability           LIE_Contextuality     0.38    [ 0.31,  0.44]   10.85    708   < .001   Pearson   710   
+LIE_Ability           PID5_NegativeAffect   -0.05   [-0.13,  0.02]   -1.40    708   0.163    Pearson   710   
+LIE_Ability           PID5_Detachment       -0.06   [-0.13,  0.02]   -1.50    708   0.134    Pearson   710   
+LIE_Ability           PID5_Antagonism       0.18    [ 0.10,  0.25]   4.79     708   < .001   Pearson   710   
+LIE_Ability           PID5_Disinhibition    -0.05   [-0.13,  0.02]   -1.39    708   0.165    Pearson   710   
+LIE_Ability           PID5_Psychoticism     0.02    [-0.05,  0.10]   0.60     708   0.548    Pearson   710   
+LIE_Frequency         LIE_Negativity        -0.47   [-0.52, -0.41]   -14.06   708   < .001   Pearson   710   
+LIE_Frequency         LIE_Contextuality     -0.12   [-0.19, -0.05]   -3.21    708   0.001    Pearson   710   
+LIE_Frequency         PID5_NegativeAffect   0.01    [-0.06,  0.09]   0.32     708   0.752    Pearson   710   
+LIE_Frequency         PID5_Detachment       0.06    [-0.02,  0.13]   1.53     708   0.127    Pearson   710   
+LIE_Frequency         PID5_Antagonism       0.07    [ 0.00,  0.14]   1.92     708   0.055    Pearson   710   
+LIE_Frequency         PID5_Disinhibition    0.16    [ 0.08,  0.23]   4.22     708   < .001   Pearson   710   
+LIE_Frequency         PID5_Psychoticism     -0.01   [-0.09,  0.06]   -0.31    708   0.754    Pearson   710   
+LIE_Negativity        LIE_Contextuality     -0.29   [-0.36, -0.23]   -8.18    708   < .001   Pearson   710   
+LIE_Negativity        PID5_NegativeAffect   0.11    [ 0.04,  0.18]   2.93     708   0.003    Pearson   710   
+LIE_Negativity        PID5_Detachment       -0.02   [-0.09,  0.06]   -0.48    708   0.631    Pearson   710   
+LIE_Negativity        PID5_Antagonism       0.00    [-0.07,  0.07]   0.03     708   0.976    Pearson   710   
+LIE_Negativity        PID5_Disinhibition    -0.01   [-0.08,  0.07]   -0.18    708   0.859    Pearson   710   
+LIE_Negativity        PID5_Psychoticism     0.01    [-0.06,  0.08]   0.25     708   0.804    Pearson   710   
+LIE_Contextuality     PID5_NegativeAffect   0.07    [ 0.00,  0.14]   1.83     708   0.067    Pearson   710   
+LIE_Contextuality     PID5_Detachment       0.04    [-0.03,  0.12]   1.18     708   0.239    Pearson   710   
+LIE_Contextuality     PID5_Antagonism       -0.05   [-0.13,  0.02]   -1.39    708   0.166    Pearson   710   
+LIE_Contextuality     PID5_Disinhibition    -0.04   [-0.11,  0.03]   -1.07    708   0.285    Pearson   710   
+LIE_Contextuality     PID5_Psychoticism     0.02    [-0.05,  0.09]   0.51     708   0.612    Pearson   710   
+PID5_NegativeAffect   PID5_Detachment       0.18    [ 0.11,  0.25]   4.90     708   < .001   Pearson   710   
+PID5_NegativeAffect   PID5_Antagonism       0.14    [ 0.07,  0.22]   3.88     708   < .001   Pearson   710   
+PID5_NegativeAffect   PID5_Disinhibition    0.15    [ 0.08,  0.22]   4.04     708   < .001   Pearson   710   
+PID5_NegativeAffect   PID5_Psychoticism     0.25    [ 0.18,  0.32]   6.79     708   < .001   Pearson   710   
+PID5_Detachment       PID5_Antagonism       0.11    [ 0.04,  0.18]   2.91     708   0.004    Pearson   710   
+PID5_Detachment       PID5_Disinhibition    0.07    [-0.01,  0.14]   1.78     708   0.075    Pearson   710   
+PID5_Detachment       PID5_Psychoticism     0.28    [ 0.21,  0.34]   7.62     708   < .001   Pearson   710   
+PID5_Antagonism       PID5_Disinhibition    0.24    [ 0.17,  0.31]   6.49     708   < .001   Pearson   710   
+PID5_Antagonism       PID5_Psychoticism     0.12    [ 0.05,  0.20]   3.31     708   < .001   Pearson   710   
+PID5_Disinhibition    PID5_Psychoticism     0.34    [ 0.28,  0.41]   9.77     708   < .001   Pearson   710   
 
 </div>
 
@@ -3130,27 +3130,27 @@ parameters::parameters_table(cor_lts)
 
 Parameter1            Parameter2            r       95% CI           t        df    p        Method    n_Obs 
 --------------------  --------------------  ------  ---------------  -------  ----  -------  --------  ------
-LIE_Frequency         LIE_Ability           0.20    [ 0.13,  0.27]   5.76     787   < .001   Pearson   789   
-LIE_Frequency         LIE_Negativity        -0.33   [-0.39, -0.26]   -9.68    787   < .001   Pearson   789   
-LIE_Frequency         LIE_Contextuality     0.31    [ 0.25,  0.38]   9.27     787   < .001   Pearson   789   
-LIE_Frequency         LTS_FaithInHumanity   0.04    [-0.03,  0.11]   1.02     787   0.307    Pearson   789   
-LIE_Frequency         LTS_Humanism          -0.07   [-0.14,  0.00]   -2.05    787   0.041    Pearson   789   
-LIE_Frequency         LTS_Kantianism        -0.03   [-0.10,  0.04]   -0.82    787   0.415    Pearson   789   
-LIE_Ability           LIE_Negativity        -0.46   [-0.52, -0.41]   -14.72   787   < .001   Pearson   789   
-LIE_Ability           LIE_Contextuality     -0.07   [-0.13,  0.00]   -1.83    787   0.067    Pearson   789   
-LIE_Ability           LTS_FaithInHumanity   -0.11   [-0.18, -0.04]   -3.04    787   0.002    Pearson   789   
-LIE_Ability           LTS_Humanism          0.03    [-0.04,  0.10]   0.79     787   0.427    Pearson   789   
-LIE_Ability           LTS_Kantianism        0.09    [ 0.02,  0.16]   2.49     787   0.013    Pearson   789   
-LIE_Negativity        LIE_Contextuality     -0.20   [-0.26, -0.13]   -5.61    787   < .001   Pearson   789   
-LIE_Negativity        LTS_FaithInHumanity   -0.03   [-0.10,  0.04]   -0.84    787   0.400    Pearson   789   
-LIE_Negativity        LTS_Humanism          -0.06   [-0.13,  0.01]   -1.74    787   0.083    Pearson   789   
-LIE_Negativity        LTS_Kantianism        -0.13   [-0.20, -0.06]   -3.69    787   < .001   Pearson   789   
-LIE_Contextuality     LTS_FaithInHumanity   0.01    [-0.06,  0.08]   0.21     787   0.835    Pearson   789   
-LIE_Contextuality     LTS_Humanism          -0.08   [-0.15, -0.01]   -2.32    787   0.021    Pearson   789   
-LIE_Contextuality     LTS_Kantianism        -0.03   [-0.10,  0.04]   -0.82    787   0.415    Pearson   789   
-LTS_FaithInHumanity   LTS_Humanism          0.49    [ 0.43,  0.54]   15.65    787   < .001   Pearson   789   
-LTS_FaithInHumanity   LTS_Kantianism        0.15    [ 0.08,  0.22]   4.24     787   < .001   Pearson   789   
-LTS_Humanism          LTS_Kantianism        0.31    [ 0.24,  0.37]   8.99     787   < .001   Pearson   789   
+LIE_Ability           LIE_Frequency         0.25    [ 0.18,  0.32]   7.01     708   < .001   Pearson   710   
+LIE_Ability           LIE_Negativity        -0.18   [-0.25, -0.11]   -4.88    708   < .001   Pearson   710   
+LIE_Ability           LIE_Contextuality     0.36    [ 0.30,  0.43]   10.37    708   < .001   Pearson   710   
+LIE_Ability           LTS_FaithInHumanity   0.06    [-0.01,  0.14]   1.66     708   0.097    Pearson   710   
+LIE_Ability           LTS_Humanism          -0.07   [-0.14,  0.01]   -1.80    708   0.072    Pearson   710   
+LIE_Ability           LTS_Kantianism        -0.02   [-0.10,  0.05]   -0.63    708   0.531    Pearson   710   
+LIE_Frequency         LIE_Negativity        -0.44   [-0.50, -0.38]   -13.02   708   < .001   Pearson   710   
+LIE_Frequency         LIE_Contextuality     -0.11   [-0.19, -0.04]   -3.07    708   0.002    Pearson   710   
+LIE_Frequency         LTS_FaithInHumanity   -0.13   [-0.21, -0.06]   -3.59    708   < .001   Pearson   710   
+LIE_Frequency         LTS_Humanism          0.06    [-0.02,  0.13]   1.53     708   0.127    Pearson   710   
+LIE_Frequency         LTS_Kantianism        0.12    [ 0.04,  0.19]   3.15     708   0.002    Pearson   710   
+LIE_Negativity        LIE_Contextuality     -0.31   [-0.37, -0.24]   -8.61    708   < .001   Pearson   710   
+LIE_Negativity        LTS_FaithInHumanity   -0.04   [-0.11,  0.04]   -1.00    708   0.316    Pearson   710   
+LIE_Negativity        LTS_Humanism          -0.05   [-0.13,  0.02]   -1.46    708   0.144    Pearson   710   
+LIE_Negativity        LTS_Kantianism        -0.14   [-0.21, -0.07]   -3.71    708   < .001   Pearson   710   
+LIE_Contextuality     LTS_FaithInHumanity   -0.02   [-0.10,  0.05]   -0.63    708   0.530    Pearson   710   
+LIE_Contextuality     LTS_Humanism          -0.08   [-0.15, -0.01]   -2.15    708   0.032    Pearson   710   
+LIE_Contextuality     LTS_Kantianism        -0.04   [-0.11,  0.03]   -1.10    708   0.271    Pearson   710   
+LTS_FaithInHumanity   LTS_Humanism          0.46    [ 0.40,  0.52]   13.88    708   < .001   Pearson   710   
+LTS_FaithInHumanity   LTS_Kantianism        0.15    [ 0.08,  0.22]   4.08     708   < .001   Pearson   710   
+LTS_Humanism          LTS_Kantianism        0.29    [ 0.23,  0.36]   8.19     708   < .001   Pearson   710   
 
 </div>
 
@@ -3188,44 +3188,44 @@ parameters::parameters_table(cor_upps)
 
 <div class="kable-table">
 
-Parameter1                 Parameter2                 r       95% CI           t        df    p        Method    n_Obs 
--------------------------  -------------------------  ------  ---------------  -------  ----  -------  --------  ------
-LIE_Frequency              LIE_Ability                0.20    [ 0.13,  0.26]   5.66     787   < .001   Pearson   789   
-LIE_Frequency              LIE_Negativity             -0.34   [-0.40, -0.27]   -10.00   787   < .001   Pearson   789   
-LIE_Frequency              LIE_Contextuality          0.30    [ 0.24,  0.36]   8.85     787   < .001   Pearson   789   
-LIE_Frequency              UPPS_NegativeUrgency       0.02    [-0.05,  0.09]   0.66     787   0.509    Pearson   789   
-LIE_Frequency              UPPS_PositiveUrgency       -0.01   [-0.08,  0.06]   -0.28    787   0.783    Pearson   789   
-LIE_Frequency              UPPS_LackOfPerseverance    -0.07   [-0.14,  0.00]   -1.87    787   0.062    Pearson   789   
-LIE_Frequency              UPPS_LackOfPremeditation   -0.07   [-0.14,  0.00]   -1.91    787   0.057    Pearson   789   
-LIE_Frequency              UPPS_SensationSeeking      0.05    [-0.02,  0.12]   1.42     787   0.155    Pearson   789   
-LIE_Ability                LIE_Negativity             -0.46   [-0.51, -0.40]   -14.57   787   < .001   Pearson   789   
-LIE_Ability                LIE_Contextuality          -0.05   [-0.12,  0.02]   -1.42    787   0.157    Pearson   789   
-LIE_Ability                UPPS_NegativeUrgency       0.03    [-0.04,  0.10]   0.84     787   0.401    Pearson   789   
-LIE_Ability                UPPS_PositiveUrgency       0.17    [ 0.11,  0.24]   4.98     787   < .001   Pearson   789   
-LIE_Ability                UPPS_LackOfPerseverance    0.04    [-0.03,  0.11]   1.25     787   0.212    Pearson   789   
-LIE_Ability                UPPS_LackOfPremeditation   -0.01   [-0.08,  0.06]   -0.16    787   0.874    Pearson   789   
-LIE_Ability                UPPS_SensationSeeking      -0.01   [-0.08,  0.06]   -0.28    787   0.777    Pearson   789   
-LIE_Negativity             LIE_Contextuality          -0.20   [-0.26, -0.13]   -5.63    787   < .001   Pearson   789   
-LIE_Negativity             UPPS_NegativeUrgency       0.08    [ 0.01,  0.15]   2.16     787   0.031    Pearson   789   
-LIE_Negativity             UPPS_PositiveUrgency       0.05    [-0.02,  0.12]   1.28     787   0.199    Pearson   789   
-LIE_Negativity             UPPS_LackOfPerseverance    -0.08   [-0.15, -0.01]   -2.20    787   0.028    Pearson   789   
-LIE_Negativity             UPPS_LackOfPremeditation   -0.18   [-0.24, -0.11]   -5.03    787   < .001   Pearson   789   
-LIE_Negativity             UPPS_SensationSeeking      -0.02   [-0.09,  0.05]   -0.65    787   0.513    Pearson   789   
-LIE_Contextuality          UPPS_NegativeUrgency       0.03    [-0.04,  0.10]   0.80     787   0.423    Pearson   789   
-LIE_Contextuality          UPPS_PositiveUrgency       -0.04   [-0.11,  0.03]   -1.17    787   0.244    Pearson   789   
-LIE_Contextuality          UPPS_LackOfPerseverance    -0.05   [-0.12,  0.02]   -1.46    787   0.146    Pearson   789   
-LIE_Contextuality          UPPS_LackOfPremeditation   -0.06   [-0.13,  0.01]   -1.81    787   0.071    Pearson   789   
-LIE_Contextuality          UPPS_SensationSeeking      0.07    [ 0.00,  0.14]   1.93     787   0.054    Pearson   789   
-UPPS_NegativeUrgency       UPPS_PositiveUrgency       0.58    [ 0.53,  0.62]   19.80    787   < .001   Pearson   789   
-UPPS_NegativeUrgency       UPPS_LackOfPerseverance    -0.03   [-0.10,  0.04]   -0.76    787   0.446    Pearson   789   
-UPPS_NegativeUrgency       UPPS_LackOfPremeditation   0.04    [-0.03,  0.11]   1.21     787   0.225    Pearson   789   
-UPPS_NegativeUrgency       UPPS_SensationSeeking      -0.10   [-0.17, -0.03]   -2.90    787   0.004    Pearson   789   
-UPPS_PositiveUrgency       UPPS_LackOfPerseverance    0.02    [-0.05,  0.09]   0.58     787   0.564    Pearson   789   
-UPPS_PositiveUrgency       UPPS_LackOfPremeditation   0.21    [ 0.14,  0.27]   5.96     787   < .001   Pearson   789   
-UPPS_PositiveUrgency       UPPS_SensationSeeking      0.26    [ 0.20,  0.33]   7.69     787   < .001   Pearson   789   
-UPPS_LackOfPerseverance    UPPS_LackOfPremeditation   0.41    [ 0.35,  0.47]   12.67    787   < .001   Pearson   789   
-UPPS_LackOfPerseverance    UPPS_SensationSeeking      -0.14   [-0.21, -0.07]   -4.06    787   < .001   Pearson   789   
-UPPS_LackOfPremeditation   UPPS_SensationSeeking      -0.01   [-0.08,  0.06]   -0.16    787   0.873    Pearson   789   
+Parameter1                 Parameter2                 r          95% CI           t        df    p        Method    n_Obs 
+-------------------------  -------------------------  ---------  ---------------  -------  ----  -------  --------  ------
+LIE_Ability                LIE_Frequency              0.24       [ 0.17,  0.31]   6.56     708   < .001   Pearson   710   
+LIE_Ability                LIE_Negativity             -0.19      [-0.26, -0.12]   -5.25    708   < .001   Pearson   710   
+LIE_Ability                LIE_Contextuality          0.35       [ 0.28,  0.41]   9.81     708   < .001   Pearson   710   
+LIE_Ability                UPPS_NegativeUrgency       0.02       [-0.05,  0.09]   0.56     708   0.578    Pearson   710   
+LIE_Ability                UPPS_PositiveUrgency       -0.01      [-0.09,  0.06]   -0.31    708   0.757    Pearson   710   
+LIE_Ability                UPPS_LackOfPerseverance    -0.07      [-0.14,  0.01]   -1.80    708   0.072    Pearson   710   
+LIE_Ability                UPPS_LackOfPremeditation   -0.03      [-0.10,  0.04]   -0.77    708   0.444    Pearson   710   
+LIE_Ability                UPPS_SensationSeeking      0.07       [-0.01,  0.14]   1.81     708   0.070    Pearson   710   
+LIE_Frequency              LIE_Negativity             -0.45      [-0.50, -0.39]   -13.30   708   < .001   Pearson   710   
+LIE_Frequency              LIE_Contextuality          -0.10      [-0.17, -0.02]   -2.61    708   0.009    Pearson   710   
+LIE_Frequency              UPPS_NegativeUrgency       0.04       [-0.04,  0.11]   1.03     708   0.304    Pearson   710   
+LIE_Frequency              UPPS_PositiveUrgency       0.18       [ 0.10,  0.25]   4.75     708   < .001   Pearson   710   
+LIE_Frequency              UPPS_LackOfPerseverance    0.04       [-0.03,  0.12]   1.15     708   0.252    Pearson   710   
+LIE_Frequency              UPPS_LackOfPremeditation   0.05       [-0.03,  0.12]   1.27     708   0.205    Pearson   710   
+LIE_Frequency              UPPS_SensationSeeking      0.03       [-0.04,  0.11]   0.90     708   0.368    Pearson   710   
+LIE_Negativity             LIE_Contextuality          -0.31      [-0.38, -0.25]   -8.77    708   < .001   Pearson   710   
+LIE_Negativity             UPPS_NegativeUrgency       0.09       [ 0.02,  0.16]   2.46     708   0.014    Pearson   710   
+LIE_Negativity             UPPS_PositiveUrgency       0.06       [-0.02,  0.13]   1.56     708   0.119    Pearson   710   
+LIE_Negativity             UPPS_LackOfPerseverance    -0.12      [-0.20, -0.05]   -3.33    708   < .001   Pearson   710   
+LIE_Negativity             UPPS_LackOfPremeditation   -0.13      [-0.20, -0.05]   -3.41    708   < .001   Pearson   710   
+LIE_Negativity             UPPS_SensationSeeking      0.03       [-0.05,  0.10]   0.68     708   0.497    Pearson   710   
+LIE_Contextuality          UPPS_NegativeUrgency       0.04       [-0.03,  0.11]   1.11     708   0.269    Pearson   710   
+LIE_Contextuality          UPPS_PositiveUrgency       -0.02      [-0.10,  0.05]   -0.62    708   0.535    Pearson   710   
+LIE_Contextuality          UPPS_LackOfPerseverance    -0.08      [-0.15,  0.00]   -2.08    708   0.038    Pearson   710   
+LIE_Contextuality          UPPS_LackOfPremeditation   -0.10      [-0.17, -0.02]   -2.54    708   0.011    Pearson   710   
+LIE_Contextuality          UPPS_SensationSeeking      0.06       [-0.01,  0.13]   1.64     708   0.102    Pearson   710   
+UPPS_NegativeUrgency       UPPS_PositiveUrgency       0.58       [ 0.52,  0.62]   18.74    708   < .001   Pearson   710   
+UPPS_NegativeUrgency       UPPS_LackOfPerseverance    -0.01      [-0.08,  0.06]   -0.27    708   0.787    Pearson   710   
+UPPS_NegativeUrgency       UPPS_LackOfPremeditation   0.02       [-0.05,  0.10]   0.64     708   0.521    Pearson   710   
+UPPS_NegativeUrgency       UPPS_SensationSeeking      -0.11      [-0.18, -0.04]   -2.98    708   0.003    Pearson   710   
+UPPS_PositiveUrgency       UPPS_LackOfPerseverance    0.03       [-0.04,  0.10]   0.82     708   0.415    Pearson   710   
+UPPS_PositiveUrgency       UPPS_LackOfPremeditation   0.23       [ 0.16,  0.30]   6.19     708   < .001   Pearson   710   
+UPPS_PositiveUrgency       UPPS_SensationSeeking      0.25       [ 0.18,  0.32]   6.84     708   < .001   Pearson   710   
+UPPS_LackOfPerseverance    UPPS_LackOfPremeditation   0.37       [ 0.30,  0.43]   10.44    708   < .001   Pearson   710   
+UPPS_LackOfPerseverance    UPPS_SensationSeeking      -0.14      [-0.21, -0.07]   -3.74    708   < .001   Pearson   710   
+UPPS_LackOfPremeditation   UPPS_SensationSeeking      8.08e-04   [-0.07,  0.07]   0.02     708   0.983    Pearson   710   
 
 </div>
 
@@ -3263,53 +3263,53 @@ parameters::parameters_table(cor_ders)
 
 <div class="kable-table">
 
-Parameter1           Parameter2           r       95% CI           t        df    p        Method    n_Obs 
--------------------  -------------------  ------  ---------------  -------  ----  -------  --------  ------
-LIE_Frequency        LIE_Ability          0.19    [ 0.12,  0.26]   5.46     787   < .001   Pearson   789   
-LIE_Frequency        LIE_Negativity       -0.32   [-0.38, -0.26]   -9.46    787   < .001   Pearson   789   
-LIE_Frequency        LIE_Contextuality    0.32    [ 0.26,  0.38]   9.49     787   < .001   Pearson   789   
-LIE_Frequency        DERS_Awareness       -0.10   [-0.17, -0.03]   -2.84    787   0.005    Pearson   789   
-LIE_Frequency        DERS_Clarity         -0.02   [-0.09,  0.05]   -0.50    787   0.619    Pearson   789   
-LIE_Frequency        DERS_Goals           -0.05   [-0.12,  0.02]   -1.40    787   0.161    Pearson   789   
-LIE_Frequency        DERS_Impulse         0.01    [-0.06,  0.08]   0.29     787   0.773    Pearson   789   
-LIE_Frequency        DERS_NonAcceptance   0.04    [-0.03,  0.11]   1.16     787   0.248    Pearson   789   
-LIE_Frequency        DERS_Strategies      0.02    [-0.05,  0.09]   0.64     787   0.521    Pearson   789   
-LIE_Ability          LIE_Negativity       -0.50   [-0.55, -0.45]   -16.33   787   < .001   Pearson   789   
-LIE_Ability          LIE_Contextuality    -0.06   [-0.12,  0.01]   -1.55    787   0.121    Pearson   789   
-LIE_Ability          DERS_Awareness       0.06    [-0.01,  0.13]   1.72     787   0.085    Pearson   789   
-LIE_Ability          DERS_Clarity         0.10    [ 0.03,  0.17]   2.74     787   0.006    Pearson   789   
-LIE_Ability          DERS_Goals           -0.02   [-0.09,  0.05]   -0.43    787   0.665    Pearson   789   
-LIE_Ability          DERS_Impulse         0.10    [ 0.03,  0.17]   2.91     787   0.004    Pearson   789   
-LIE_Ability          DERS_NonAcceptance   0.11    [ 0.04,  0.18]   3.11     787   0.002    Pearson   789   
-LIE_Ability          DERS_Strategies      -0.02   [-0.09,  0.05]   -0.54    787   0.589    Pearson   789   
-LIE_Negativity       LIE_Contextuality    -0.18   [-0.24, -0.11]   -5.01    787   < .001   Pearson   789   
-LIE_Negativity       DERS_Awareness       -0.04   [-0.11,  0.03]   -1.00    787   0.317    Pearson   789   
-LIE_Negativity       DERS_Clarity         0.03    [-0.04,  0.10]   0.79     787   0.430    Pearson   789   
-LIE_Negativity       DERS_Goals           0.02    [-0.05,  0.09]   0.51     787   0.612    Pearson   789   
-LIE_Negativity       DERS_Impulse         0.01    [-0.06,  0.08]   0.39     787   0.699    Pearson   789   
-LIE_Negativity       DERS_NonAcceptance   0.15    [ 0.08,  0.22]   4.27     787   < .001   Pearson   789   
-LIE_Negativity       DERS_Strategies      -0.01   [-0.08,  0.06]   -0.21    787   0.834    Pearson   789   
-LIE_Contextuality    DERS_Awareness       -0.04   [-0.11,  0.03]   -1.04    787   0.298    Pearson   789   
-LIE_Contextuality    DERS_Clarity         -0.03   [-0.10,  0.04]   -0.81    787   0.419    Pearson   789   
-LIE_Contextuality    DERS_Goals           0.05    [-0.02,  0.12]   1.49     787   0.137    Pearson   789   
-LIE_Contextuality    DERS_Impulse         -0.03   [-0.10,  0.03]   -0.98    787   0.327    Pearson   789   
-LIE_Contextuality    DERS_NonAcceptance   -0.01   [-0.08,  0.06]   -0.23    787   0.820    Pearson   789   
-LIE_Contextuality    DERS_Strategies      0.01    [-0.06,  0.08]   0.37     787   0.714    Pearson   789   
-DERS_Awareness       DERS_Clarity         0.25    [ 0.18,  0.31]   7.25     787   < .001   Pearson   789   
-DERS_Awareness       DERS_Goals           -0.16   [-0.23, -0.09]   -4.48    787   < .001   Pearson   789   
-DERS_Awareness       DERS_Impulse         0.06    [-0.01,  0.13]   1.68     787   0.094    Pearson   789   
-DERS_Awareness       DERS_NonAcceptance   -0.03   [-0.10,  0.04]   -0.97    787   0.330    Pearson   789   
-DERS_Awareness       DERS_Strategies      -0.01   [-0.08,  0.06]   -0.30    787   0.766    Pearson   789   
-DERS_Clarity         DERS_Goals           0.01    [-0.06,  0.08]   0.30     787   0.765    Pearson   789   
-DERS_Clarity         DERS_Impulse         0.07    [ 0.00,  0.13]   1.85     787   0.065    Pearson   789   
-DERS_Clarity         DERS_NonAcceptance   0.16    [ 0.10,  0.23]   4.66     787   < .001   Pearson   789   
-DERS_Clarity         DERS_Strategies      0.21    [ 0.14,  0.27]   5.91     787   < .001   Pearson   789   
-DERS_Goals           DERS_Impulse         0.28    [ 0.22,  0.35]   8.30     787   < .001   Pearson   789   
-DERS_Goals           DERS_NonAcceptance   0.17    [ 0.10,  0.24]   4.87     787   < .001   Pearson   789   
-DERS_Goals           DERS_Strategies      0.24    [ 0.17,  0.30]   6.94     787   < .001   Pearson   789   
-DERS_Impulse         DERS_NonAcceptance   0.03    [-0.04,  0.10]   0.82     787   0.415    Pearson   789   
-DERS_Impulse         DERS_Strategies      0.48    [ 0.42,  0.53]   15.30    787   < .001   Pearson   789   
-DERS_NonAcceptance   DERS_Strategies      0.24    [ 0.17,  0.30]   6.91     787   < .001   Pearson   789   
+Parameter1           Parameter2           r           95% CI           t        df    p        Method    n_Obs 
+-------------------  -------------------  ----------  ---------------  -------  ----  -------  --------  ------
+LIE_Ability          LIE_Frequency        0.25        [ 0.18,  0.32]   6.87     708   < .001   Pearson   710   
+LIE_Ability          LIE_Negativity       -0.17       [-0.24, -0.10]   -4.67    708   < .001   Pearson   710   
+LIE_Ability          LIE_Contextuality    0.37        [ 0.31,  0.43]   10.61    708   < .001   Pearson   710   
+LIE_Ability          DERS_Awareness       -0.10       [-0.17, -0.03]   -2.70    708   0.007    Pearson   710   
+LIE_Ability          DERS_Clarity         -0.03       [-0.10,  0.05]   -0.75    708   0.453    Pearson   710   
+LIE_Ability          DERS_Goals           -0.06       [-0.13,  0.01]   -1.57    708   0.117    Pearson   710   
+LIE_Ability          DERS_Impulse         -0.01       [-0.08,  0.07]   -0.20    708   0.838    Pearson   710   
+LIE_Ability          DERS_NonAcceptance   0.01        [-0.06,  0.08]   0.28     708   0.783    Pearson   710   
+LIE_Ability          DERS_Strategies      0.03        [-0.04,  0.11]   0.88     708   0.379    Pearson   710   
+LIE_Frequency        LIE_Negativity       -0.49       [-0.54, -0.43]   -15.00   708   < .001   Pearson   710   
+LIE_Frequency        LIE_Contextuality    -0.12       [-0.19, -0.05]   -3.26    708   0.001    Pearson   710   
+LIE_Frequency        DERS_Awareness       0.07        [ 0.00,  0.14]   1.88     708   0.060    Pearson   710   
+LIE_Frequency        DERS_Clarity         0.09        [ 0.02,  0.17]   2.49     708   0.013    Pearson   710   
+LIE_Frequency        DERS_Goals           -0.06       [-0.14,  0.01]   -1.72    708   0.085    Pearson   710   
+LIE_Frequency        DERS_Impulse         0.15        [ 0.08,  0.22]   4.01     708   < .001   Pearson   710   
+LIE_Frequency        DERS_NonAcceptance   0.10        [ 0.02,  0.17]   2.60     708   0.010    Pearson   710   
+LIE_Frequency        DERS_Strategies      -0.02       [-0.09,  0.06]   -0.46    708   0.647    Pearson   710   
+LIE_Negativity       LIE_Contextuality    -0.29       [-0.36, -0.22]   -8.04    708   < .001   Pearson   710   
+LIE_Negativity       DERS_Awareness       -0.04       [-0.11,  0.04]   -0.95    708   0.342    Pearson   710   
+LIE_Negativity       DERS_Clarity         0.02        [-0.05,  0.10]   0.65     708   0.515    Pearson   710   
+LIE_Negativity       DERS_Goals           -0.04       [-0.11,  0.04]   -1.03    708   0.304    Pearson   710   
+LIE_Negativity       DERS_Impulse         0.05        [-0.02,  0.13]   1.46     708   0.146    Pearson   710   
+LIE_Negativity       DERS_NonAcceptance   0.15        [ 0.08,  0.22]   3.98     708   < .001   Pearson   710   
+LIE_Negativity       DERS_Strategies      0.00        [-0.08,  0.07]   -0.11    708   0.915    Pearson   710   
+LIE_Contextuality    DERS_Awareness       -0.02       [-0.09,  0.06]   -0.44    708   0.663    Pearson   710   
+LIE_Contextuality    DERS_Clarity         -6.81e-04   [-0.07,  0.07]   -0.02    708   0.986    Pearson   710   
+LIE_Contextuality    DERS_Goals           0.03        [-0.04,  0.11]   0.86     708   0.390    Pearson   710   
+LIE_Contextuality    DERS_Impulse         -0.02       [-0.09,  0.06]   -0.49    708   0.627    Pearson   710   
+LIE_Contextuality    DERS_NonAcceptance   0.02        [-0.06,  0.09]   0.48     708   0.630    Pearson   710   
+LIE_Contextuality    DERS_Strategies      0.01        [-0.06,  0.09]   0.35     708   0.729    Pearson   710   
+DERS_Awareness       DERS_Clarity         0.29        [ 0.22,  0.36]   8.12     708   < .001   Pearson   710   
+DERS_Awareness       DERS_Goals           -0.16       [-0.23, -0.08]   -4.22    708   < .001   Pearson   710   
+DERS_Awareness       DERS_Impulse         0.03        [-0.05,  0.10]   0.68     708   0.499    Pearson   710   
+DERS_Awareness       DERS_NonAcceptance   -0.09       [-0.16, -0.02]   -2.47    708   0.014    Pearson   710   
+DERS_Awareness       DERS_Strategies      -3.11e-04   [-0.07,  0.07]   -0.01    708   0.993    Pearson   710   
+DERS_Clarity         DERS_Goals           0.03        [-0.04,  0.10]   0.83     708   0.406    Pearson   710   
+DERS_Clarity         DERS_Impulse         0.09        [ 0.02,  0.16]   2.43     708   0.015    Pearson   710   
+DERS_Clarity         DERS_NonAcceptance   0.20        [ 0.13,  0.27]   5.38     708   < .001   Pearson   710   
+DERS_Clarity         DERS_Strategies      0.17        [ 0.10,  0.24]   4.61     708   < .001   Pearson   710   
+DERS_Goals           DERS_Impulse         0.27        [ 0.21,  0.34]   7.60     708   < .001   Pearson   710   
+DERS_Goals           DERS_NonAcceptance   0.14        [ 0.07,  0.21]   3.76     708   < .001   Pearson   710   
+DERS_Goals           DERS_Strategies      0.23        [ 0.16,  0.30]   6.42     708   < .001   Pearson   710   
+DERS_Impulse         DERS_NonAcceptance   0.04        [-0.03,  0.11]   1.10     708   0.271    Pearson   710   
+DERS_Impulse         DERS_Strategies      0.50        [ 0.44,  0.55]   15.17    708   < .001   Pearson   710   
+DERS_NonAcceptance   DERS_Strategies      0.24        [ 0.16,  0.30]   6.45     708   < .001   Pearson   710   
 
 </div>
 
@@ -3348,21 +3348,21 @@ parameters::parameters_table(cor_maia)
 
 Parameter1          Parameter2            r       95% CI           t        df    p        Method    n_Obs 
 ------------------  --------------------  ------  ---------------  -------  ----  -------  --------  ------
-LIE_Frequency       LIE_Ability           0.20    [ 0.13,  0.26]   5.58     787   < .001   Pearson   789   
-LIE_Frequency       LIE_Negativity        -0.33   [-0.39, -0.26]   -9.75    787   < .001   Pearson   789   
-LIE_Frequency       LIE_Contextuality     0.33    [ 0.26,  0.39]   9.66     787   < .001   Pearson   789   
-LIE_Frequency       MAIA2_Noticing        0.08    [ 0.01,  0.15]   2.28     787   0.023    Pearson   789   
-LIE_Frequency       MAIA2_BodyListening   0.03    [-0.04,  0.10]   0.74     787   0.459    Pearson   789   
-LIE_Ability         LIE_Negativity        -0.49   [-0.54, -0.43]   -15.57   787   < .001   Pearson   789   
-LIE_Ability         LIE_Contextuality     -0.07   [-0.14,  0.00]   -1.95    787   0.052    Pearson   789   
-LIE_Ability         MAIA2_Noticing        -0.03   [-0.10,  0.04]   -0.81    787   0.419    Pearson   789   
-LIE_Ability         MAIA2_BodyListening   0.05    [-0.02,  0.12]   1.32     787   0.188    Pearson   789   
-LIE_Negativity      LIE_Contextuality     -0.18   [-0.24, -0.11]   -5.07    787   < .001   Pearson   789   
-LIE_Negativity      MAIA2_Noticing        0.07    [ 0.00,  0.14]   2.00     787   0.045    Pearson   789   
-LIE_Negativity      MAIA2_BodyListening   0.03    [-0.04,  0.10]   0.72     787   0.472    Pearson   789   
-LIE_Contextuality   MAIA2_Noticing        0.00    [-0.07,  0.07]   0.05     787   0.964    Pearson   789   
-LIE_Contextuality   MAIA2_BodyListening   -0.01   [-0.08,  0.06]   -0.17    787   0.866    Pearson   789   
-MAIA2_Noticing      MAIA2_BodyListening   0.56    [ 0.52,  0.61]   19.20    787   < .001   Pearson   789   
+LIE_Ability         LIE_Frequency         0.25    [ 0.18,  0.32]   6.79     708   < .001   Pearson   710   
+LIE_Ability         LIE_Negativity        -0.19   [-0.26, -0.11]   -5.05    708   < .001   Pearson   710   
+LIE_Ability         LIE_Contextuality     0.37    [ 0.31,  0.43]   10.69    708   < .001   Pearson   710   
+LIE_Ability         MAIA2_Noticing        0.10    [ 0.03,  0.17]   2.64     708   0.008    Pearson   710   
+LIE_Ability         MAIA2_BodyListening   0.00    [-0.08,  0.07]   -0.06    708   0.948    Pearson   710   
+LIE_Frequency       LIE_Negativity        -0.47   [-0.52, -0.41]   -14.07   708   < .001   Pearson   710   
+LIE_Frequency       LIE_Contextuality     -0.12   [-0.20, -0.05]   -3.35    708   < .001   Pearson   710   
+LIE_Frequency       MAIA2_Noticing        -0.07   [-0.14,  0.01]   -1.82    708   0.070    Pearson   710   
+LIE_Frequency       MAIA2_BodyListening   0.09    [ 0.01,  0.16]   2.31     708   0.021    Pearson   710   
+LIE_Negativity      LIE_Contextuality     -0.29   [-0.35, -0.22]   -7.98    708   < .001   Pearson   710   
+LIE_Negativity      MAIA2_Noticing        0.07    [ 0.00,  0.15]   1.97     708   0.049    Pearson   710   
+LIE_Negativity      MAIA2_BodyListening   0.01    [-0.07,  0.08]   0.21     708   0.833    Pearson   710   
+LIE_Contextuality   MAIA2_Noticing        -0.01   [-0.08,  0.06]   -0.29    708   0.773    Pearson   710   
+LIE_Contextuality   MAIA2_BodyListening   0.01    [-0.06,  0.08]   0.28     708   0.776    Pearson   710   
+MAIA2_Noticing      MAIA2_BodyListening   0.58    [ 0.53,  0.63]   19.12    708   < .001   Pearson   710   
 
 </div>
 

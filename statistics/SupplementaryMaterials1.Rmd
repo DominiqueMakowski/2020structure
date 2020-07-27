@@ -446,7 +446,7 @@ as.data.frame(outliers) %>%
   xlab("Number of methods detecting the same outliers") +
   ylab("Number of participants")
 
-df <- df_time[-which(as.numeric(outliers) >= 7/ n_methods), ]
+df <- df_time[-which(as.numeric(outliers) >= 6/ n_methods), ]
 
 paste("Based on a composite outlier score (see the 'check_outliers' function in the 'performance' R package; Lüdecke et al., 2019) obtained via the joint application of multiple outliers detection algorithms (Z-scores, Iglewicz, 1993; Interquartile range (IQR); Mahalanobis distance, Cabana, 2019; Robust Mahalanobis distance, Gnanadesikan & Kettenring, 1972; Minimum Covariance Determinant, Leys et al., 2018; Invariant Coordinate Selection, Archimbaud et al., 2018; Isolation Forest, Liu et al. 2008; and Local Outlier Factor, Breunig et al., 2000), we excluded", nrow(df_time) - nrow(df), "participants that were classified as outliers by at least 8/10 of the methods used.")
 ```
@@ -673,12 +673,12 @@ descriptive_statistics(df, "MAIA2")
 
 ## Factor Structure
 
-### Splitting the data 50-50 for EFA-CFA
+### Splitting the data 60-40 for EFA-CFA
 ```{r warning=FALSE, message=FALSE}
 lie <- select(df, starts_with("LIE_"))
 labels_lie <- labels[labels$Questionnaire == "LIE", ]
 
-# Two sets of data 50-50
+# Two sets of data 60-40
 partitions <- parameters::data_partition(lie, training_proportion = 0.6)
 lie_EFA <- partitions$training
 lie_CFA <- partitions$test
@@ -719,6 +719,14 @@ parameters::n_factors(lie_EFA, cor = cor, rotation = "varimax", package = "all",
 
 ### Exploratory Factor Analysis (EFA)
 
+#### Eight latent factors model
+
+```{r warning=FALSE, message=FALSE}
+efa_8 <- psych::fa(cor, n.obs = nrow(lie_EFA), nfactors = 8, rotate = "varimax", fm = "ml") 
+
+parameters::model_parameters(efa_8, labels = labels_lie$Description) %>% 
+  print(sort = TRUE, threshold = "max") 
+```
 #### Four latent factors model
 
 ```{r warning=FALSE, message=FALSE}
@@ -739,14 +747,15 @@ parameters::model_parameters(efa_1, labels = labels_lie$Description) %>%
 ```
 
 ```{r warning=FALSE, message=FALSE}
-paste0("The model with one, and four factors accounted for ",
+paste0("The model with one, four and eight factors accounted for ",
        report::format_text(c(insight::format_value(efa_1$Vaccounted[2,]*100),
-                             insight::format_value(efa_4$Vaccounted[3, 4]*100))),
+                             insight::format_value(efa_4$Vaccounted[3, 4]*100),
+                             insight::format_value(efa_8$Vaccounted[3, 8]*100))),
        "% of variance of the dataset.")
 ```
 
 
-The factor number exploration suggested the presence of four and one latent factor(s). We therefore decided to keep the unique and four-factors models and submitted their simple structure to Confirmatory Factor Analysis (CFA)
+The factor number exploration suggested the presence of eight, four and one latent factor(s). However, the eight-factors solution apppeared as spurious (two of the factors being loaded by only one item; one of them only has an item "I never tell lies", which is likely to be representing social desirability than genuine lying behaviour). We therefore decided to keep the unique and four-factors models and submitted their simple structure to Confirmatory Factor Analysis (CFA)
 
 
 <!-- #### General factor model -->
@@ -825,11 +834,11 @@ paste0("We then compared the four-factors solution with the initial hypothetic m
 ##### Short *vs.* Long Form
 
 ```{r warning=FALSE, message=FALSE}
-cfa_4_short3 <- parameters::efa_to_cfa(efa_4, threshold = 3, names = c( "Frequency", "Ability", "Negativity", "Contextuality")) %>% 
+cfa_4_short3 <- parameters::efa_to_cfa(efa_4, threshold = 3, names = c( "Ability", "Frequency", "Negativity", "Contextuality")) %>% 
   lavaan::cfa(data = lie_CFA)
-cfa_4_short4 <- parameters::efa_to_cfa(efa_4, threshold = 4, names = c( "Frequency", "Ability", "Negativity", "Contextuality")) %>% 
+cfa_4_short4 <- parameters::efa_to_cfa(efa_4, threshold = 4, names = c( "Ability", "Frequency", "Negativity", "Contextuality")) %>% 
   lavaan::cfa(data = lie_CFA)
-cfa_4_short5 <- parameters::efa_to_cfa(efa_4, threshold = 5, names = c( "Frequency", "Ability", "Negativity", "Contextuality")) %>% 
+cfa_4_short5 <- parameters::efa_to_cfa(efa_4, threshold = 5, names = c( "Ability", "Frequency", "Negativity", "Contextuality")) %>% 
   lavaan::cfa(data = lie_CFA)
 ```
 
@@ -852,7 +861,7 @@ paste0("Finally, we compared the full four-factors model (including all items) w
 
 ```{r warning=FALSE, message=FALSE, fig.height=figwidth, fig.width=figwidth}
 # Refit the cfa model with the full sample
-cfa_4_short4_full <- parameters::efa_to_cfa(efa_4, threshold = 4, names = c( "Frequency", "Ability", "Negativity", "Contextuality")) %>% 
+cfa_4_short4_full <- parameters::efa_to_cfa(efa_4, threshold = 4, names = c( "Ability", "Frequency", "Negativity", "Contextuality")) %>% 
   lavaan::cfa(data = lie)
 
 cfa_parameters <- model_parameters(cfa_4_short4_full, standardize = FALSE)
@@ -897,9 +906,9 @@ tidygraph::tbl_graph(data$nodes, data$edges) %>%
   scale_alpha(guide = FALSE, range = c(0, 1)) +
   scale_size_manual(values=c("TRUE"=33, "FALSE"=22)) +
   scale_color_manual(values=c("Negativity"="#E91E63", "Q41"="#EC407A", "Q44"="#F06292", "Q34"="#F48FB1", "Q25"="#F8BBD0",
-                              "Contextuality"="#FF9800", "Q43"="#FFA726", "Q42"="#FFB74D", "Q33"="#FFCC80", "Q39"="#FFE0B2",
-                              "Frequency"="#4CAF50", "Q1"="#66BB6A", "Q4"="#81C784", "Q5"="#A5D6A7", "Q23"="#C8E6C9",
-                              "Ability"="#2196F3", "Q10"="#42A5F5", "Q9"="#64B5F6", "Q18"="#90CAF9", "Q14"="#BBDEFB")) +
+                              "Contextuality"="#FF9800", "Q43"="#FFA726", "Q42"="#FFB74D", "Q33"="#FFCC80", "Q30"="#FFE0B2",
+                              "Frequency"="#4CAF50", "Q4"="#66BB6A", "Q5"="#81C784", "Q22"="#A5D6A7", "Q23"="#C8E6C9",
+                              "Ability"="#2196F3", "Q10"="#42A5F5", "Q9"="#64B5F6", "Q12"="#90CAF9", "Q14"="#BBDEFB")) +
   ggraph::scale_edge_alpha(guide = FALSE, range = c(0, 1)) +
   scale_x_continuous(expand = expansion(c(0.07, 0.07))) +
   scale_y_continuous(expand = expansion(c(0.07, 0.07))) +
@@ -913,7 +922,7 @@ tidygraph::tbl_graph(data$nodes, data$edges) %>%
 table_efa <- as.data.frame(sort(parameters::model_parameters(efa_4, labels = labels_lie$Description)))[,1:6] %>% 
   mutate(Variable = as.character(Variable)) %>% 
   mutate_if(is.numeric, insight::format_value)
-names(table_efa) <- c("Item", "Label", "Frequency", "Ability", "Negativity", "Contextuality")
+names(table_efa) <- c("Item", "Label", "Ability", "Frequency", "Negativity", "Contextuality")
 
 table_cfa <- as.data.frame(parameters::model_parameters(cfa_4_short4_full)) %>% 
   filter(Type == "Loading") %>% 
@@ -956,14 +965,14 @@ p_distrib <- lie %>%
   dplyr::rename_all(.funs = list(~ sub("LIE_*", "", .))) %>%
   bayestestR::estimate_density(method = "KernSmooth") %>% 
   see::data_plot() %>% 
-  mutate(Parameter = fct_relevel(Parameter, "Frequency", "Ability", "Negativity", "Contextuality")) %>% 
+  mutate(Parameter = fct_relevel(Parameter, "Ability", "Frequency", "Negativity", "Contextuality")) %>% 
   ggplot(aes(x=x, y=y, color=Parameter)) +
   geom_line(size=2) +
   # ggtitle("Distribution of the LIE dimensions") +
   xlab("Score\n") +
   ylab("Distribution") +
   theme_modern() +
-  scale_color_manual(values=c("Frequency"= "#2196F3", "Ability"="#4CAF50", "Negativity"="#E91E63", "Contextuality"="#FF9800"), name = "Dimensions")
+  scale_color_manual(values=c("Ability"= "#2196F3", "Frequency"="#4CAF50", "Negativity"="#E91E63", "Contextuality"="#FF9800"), name = "Dimensions")
 ```
 
 
@@ -994,13 +1003,13 @@ om <- psych::omega(m = questions, nfactors = 4, fm = "ml", title = "Omega of LIE
 
 # Table of omega coefficients
 table_om <- om$omega.group
-rownames(table_om) <- c("All items","Frequency", "Ability", "Negativity", "Contextuality")
+rownames(table_om) <- c("All items","Ability", "Frequency", "Negativity", "Contextuality")
 colnames(table_om) <- c("Omega (total)", "Omega (hierarchical)", "Omega (group)")
 table_om
 
 # Table of variance accounted for
 table_variance <- om$omega.group %>%
-  mutate(Composite = c("All items", "Frequency", "Ability", "Negativity", "Contextuality")) %>%
+  mutate(Composite = c("All items", "Ability", "Frequency", "Negativity", "Contextuality")) %>%
   mutate(Total = total*100,
          General = general*100,
          Group = group*100) %>%
@@ -1139,7 +1148,7 @@ p_profiles <- lie %>%
   pivot_longer(-LIE_Profile, names_to = "Dimension", values_to = "Score") %>%
   mutate(LIE_Profile = fct_relevel(LIE_Profile, "Trickster", "Average", "Virtuous"),
          Dimension = str_remove(Dimension, "LIE_"),
-         Dimension = fct_relevel(Dimension, "Frequency", "Ability", "Negativity", "Contextuality")) %>% 
+         Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality")) %>% 
   group_by(LIE_Profile, Dimension) %>% 
   summarise_all(mean) %>%
   rename(Profile = LIE_Profile) %>% 
@@ -1211,7 +1220,7 @@ df %>%
   select(Participant, Sex, starts_with("LIE_"), -LIE_Profile) %>%
   pivot_longer(-c(Sex, Participant), names_to = "Dimension", values_to = "Score") %>%
   mutate(Dimension = str_remove(Dimension, "LIE_"),
-         Dimension = fct_relevel(Dimension, "Frequency", "Ability", "Negativity", "Contextuality")) %>%
+         Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality")) %>%
   ggplot(aes(x = Dimension, y = Score)) +
   geom_boxplot(aes(fill = Sex, color = Sex)) +
   scale_fill_manual(values = c("Male" = "#2196F3", "Female" = "#F06292")) +
@@ -1230,7 +1239,7 @@ sig <- model_parameters(model_dimensional)[-1,] %>%
            select(one_of(Parameter)) %>%
            summarise_all(function(x) {mean(range(x))}) %>%
            t()) %>%
-  mutate(Dimension = fct_relevel(Dimension, "Frequency", "Ability", "Negativity", "Contextuality"))
+  mutate(Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality"))
 
 p_sex <- rbind(estimate_link(model_dimensional, target="LIE_Ability") %>%
         mutate(LIE_Frequency = NA, LIE_Contextuality=NA, LIE_Negativity=NA),
@@ -1242,7 +1251,7 @@ p_sex <- rbind(estimate_link(model_dimensional, target="LIE_Ability") %>%
         mutate(LIE_Frequency = NA, LIE_Contextuality=NA, LIE_Ability=NA)) %>%
   pivot_longer(cols=starts_with("LIE_"), names_to="Dimension", values_to = "Score") %>%
   mutate(Dimension = str_remove(Dimension, "LIE_"),
-         Dimension = fct_relevel(Dimension, "Frequency", "Ability", "Negativity", "Contextuality")) %>%
+         Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality")) %>%
   ggplot(aes(x = Score, y = Predicted)) +
   geom_ribbon(aes(ymin=CI_low, ymax=CI_high, fill=Dimension), alpha=0.1) +
   geom_line(aes(color=Dimension), size = 1) +
@@ -1296,7 +1305,7 @@ sig <- model_parameters(model_dimensional)[2:5,] %>%
            select(one_of(Parameter)) %>%
            summarise_all(function(x) {mean(range(x))}) %>%
            t()) %>%
-  mutate(Dimension = fct_relevel(Dimension, "Frequency", "Ability", "Negativity", "Contextuality"))
+  mutate(Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality"))
 
 p_age <- rbind(estimate_link(model_dimensional, target="LIE_Frequency") %>%
         mutate(LIE_Ability = NA, LIE_Contextuality=NA, LIE_Negativity=NA),
@@ -1308,7 +1317,7 @@ p_age <- rbind(estimate_link(model_dimensional, target="LIE_Frequency") %>%
         mutate(LIE_Frequency = NA, LIE_Contextuality=NA, LIE_Ability=NA)) %>%
   pivot_longer(cols=starts_with("LIE_"), names_to="Dimension", values_to = "Score") %>%
   mutate(Dimension = str_remove(Dimension, "LIE_"),
-         Dimension = fct_relevel(Dimension, "Frequency", "Ability", "Negativity", "Contextuality")) %>%
+         Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality")) %>%
   ggplot(aes(x = Score, y = Predicted)) +
   geom_ribbon(aes(ymin=CI_low, ymax=CI_high, fill=Dimension), alpha=0.1) +
   geom_line(aes(color=Dimension), size = 1) +
@@ -1388,7 +1397,7 @@ sig <- model_parameters(model_dimensional)[2:5,] %>%
            select(one_of(Parameter)) %>%
            summarise_all(function(x) {mean(range(x))}) %>%
            t()) %>%
-  mutate(Dimension = fct_relevel(Dimension, "Frequency", "Ability", "Negativity", "Contextuality"))
+  mutate(Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality"))
 
 p_income <- rbind(estimate_link(model_dimensional, target="LIE_Ability") %>%
         mutate(LIE_Frequency = NA, LIE_Contextuality=NA, LIE_Negativity=NA),
@@ -1400,7 +1409,7 @@ p_income <- rbind(estimate_link(model_dimensional, target="LIE_Ability") %>%
         mutate(LIE_Frequency = NA, LIE_Contextuality=NA, LIE_Ability=NA)) %>%
   pivot_longer(cols=starts_with("LIE_"), names_to="Dimension", values_to = "Score") %>%
   mutate(Dimension = str_remove(Dimension, "LIE_"),
-         Dimension = fct_relevel(Dimension, "Frequency", "Ability", "Negativity", "Contextuality")) %>%
+         Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality")) %>%
   ggplot(aes(x = Score, y = Predicted)) +
   geom_ribbon(aes(ymin=CI_low, ymax=CI_high, fill=Dimension), alpha=0.1) +
   geom_line(aes(color=Dimension), size = 1) +
@@ -1459,7 +1468,7 @@ sig <- model_parameters(model_dimensional)[-1,] %>%
            select(one_of(Parameter)) %>%
            summarise_all(function(x) {mean(range(x))}) %>%
            t()) %>%
-  mutate(Dimension = fct_relevel(Dimension, "Frequency", "Ability", "Negativity", "Contextuality"))
+  mutate(Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality"))
 
 
 p_religion <- rbind(estimate_link(model_dimensional, target="LIE_Ability") %>%
@@ -1472,7 +1481,7 @@ p_religion <- rbind(estimate_link(model_dimensional, target="LIE_Ability") %>%
         mutate(LIE_Frequency = NA, LIE_Contextuality=NA, LIE_Ability=NA)) %>%
   pivot_longer(cols=starts_with("LIE_"), names_to="Dimension", values_to = "Score") %>%
   mutate(Dimension = str_remove(Dimension, "LIE_"),
-         Dimension = fct_relevel(Dimension, "Frequency", "Ability", "Negativity", "Contextuality")) %>%
+         Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality")) %>%
   ggplot(aes(x = Score, y = Predicted)) +
   geom_ribbon(aes(ymin=CI_low, ymax=CI_high, fill=Dimension), alpha=0.1) +
   geom_line(aes(color=Dimension), size = 1) +
