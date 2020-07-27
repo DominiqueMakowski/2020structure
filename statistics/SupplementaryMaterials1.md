@@ -44,8 +44,8 @@ library(easystats)
 
 ```
 > # Attaching packages (red = needs update)
-> <U+2714> insight     0.9.0     <U+26A0> bayestestR  0.6.0  
-> <U+2714> performance 0.4.7.1   <U+2714> parameters  0.8.0.1
+> <U+2714> insight     0.9.0.1   <U+2714> bayestestR  0.7.2.1
+> <U+2714> performance 0.4.7.1   <U+2714> parameters  0.8.2  
 > <U+2714> see         0.5.1     <U+2714> effectsize  0.3.1  
 > <U+26A0> correlation 0.2.1     <U+2714> modelbased  0.3.0  
 > <U+2714> report      0.1.0     
@@ -975,7 +975,7 @@ descriptive_statistics(df, "MAIA2")
 
 ## Factor Structure
 
-### Splitting the data 50-50 for EFA-CFA
+### Splitting the data 60-40 for EFA-CFA
 
 ```r
 lie <- select(df, starts_with("LIE_"))
@@ -1099,6 +1099,68 @@ parameters::n_factors(lie_EFA, cor = cor, rotation = "varimax", package = "all",
 
 ### Exploratory Factor Analysis (EFA)
 
+#### Eight latent factors model
+
+
+```r
+efa_8 <- psych::fa(cor, n.obs = nrow(lie_EFA), nfactors = 8, rotate = "varimax", fm = "ml") 
+
+parameters::model_parameters(efa_8, labels = labels_lie$Description) %>% 
+  print(sort = TRUE, threshold = "max") 
+```
+
+```
+> # Rotated loadings from Factor Analysis (varimax-rotation)
+> 
+> Variable |                                                      Label |   ML1 |   ML2 |  ML4 |  ML3 |  ML6 |  ML7 |  ML5 | ML8 | Complexity | Uniqueness
+> --------------------------------------------------------------------------------------------------------------------------------------------------------
+> LIE_10   |                                             I can lie well |  0.86 |       |      |      |      |      |      |     |       1.28 |       0.15
+> LIE_9    |                                           I am a good liar |  0.84 |       |      |      |      |      |      |     |       1.36 |       0.18
+> LIE_12   |                         I can lie effectively if I want to |  0.79 |       |      |      |      |      |      |     |       1.34 |       0.28
+> LIE_14   |                    It is hard for others to detect my lies |  0.76 |       |      |      |      |      |      |     |       1.22 |       0.35
+> LIE_13   |                      Others can easily tell when I’m lying | -0.76 |       |      |      |      |      |      |     |       1.40 |       0.31
+> LIE_18   |                   It is easy for me to make up clever lies |  0.75 |       |      |      |      |      |      |     |       1.46 |       0.32
+> LIE_11   |                              I am good at deceiving others |  0.74 |       |      |      |      |      |      |     |       1.47 |       0.33
+> LIE_17   |                                     I find lying difficult | -0.67 |       |      |      |      |      |      |     |       1.96 |       0.33
+> LIE_15   |                            I almost never get caught lying |  0.66 |       |      |      |      |      |      |     |       1.18 |       0.53
+> LIE_20   |                    I do not have to prepare much for a lie |  0.62 |       |      |      |      |      |      |     |       1.90 |       0.46
+> LIE_19   |                I find it taxing to come up with a good lie | -0.57 |       |      |      |      |      |      |     |       1.96 |       0.50
+> LIE_16   |                 My lies often arouse suspicion from others | -0.51 |       |      |      |      |      |      |     |       2.11 |       0.61
+> LIE_7    |                           I lie more than I think I should |       |  0.76 |      |      |      |      |      |     |       1.59 |       0.26
+> LIE_5    |                      I lie more often than most people do  |       |  0.75 |      |      |      |      |      |     |       1.39 |       0.33
+> LIE_23   |           I find it difficult to refrain myself from lying |       |  0.75 |      |      |      |      |      |     |       1.25 |       0.38
+> LIE_6    |         I lie more frequently than what I expect myself to |       |  0.74 |      |      |      |      |      |     |       1.50 |       0.33
+> LIE_4    |                                   I have a tendency to lie |       |  0.74 |      |      |      |      |      |     |       1.28 |       0.39
+> LIE_22   |                     I find myself lying without any reason |       |  0.72 |      |      |      |      |      |     |       1.37 |       0.39
+> LIE_1    |                                           I lie frequently |       |  0.70 |      |      |      |      |      |     |       1.91 |       0.30
+> LIE_2    |                                   I lie in many situations |       |  0.61 |      |      |      |      |      |     |       2.79 |       0.34
+> LIE_8    |                            Others lie less often than I do |       |  0.61 |      |      |      |      |      |     |       1.73 |       0.51
+> LIE_29   |                             I lie whenever it’s convenient |       |  0.55 |      |      |      |      |      |     |       2.42 |       0.46
+> LIE_21   |                          I have to try hard to avoid lying |       |  0.52 |      |      |      |      |      |     |       2.52 |       0.53
+> LIE_26   |                                              I enjoy lying |       |  0.52 |      |      |      |      |      |     |       3.24 |       0.40
+> LIE_24   |                  It is easy to hold back from telling lies |       | -0.40 |      |      |      |      |      |     |       3.43 |       0.67
+> LIE_28   |                I feel satisfied when others believe my lie |       |  0.32 |      |      |      |      |      |     |       4.85 |       0.64
+> LIE_44   |                                          It is bad to lie  |       |       | 0.66 |      |      |      |      |     |       1.31 |       0.50
+> LIE_25   |                                  I feel guilty after lying |       |       | 0.63 |      |      |      |      |     |       1.71 |       0.46
+> LIE_41   |                             Lying is against my principles |       |       | 0.61 |      |      |      |      |     |       2.11 |       0.44
+> LIE_34   |                              I always avoid lying if I can |       |       | 0.53 |      |      |      |      |     |       2.28 |       0.50
+> LIE_27   |                        I feel tense whenever I have to lie |       |       | 0.51 |      |      |      |      |     |       2.36 |       0.49
+> LIE_36   | I prefer to tell the truth even if it gets me into trouble |       |       | 0.36 |      |      |      |      |     |       4.36 |       0.65
+> LIE_37   |                      I would never lie for trivial matters |       |       | 0.30 |      |      |      |      |     |       3.53 |       0.81
+> LIE_42   |           It is acceptable to lie depending on the context |       |       |      | 0.73 |      |      |      |     |       1.42 |       0.35
+> LIE_43   |                               It is okay to lie sometimes  |       |       |      | 0.67 |      |      |      |     |       1.73 |       0.40
+> LIE_33   |                                       I lie when necessary |       |       |      | 0.61 |      |      |      |     |       2.09 |       0.45
+> LIE_39   |            I would lie if something important was at stake |       |       |      | 0.39 |      |      |      |     |       2.84 |       0.71
+> LIE_35   |                 I would only lie if I have no other choice |       |       |      | 0.37 |      |      |      |     |       2.56 |       0.70
+> LIE_40   |                         I would only lie if it is harmless |       |       |      | 0.33 |      |      |      |     |       2.75 |       0.80
+> LIE_30   |              I lie when it’s easier than telling the truth |       |       |      |      | 0.66 |      |      |     |       1.83 |       0.40
+> LIE_32   |            I lie when telling the truth is too troublesome |       |       |      |      | 0.61 |      |      |     |       2.15 |       0.44
+> LIE_31   |       I lie if it’s the most direct way to get what I want |       |       |      |      | 0.44 |      |      |     |       2.81 |       0.53
+> LIE_38   |                      I would never lie in serious contexts |       |       |      |      |      | 0.53 |      |     |       2.10 |       0.57
+> LIE_3    |                                          I never tell lies |       |       |      |      |      |      | 0.45 |     |       3.27 |       0.58
+> 
+> The 8 latent factors (varimax rotation) accounted for 54.40% of the total variance of the original data (ML1 = 16.77%, ML2 = 15.62%, ML4 = 7.78%, ML3 = 5.67%, ML6 = 3.71%, ML7 = 1.85%, ML5 = 1.82%, ML8 = 1.18%).
+```
 #### Four latent factors model
 
 
@@ -1228,18 +1290,19 @@ parameters::model_parameters(efa_1, labels = labels_lie$Description) %>%
 
 
 ```r
-paste0("The model with one, and four factors accounted for ",
+paste0("The model with one, four and eight factors accounted for ",
        report::format_text(c(insight::format_value(efa_1$Vaccounted[2,]*100),
-                             insight::format_value(efa_4$Vaccounted[3, 4]*100))),
+                             insight::format_value(efa_4$Vaccounted[3, 4]*100),
+                             insight::format_value(efa_8$Vaccounted[3, 8]*100))),
        "% of variance of the dataset.")
 ```
 
 ```
-> [1] "The model with one, and four factors accounted for 29.04 and 47.98% of variance of the dataset."
+> [1] "The model with one, four and eight factors accounted for 29.04, 47.98 and 54.40% of variance of the dataset."
 ```
 
 
-The factor number exploration suggested the presence of four and one latent factor(s). We therefore decided to keep the unique and four-factors models and submitted their simple structure to Confirmatory Factor Analysis (CFA)
+The factor number exploration suggested the presence of eight, four and one latent factor(s). However, the eight-factors solution apppeared as spurious (two of the factors being loaded by only one item; one of them only has an item "I never tell lies", which is likely to be representing social desirability than genuine lying behaviour). We therefore decided to keep the unique and four-factors models and submitted their simple structure to Confirmatory Factor Analysis (CFA)
 
 
 <!-- #### General factor model -->
@@ -1660,7 +1723,7 @@ parameters::check_clusterstructure(lie, standardize = FALSE) %T>%
 > The dataset is suitable for clustering (Hopkins' H = 0.21).
 ```
 
-<img src="figures/unnamed-chunk-58-1.png" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-59-1.png" style="display: block; margin: auto;" />
 
 ### How many clusters
 
@@ -1678,7 +1741,7 @@ parameters::n_clusters(lie, standardize = FALSE) %T>%
 > The choice of 3 clusters is supported by 7 (25.00%) methods out of 28 (Scott, TrCovW, Friedman, Ratkowsky, Ball, SDindex, Mixture).
 ```
 
-<img src="figures/unnamed-chunk-59-1.png" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-60-1.png" style="display: block; margin: auto;" />
 
 The agreement procedure, combining 28 different methods for determining the optimal number of clusters, supported the existence of 2 (8/28) or 3 (11/28)
 clusters. 
@@ -1876,8 +1939,8 @@ df <- cbind(df, lie) %>%
 ```r
 library(rstanarm)
 
-model_dimensional <- stan_glm(Sex ~ LIE_Ability + LIE_Frequency + LIE_Contextuality + LIE_Negativity, data=df, family = "binomial", refresh = 0, seed=333)
 model_profile <- stan_glm(Sex ~ LIE_Profile, data = df, family = "binomial", refresh = 0, seed=333)
+model_dimensional <- stan_glm(Sex ~ LIE_Ability + LIE_Frequency + LIE_Contextuality + LIE_Negativity, data=df, family = "binomial", refresh = 0, seed=333)
 
 performance::compare_performance(model_dimensional, model_profile, metrics = c("LOOIC", "R2"))
 ```
@@ -1897,11 +1960,11 @@ parameters::parameters_table(model_parameters(model_profile))
 
 <div class="kable-table">
 
-Parameter                 Median   89% CI           pd       % in ROPE   Rhat    ESS    Prior               
-------------------------  -------  ---------------  -------  ----------  ------  -----  --------------------
-(Intercept)               -0.37    [-0.54, -0.18]   99.95%   4.38%       0.999   3016   Normal (0 +- 10.00) 
-LIE_Profile [Trickster]   0.53     [ 0.26,  0.80]   99.95%   2.08%       1.000   3258   Normal (0 +- 2.50)  
-LIE_Profile [Virtuous]    -0.31    [-0.62,  0.06]   92.00%   27.38%      1.000   3034   Normal (0 +- 2.50)  
+Parameter                 Median   89% CI           pd       % in ROPE   Rhat    ESS       Prior              
+------------------------  -------  ---------------  -------  ----------  ------  --------  -------------------
+(Intercept)               -0.37    [-0.56, -0.20]   99.85%   5.38%       1.001   2906.68   Normal (0 +- 2.50) 
+LIE_Profile [Trickster]   0.53     [ 0.28,  0.83]   99.85%   1.95%       1.000   2919.42   Normal (0 +- 5.20) 
+LIE_Profile [Virtuous]    -0.31    [-0.62,  0.05]   92.42%   27.20%      1.000   2674.12   Normal (0 +- 6.14) 
 
 </div>
 
@@ -1911,13 +1974,13 @@ parameters::parameters_table(model_parameters(model_dimensional))
 
 <div class="kable-table">
 
-     Parameter           Median   89% CI           pd       % in ROPE   Rhat    ESS    Prior               
----  ------------------  -------  ---------------  -------  ----------  ------  -----  --------------------
-1    (Intercept)         -0.24    [-0.36, -0.11]   99.83%   20.70%      1.000   3682   Normal (0 +- 10.00) 
-2    LIE_Ability         0.11     [ 0.04,  0.18]   99.20%   96.25%      1.001   2811   Normal (0 +- 1.05)  
-4    LIE_Frequency       0.08     [-0.01,  0.17]   93.62%   95.85%      1.002   3291   Normal (0 +- 1.35)  
-3    LIE_Contextuality   -0.10    [-0.25,  0.06]   84.60%   79.33%      1.000   2988   Normal (0 +- 2.49)  
-5    LIE_Negativity      -0.06    [-0.19,  0.07]   74.28%   93.00%      1.001   2755   Normal (0 +- 1.78)  
+     Parameter           Median   89% CI           pd       % in ROPE   Rhat    ESS       Prior              
+---  ------------------  -------  ---------------  -------  ----------  ------  --------  -------------------
+1    (Intercept)         -0.25    [-0.37, -0.12]   99.92%   20.45%      1.001   3423.96   Normal (0 +- 2.50) 
+2    LIE_Ability         0.11     [ 0.04,  0.18]   99.28%   95.75%      1.000   3266.24   Normal (0 +- 1.05) 
+4    LIE_Frequency       0.08     [ 0.00,  0.17]   94.77%   96.88%      1.000   3049.46   Normal (0 +- 1.35) 
+3    LIE_Contextuality   -0.10    [-0.25,  0.06]   83.65%   79.17%      0.999   3074.58   Normal (0 +- 2.49) 
+5    LIE_Negativity      -0.05    [-0.18,  0.07]   73.90%   94.17%      1.001   2887.57   Normal (0 +- 1.78) 
 
 </div>
 
@@ -1935,7 +1998,7 @@ model_profile %>%
   xlab("Deception Profile")
 ```
 
-<img src="figures/unnamed-chunk-65-1.png" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-66-1.png" style="display: block; margin: auto;" />
 
 ```r
 df %>%
@@ -1951,7 +2014,7 @@ df %>%
   coord_flip()
 ```
 
-<img src="figures/unnamed-chunk-65-2.png" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-66-2.png" style="display: block; margin: auto;" />
 
 
 ```r
@@ -1999,8 +2062,8 @@ p_sex <- rbind(estimate_link(model_dimensional, target="LIE_Ability") %>%
 
 
 ```r
-model_dimensional <- stan_lmer(Age ~ LIE_Ability + LIE_Frequency + LIE_Contextuality + LIE_Negativity + Income + Education + (1|Sex), data = df, refresh = 0, seed=333)
 model_profile <- stan_lmer(Age ~ LIE_Profile + Income + Education + (1|Sex), data = df, refresh = 0, seed=333)
+model_dimensional <- stan_lmer(Age ~ LIE_Ability + LIE_Frequency + LIE_Contextuality + LIE_Negativity + Income + Education + (1|Sex), data = df, refresh = 0, seed=333)
 
 performance::compare_performance(model_dimensional, model_profile)
 ```
@@ -2020,13 +2083,13 @@ parameters::parameters_table(model_parameters(model_profile))
 
 <div class="kable-table">
 
-     Parameter                 Median     89% CI           pd       % in ROPE   Rhat    ESS    Prior               
----  ------------------------  ---------  ---------------  -------  ----------  ------  -----  --------------------
-1    (Intercept)               31.12      [29.10, 33.39]   100%     0%          1.004   789    Normal (0 +- 69.26) 
-4    LIE_Profile [Trickster]   -0.55      [-1.37,  0.36]   83.33%   59.25%      1.000   2883   Normal (0 +- 17.31) 
-5    LIE_Profile [Virtuous]    1.56       [ 0.58,  2.65]   99.20%   8.75%       1.000   3199   Normal (0 +- 17.31) 
-3    Income                    1.41e-04   [ 0.00,  0.00]   99.20%   100%        1.000   3744   Normal (0 +- 0.00)  
-2    Education                 -1.84      [-2.06, -1.65]   100%     0%          1.001   3527   Normal (0 +- 8.97)  
+     Parameter                 Median     89% CI           pd       % in ROPE   Rhat    ESS       Prior                   
+---  ------------------------  ---------  ---------------  -------  ----------  ------  --------  ------------------------
+1    (Intercept)               31.09      [28.94, 33.11]   100%     0%          1.003   608.73    Normal (25.06 +- 17.31) 
+4    LIE_Profile [Trickster]   -0.50      [-1.38,  0.32]   82.97%   62.58%      1.000   3509.52   Normal (0.00 +- 35.92)  
+5    LIE_Profile [Virtuous]    1.62       [ 0.66,  2.76]   99.40%   7.72%       1.000   3355.97   Normal (0.00 +- 43.38)  
+3    Income                    1.42e-04   [ 0.00,  0.00]   99.20%   100%        1.002   3314.22   Normal (0.00 +- 0.00)   
+2    Education                 -1.85      [-2.05, -1.65]   100%     0%          1.000   2831.07   Normal (0.00 +- 8.97)   
 
 </div>
 
@@ -2036,15 +2099,15 @@ parameters::parameters_table(model_parameters(model_dimensional))
 
 <div class="kable-table">
 
-     Parameter           Median     89% CI           pd       % in ROPE   Rhat    ESS    Prior               
----  ------------------  ---------  ---------------  -------  ----------  ------  -----  --------------------
-1    (Intercept)         31.12      [28.44, 33.71]   100%     0%          1.090   38     Normal (0 +- 69.26) 
-4    LIE_Ability         -0.23      [-0.47, -0.01]   95.15%   99.95%      1.008   429    Normal (0 +- 7.41)  
-6    LIE_Frequency       0.04       [-0.26,  0.30]   60.15%   100%        1.002   2222   Normal (0 +- 9.29)  
-5    LIE_Contextuality   -0.61      [-1.11, -0.13]   96.83%   60.82%      1.003   1250   Normal (0 +- 17.30) 
-7    LIE_Negativity      0.00       [-0.40,  0.42]   50.85%   99.35%      1.002   1312   Normal (0 +- 12.30) 
-3    Income              1.40e-04   [ 0.00,  0.00]   99.45%   100%        1.002   2341   Normal (0 +- 0.00)  
-2    Education           -1.82      [-2.01, -1.62]   100%     0%          1.004   1616   Normal (0 +- 8.97)  
+     Parameter           Median     89% CI           pd       % in ROPE   Rhat    ESS       Prior                   
+---  ------------------  ---------  ---------------  -------  ----------  ------  --------  ------------------------
+1    (Intercept)         31.23      [29.23, 33.43]   100%     0%          1.010   643.76    Normal (25.06 +- 17.31) 
+4    LIE_Ability         -0.24      [-0.45, -0.02]   96.67%   99.98%      1.000   2833.74   Normal (0.00 +- 7.41)   
+6    LIE_Frequency       0.04       [-0.25,  0.31]   58.17%   100%        1.000   2797.71   Normal (0.00 +- 9.29)   
+5    LIE_Contextuality   -0.57      [-1.09, -0.10]   96.83%   65.77%      1.003   2160.13   Normal (0.00 +- 17.30)  
+7    LIE_Negativity      -0.01      [-0.39,  0.41]   51.02%   99.20%      1.002   2377.70   Normal (0.00 +- 12.30)  
+3    Income              1.40e-04   [ 0.00,  0.00]   99.35%   100%        1.000   2330.40   Normal (0.00 +- 0.00)   
+2    Education           -1.81      [-2.01, -1.61]   100%     0%          1.001   3276.73   Normal (0.00 +- 8.97)   
 
 </div>
 
@@ -2062,7 +2125,7 @@ model_profile %>%
   xlab("Deception Profile")
 ```
 
-<img src="figures/unnamed-chunk-68-1.png" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-69-1.png" style="display: block; margin: auto;" />
 
 
 ```r
@@ -2122,7 +2185,7 @@ performance::compare_performance(model_dimensional, model_profile)
 Model               Type        ELPD   ELPD_SE   LOOIC   LOOIC_SE   WAIC     R2   R2_marginal   R2_adjusted   RMSE
 ------------------  --------  ------  --------  ------  ---------  -----  -----  ------------  ------------  -----
 model_dimensional   stanreg    -1388        34    2775         68   2775   0.26          0.26          0.24    1.7
-model_profile       stanreg    -1384        34    2768         68   2768   0.26          0.26          0.24    1.7
+model_profile       stanreg    -1384        34    2768         67   2768   0.26          0.26          0.24    1.7
 
 </div>
 
@@ -2132,12 +2195,12 @@ parameters::parameters_table(model_parameters(model_profile))
 
 <div class="kable-table">
 
-     Parameter                 Median   89% CI           pd       % in ROPE   Rhat    ESS    Prior               
----  ------------------------  -------  ---------------  -------  ----------  ------  -----  --------------------
-1    (Intercept)               7.07     [ 6.28,  7.75]   100%     0%          1.005   788    Normal (0 +- 19.53) 
-3    LIE_Profile [Trickster]   -0.45    [-0.69, -0.22]   99.85%   3.72%       1.000   3087   Normal (0 +- 4.88)  
-4    LIE_Profile [Virtuous]    0.22     [-0.05,  0.50]   90.30%   42.70%      1.000   2926   Normal (0 +- 4.88)  
-2    Age                       -0.14    [-0.15, -0.12]   100%     100%        1.000   3443   Normal (0 +- 0.69)  
+     Parameter                 Median   89% CI           pd       % in ROPE   Rhat    ESS       Prior                  
+---  ------------------------  -------  ---------------  -------  ----------  ------  --------  -----------------------
+1    (Intercept)               7.07     [ 6.42,  7.70]   100%     0%          1.014   206.23    Normal (3.54 +- 4.88)  
+3    LIE_Profile [Trickster]   -0.45    [-0.69, -0.22]   99.98%   4.25%       1.004   1971.47   Normal (0.00 +- 10.18) 
+4    LIE_Profile [Virtuous]    0.22     [-0.05,  0.48]   89.85%   43.18%      1.004   2259.92   Normal (0.00 +- 11.98) 
+2    Age                       -0.14    [-0.15, -0.12]   100%     100%        1.003   1057.77   Normal (0.00 +- 0.69)  
 
 </div>
 
@@ -2147,14 +2210,14 @@ parameters::parameters_table(model_parameters(model_dimensional))
 
 <div class="kable-table">
 
-     Parameter           Median   89% CI           pd       % in ROPE   Rhat    ESS    Prior               
----  ------------------  -------  ---------------  -------  ----------  ------  -----  --------------------
-1    (Intercept)         6.95     [ 6.24,  7.73]   100%     0%          1.013   444    Normal (0 +- 19.53) 
-3    LIE_Ability         -0.05    [-0.10,  0.01]   91.38%   100%        0.999   3180   Normal (0 +- 2.06)  
-5    LIE_Frequency       -0.11    [-0.18, -0.04]   99.40%   96.67%      0.999   3052   Normal (0 +- 2.63)  
-4    LIE_Contextuality   0.02     [-0.10,  0.16]   60.98%   97.82%      1.000   2934   Normal (0 +- 4.87)  
-6    LIE_Negativity      -0.03    [-0.14,  0.08]   67.05%   98.92%      1.000   2748   Normal (0 +- 3.50)  
-2    Age                 -0.14    [-0.15, -0.12]   100%     100%        1.000   3461   Normal (0 +- 0.69)  
+     Parameter           Median   89% CI           pd       % in ROPE   Rhat    ESS       Prior                 
+---  ------------------  -------  ---------------  -------  ----------  ------  --------  ----------------------
+1    (Intercept)         6.92     [ 6.17,  7.99]   100%     0%          1.079   38.15     Normal (3.54 +- 4.88) 
+3    LIE_Ability         -0.05    [-0.10,  0.01]   92.42%   100%        1.011   958.02    Normal (0.00 +- 2.06) 
+5    LIE_Frequency       -0.12    [-0.21, -0.05]   98.83%   91.30%      1.032   86.20     Normal (0.00 +- 2.63) 
+4    LIE_Contextuality   0.03     [-0.10,  0.16]   62.68%   97.80%      1.006   1529.68   Normal (0.00 +- 4.87) 
+6    LIE_Negativity      -0.03    [-0.14,  0.08]   68.53%   99.33%      1.001   209.28    Normal (0.00 +- 3.50) 
+2    Age                 -0.14    [-0.15, -0.12]   100%     100%        1.017   365.67    Normal (0.00 +- 0.69) 
 
 </div>
 
@@ -2171,7 +2234,7 @@ model_profile %>%
   xlab("Deception Profile")
 ```
 
-<img src="figures/unnamed-chunk-71-1.png" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-72-1.png" style="display: block; margin: auto;" />
 
 
 
@@ -2189,8 +2252,8 @@ performance::compare_performance(model_dimensional, model_profile)
 
 Model               Type        ELPD   ELPD_SE   LOOIC   LOOIC_SE    WAIC     R2   R2_marginal   R2_adjusted   RMSE
 ------------------  --------  ------  --------  ------  ---------  ------  -----  ------------  ------------  -----
-model_dimensional   stanreg    -6044       139   12087        278   12107   0.05          0.05          0.01   4259
-model_profile       stanreg    -6043       138   12086        275   12110   0.04          0.04          0.01   4278
+model_dimensional   stanreg    -6044       139   12089        278   12101   0.05          0.05          0.02   4259
+model_profile       stanreg    -6044       139   12089        277   12105   0.04          0.04          0.02   4278
 
 </div>
 
@@ -2200,13 +2263,13 @@ parameters::parameters_table(model_parameters(model_profile))
 
 <div class="kable-table">
 
-     Parameter                 Median    89% CI                pd       % in ROPE   Rhat    ESS    Prior                  
----  ------------------------  --------  --------------------  -------  ----------  ------  -----  -----------------------
-1    (Intercept)               -813.36   [-2819.17, 1085.59]   75.10%   22.90%      1.002   1099   Normal (0 +- 43583.53) 
-4    LIE_Profile [Trickster]   274.76    [ -352.58,  913.93]   75.17%   62.28%      1.000   2343   Normal (0 +- 10895.88) 
-5    LIE_Profile [Virtuous]    -400.26   [-1139.97,  376.44]   80.00%   48.90%      1.001   2861   Normal (0 +- 10895.88) 
-2    Age                       73.48     [   28.81,  120.61]   99.62%   100%        1.002   2271   Normal (0 +- 1573.27)  
-3    Education                 487.09    [  318.65,  652.46]   100%     30.73%      1.002   2248   Normal (0 +- 5643.76)  
+     Parameter                 Median    89% CI                pd       % in ROPE   Rhat    ESS       Prior                        
+---  ------------------------  --------  --------------------  -------  ----------  ------  --------  -----------------------------
+1    (Intercept)               -765.55   [-2680.43, 1391.66]   73.15%   22.43%      1.005   1187.09   Normal (2820.46 +- 10895.88) 
+4    LIE_Profile [Trickster]   268.13    [ -379.93,  848.07]   75.83%   62.52%      1.000   2526.37   Normal (0.00 +- 22602.71)    
+5    LIE_Profile [Virtuous]    -382.57   [-1144.35,  374.10]   79.85%   50.22%      1.001   2836.85   Normal (0.00 +- 27301.14)    
+2    Age                       73.32     [   22.17,  115.04]   99.30%   100%        1.001   1414.79   Normal (0.00 +- 1573.27)     
+3    Education                 479.11    [  316.73,  668.63]   100%     34.10%      1.003   1214.22   Normal (0.00 +- 5643.76)     
 
 </div>
 
@@ -2216,15 +2279,15 @@ parameters::parameters_table(model_parameters(model_dimensional))
 
 <div class="kable-table">
 
-     Parameter           Median    89% CI                pd       % in ROPE   Rhat    ESS    Prior                  
----  ------------------  --------  --------------------  -------  ----------  ------  -----  -----------------------
-1    (Intercept)         -716.13   [-2961.26, 1368.37]   72.80%   21.80%      1.071   69     Normal (0 +- 43583.53) 
-4    LIE_Ability         222.05    [   66.74,  378.14]   99.12%   98.15%      1.003   1550   Normal (0 +- 4661.19)  
-6    LIE_Frequency       58.29     [ -130.90,  255.33]   68.73%   99.90%      1.011   1166   Normal (0 +- 5845.00)  
-5    LIE_Contextuality   -349.29   [ -688.72,   18.94]   93.67%   66.47%      1.001   2201   Normal (0 +- 10890.12) 
-7    LIE_Negativity      9.28      [ -260.48,  293.86]   52.10%   98.40%      1.004   1246   Normal (0 +- 7742.93)  
-2    Age                 71.32     [   27.95,  117.46]   99.65%   100%        1.004   1885   Normal (0 +- 1573.27)  
-3    Education           484.19    [  316.44,  636.12]   100%     33.58%      1.010   653    Normal (0 +- 5643.76)  
+     Parameter           Median    89% CI                pd       % in ROPE   Rhat    ESS       Prior                        
+---  ------------------  --------  --------------------  -------  ----------  ------  --------  -----------------------------
+1    (Intercept)         -749.48   [-2811.99, 1443.61]   72.40%   22.32%      1.007   819.95    Normal (2820.46 +- 10895.88) 
+4    LIE_Ability         226.38    [   72.52,  377.08]   98.95%   98.70%      1.000   2813.61   Normal (0.00 +- 4661.19)     
+6    LIE_Frequency       56.71     [ -129.53,  256.49]   67.80%   99.88%      1.000   2757.29   Normal (0.00 +- 5845.00)     
+5    LIE_Contextuality   -326.57   [ -691.08,    6.91]   93.30%   68.45%      1.000   2677.38   Normal (0.00 +- 10890.12)    
+7    LIE_Negativity      32.94     [ -254.67,  328.35]   56.75%   98.38%      1.000   2867.78   Normal (0.00 +- 7742.93)     
+2    Age                 73.29     [   27.08,  120.35]   99.40%   100%        1.000   3195.15   Normal (0.00 +- 1573.27)     
+3    Education           489.31    [  334.99,  661.06]   100%     30.40%      1.000   2936.36   Normal (0.00 +- 5643.76)     
 
 </div>
 
@@ -2241,7 +2304,7 @@ model_profile %>%
   xlab("Deception Profile")
 ```
 
-<img src="figures/unnamed-chunk-73-1.png" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-74-1.png" style="display: block; margin: auto;" />
 
 
 ```r
@@ -2305,7 +2368,7 @@ performance::compare_performance(model_dimensional, model_profile)
 
 Model               Type        ELPD   ELPD_SE   LOOIC   LOOIC_SE   WAIC     R2   R2_marginal   R2_adjusted   RMSE
 ------------------  --------  ------  --------  ------  ---------  -----  -----  ------------  ------------  -----
-model_dimensional   stanreg    -1534        16    3068         33   3068   0.39          0.08          0.37    2.3
+model_dimensional   stanreg    -1534        16    3068         33   3068   0.39          0.07          0.37    2.3
 model_profile       stanreg    -1548        16    3097         32   3097   0.36          0.02          0.35    2.3
 
 </div>
@@ -2316,11 +2379,11 @@ parameters::parameters_table(model_parameters(model_profile))
 
 <div class="kable-table">
 
-Parameter                 Median   89% CI           pd       % in ROPE   Rhat    ESS    Prior               
-------------------------  -------  ---------------  -------  ----------  ------  -----  --------------------
-(Intercept)               4.40     [ 3.09,  5.68]   100%     0%          1.003   843    Normal (0 +- 29.28) 
-LIE_Profile [Trickster]   -0.38    [-0.68, -0.05]   97.15%   32.88%      1.001   3755   Normal (0 +- 7.32)  
-LIE_Profile [Virtuous]    0.47     [ 0.08,  0.86]   97.22%   22.55%      1.003   3302   Normal (0 +- 7.32)  
+Parameter                 Median   89% CI           pd       % in ROPE   Rhat    ESS       Prior                  
+------------------------  -------  ---------------  -------  ----------  ------  --------  -----------------------
+(Intercept)               4.38     [ 3.02,  5.53]   100%     0%          1.006   843.63    Normal (3.93 +- 7.32)  
+LIE_Profile [Trickster]   -0.38    [-0.68, -0.03]   96.85%   33.52%      1.000   3661.61   Normal (0.00 +- 15.20) 
+LIE_Profile [Virtuous]    0.47     [ 0.08,  0.84]   97.60%   20.85%      1.000   3531.67   Normal (0.00 +- 18.28) 
 
 </div>
 
@@ -2330,13 +2393,13 @@ parameters::parameters_table(model_parameters(model_dimensional))
 
 <div class="kable-table">
 
-     Parameter           Median   89% CI           pd       % in ROPE   Rhat    ESS    Prior               
----  ------------------  -------  ---------------  -------  ----------  ------  -----  --------------------
-1    (Intercept)         4.32     [ 3.06,  5.40]   100%     0%          1.001   1168   Normal (0 +- 29.28) 
-2    LIE_Ability         0.00     [-0.07,  0.09]   53.65%   100%        1.002   3441   Normal (0 +- 3.12)  
-4    LIE_Frequency       0.20     [ 0.10,  0.30]   99.78%   93.33%      1.000   3197   Normal (0 +- 3.95)  
-3    LIE_Contextuality   -0.38    [-0.58, -0.20]   99.90%   23.10%      1.002   3356   Normal (0 +- 7.27)  
-5    LIE_Negativity      0.36     [ 0.21,  0.52]   99.98%   23.08%      1.000   3081   Normal (0 +- 5.22)  
+     Parameter           Median   89% CI           pd       % in ROPE   Rhat    ESS       Prior                 
+---  ------------------  -------  ---------------  -------  ----------  ------  --------  ----------------------
+1    (Intercept)         4.33     [ 3.15,  5.47]   100%     0%          1.003   1230.14   Normal (3.93 +- 7.32) 
+2    LIE_Ability         0.01     [-0.08,  0.09]   53.75%   100%        1.000   3572.10   Normal (0.00 +- 3.12) 
+4    LIE_Frequency       0.19     [ 0.09,  0.29]   99.85%   94.40%      1.000   3667.54   Normal (0.00 +- 3.95) 
+3    LIE_Contextuality   -0.37    [-0.56, -0.19]   99.95%   24.22%      1.000   3823.94   Normal (0.00 +- 7.27) 
+5    LIE_Negativity      0.36     [ 0.22,  0.52]   99.98%   22.50%      1.001   3205.93   Normal (0.00 +- 5.22) 
 
 </div>
 
@@ -2353,7 +2416,7 @@ model_profile %>%
   xlab("Deception Profile")
 ```
 
-<img src="figures/unnamed-chunk-76-1.png" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-77-1.png" style="display: block; margin: auto;" />
 
 
 ```r
@@ -2453,7 +2516,7 @@ df %>%
   theme_modern()
 ```
 
-<img src="figures/unnamed-chunk-78-1.png" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-79-1.png" style="display: block; margin: auto;" />
 
 
 ```r
@@ -2478,11 +2541,11 @@ parameters::parameters_table(model_parameters(model_profile))
 
 <div class="kable-table">
 
-Parameter                 Median   89% CI           pd     % in ROPE   Rhat    ESS    Prior              
-------------------------  -------  ---------------  -----  ----------  ------  -----  -------------------
-(Intercept)               1.13     [ 1.04,  1.21]   100%   0%          1.000   4028   Normal (0 +- 9.09) 
-LIE_Profile [Trickster]   0.37     [ 0.25,  0.50]   100%   0.02%       0.999   4112   Normal (0 +- 2.27) 
-LIE_Profile [Virtuous]    -0.41    [-0.55, -0.27]   100%   0.05%       1.000   4117   Normal (0 +- 2.27) 
+Parameter                 Median   89% CI           pd     % in ROPE   Rhat    ESS       Prior                 
+------------------------  -------  ---------------  -----  ----------  ------  --------  ----------------------
+(Intercept)               1.13     [ 1.04,  1.20]   100%   0%          1.000   4152.67   Normal (1.16 +- 2.27) 
+LIE_Profile [Trickster]   0.37     [ 0.25,  0.50]   100%   0%          1.000   4077.22   Normal (0.00 +- 4.81) 
+LIE_Profile [Virtuous]    -0.40    [-0.55, -0.26]   100%   0.02%       1.000   4027.72   Normal (0.00 +- 5.46) 
 
 </div>
 
@@ -2492,13 +2555,13 @@ parameters::parameters_table(model_parameters(model_dimensional))
 
 <div class="kable-table">
 
-     Parameter           Median   89% CI          pd       % in ROPE   Rhat    ESS    Prior              
----  ------------------  -------  --------------  -------  ----------  ------  -----  -------------------
-1    (Intercept)         1.18     [ 1.13, 1.24]   100%     0%          1.000   3696   Normal (0 +- 9.09) 
-2    LIE_Ability         0.02     [-0.01, 0.05]   90.53%   99.95%      1.001   3571   Normal (0 +- 0.96) 
-4    LIE_Frequency       0.12     [ 0.09, 0.16]   100%     9.72%       1.001   3597   Normal (0 +- 1.25) 
-3    LIE_Contextuality   0.05     [-0.01, 0.12]   88.52%   83.30%      1.000   3678   Normal (0 +- 2.26) 
-5    LIE_Negativity      -0.04    [-0.10, 0.01]   89.18%   92.42%      1.001   3211   Normal (0 +- 1.66) 
+     Parameter           Median   89% CI          pd       % in ROPE   Rhat    ESS       Prior                 
+---  ------------------  -------  --------------  -------  ----------  ------  --------  ----------------------
+1    (Intercept)         1.18     [ 1.13, 1.24]   100%     0%          1.001   3707.46   Normal (1.16 +- 2.27) 
+2    LIE_Ability         0.02     [-0.01, 0.05]   89.45%   99.98%      1.001   3030.55   Normal (0.00 +- 0.96) 
+4    LIE_Frequency       0.12     [ 0.08, 0.16]   100%     10.60%      1.000   3162.83   Normal (0.00 +- 1.25) 
+3    LIE_Contextuality   0.05     [-0.01, 0.12]   88.83%   85.17%      1.002   3171.39   Normal (0.00 +- 2.26) 
+5    LIE_Negativity      -0.04    [-0.10, 0.01]   89.18%   91.85%      1.000   2854.71   Normal (0.00 +- 1.66) 
 
 </div>
 
@@ -2574,7 +2637,7 @@ df %>%
   theme_modern()
 ```
 
-<img src="figures/unnamed-chunk-81-1.png" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-82-1.png" style="display: block; margin: auto;" />
 
 
 ```r
@@ -2588,8 +2651,8 @@ performance::compare_performance(model_dimensional, model_profile)
 
 Model               Type       ELPD   ELPD_SE   LOOIC   LOOIC_SE   WAIC     R2   R2_adjusted   RMSE
 ------------------  --------  -----  --------  ------  ---------  -----  -----  ------------  -----
-model_dimensional   stanreg    -837        20    1675         41   1675   0.08          0.06   0.86
-model_profile       stanreg    -839        20    1678         40   1678   0.07          0.06   0.86
+model_dimensional   stanreg    -837        20    1674         41   1674   0.08          0.06   0.86
+model_profile       stanreg    -839        20    1677         40   1677   0.07          0.06   0.86
 
 </div>
 
@@ -2599,11 +2662,11 @@ parameters::parameters_table(model_parameters(model_profile))
 
 <div class="kable-table">
 
-Parameter                 Median   89% CI           pd     % in ROPE   Rhat    ESS    Prior              
-------------------------  -------  ---------------  -----  ----------  ------  -----  -------------------
-(Intercept)               1.43     [ 1.35,  1.51]   100%   0%          1.000   3883   Normal (0 +- 8.93) 
-LIE_Profile [Trickster]   0.29     [ 0.17,  0.41]   100%   0.50%       1.000   4111   Normal (0 +- 2.23) 
-LIE_Profile [Virtuous]    -0.34    [-0.48, -0.20]   100%   0.12%       1.000   4081   Normal (0 +- 2.23) 
+Parameter                 Median   89% CI           pd     % in ROPE   Rhat    ESS       Prior                 
+------------------------  -------  ---------------  -----  ----------  ------  --------  ----------------------
+(Intercept)               1.43     [ 1.35,  1.51]   100%   0%          1.000   4476.88   Normal (1.45 +- 2.23) 
+LIE_Profile [Trickster]   0.29     [ 0.17,  0.41]   100%   0.40%       1.000   5096.96   Normal (0.00 +- 4.73) 
+LIE_Profile [Virtuous]    -0.34    [-0.47, -0.20]   100%   0.10%       1.000   4672.89   Normal (0.00 +- 5.37) 
 
 </div>
 
@@ -2613,13 +2676,13 @@ parameters::parameters_table(model_parameters(model_dimensional))
 
 <div class="kable-table">
 
-     Parameter           Median   89% CI          pd       % in ROPE   Rhat    ESS    Prior              
----  ------------------  -------  --------------  -------  ----------  ------  -----  -------------------
-1    (Intercept)         1.47     [ 1.41, 1.52]   100%     0%          1.000   3402   Normal (0 +- 8.93) 
-2    LIE_Ability         0.03     [ 0.00, 0.06]   95.58%   99.88%      1.000   3159   Normal (0 +- 0.95) 
-4    LIE_Frequency       0.10     [ 0.06, 0.13]   100%     38.15%      1.000   3251   Normal (0 +- 1.23) 
-3    LIE_Contextuality   0.00     [-0.06, 0.07]   55.15%   96.25%      1.000   3780   Normal (0 +- 2.22) 
-5    LIE_Negativity      -0.03    [-0.08, 0.03]   77.20%   95.83%      0.999   3120   Normal (0 +- 1.63) 
+     Parameter           Median   89% CI          pd       % in ROPE   Rhat    ESS       Prior                 
+---  ------------------  -------  --------------  -------  ----------  ------  --------  ----------------------
+1    (Intercept)         1.47     [ 1.42, 1.52]   100%     0%          0.999   3961.98   Normal (1.45 +- 2.23) 
+2    LIE_Ability         0.03     [ 0.00, 0.06]   96.33%   99.95%      1.000   3679.99   Normal (0.00 +- 0.95) 
+4    LIE_Frequency       0.10     [ 0.05, 0.13]   100%     39.30%      1.000   3400.01   Normal (0.00 +- 1.23) 
+3    LIE_Contextuality   0.00     [-0.07, 0.07]   53.67%   96.33%      1.000   3715.74   Normal (0.00 +- 2.22) 
+5    LIE_Negativity      -0.03    [-0.09, 0.03]   77.15%   95.90%      1.000   3262.21   Normal (0.00 +- 1.63) 
 
 </div>
 
@@ -2763,7 +2826,7 @@ ggm_bidr <- create_ggm(graphdata_bidr, title = "Social Desirability", layout="su
 ggm_bidr
 ```
 
-<img src="figures/unnamed-chunk-86-1.png" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-87-1.png" style="display: block; margin: auto;" />
 
 After controlling for social desirability, it seems that the relationship between frequency and contextuality changed from being positive to negative. The more people lie (likely representing a lack of control), and the less flexible and insensitive to the context they are.
 
@@ -2836,7 +2899,7 @@ graphdata_trimp$nodes$name <- stringr::str_remove(graphdata_trimp$nodes$name, "L
 create_ggm(graphdata_trimp, title = "Pychopathy")
 ```
 
-<img src="figures/unnamed-chunk-89-1.png" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-90-1.png" style="display: block; margin: auto;" />
 
 
 
@@ -2956,7 +3019,7 @@ ggm_ffni <- create_ggm(graphdata_ffni, title = "Narcissism", node_size=38)
 ggm_ffni
 ```
 
-<img src="figures/unnamed-chunk-91-1.png" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-92-1.png" style="display: block; margin: auto;" />
 
 
 ### Normal Personality (IPIP6)
@@ -3039,7 +3102,7 @@ ggm_ipip <- create_ggm(graphdata_ipip, title = "Normal Personality", layout="gra
 ggm_ipip
 ```
 
-<img src="figures/unnamed-chunk-93-1.png" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-94-1.png" style="display: block; margin: auto;" />
 
 ### Pathological Personality (PID5)
 
@@ -3112,7 +3175,7 @@ ggm_pid <- create_ggm(graphdata_pid, title = "Pathological Personality", layout=
 ggm_pid
 ```
 
-<img src="figures/unnamed-chunk-95-1.png" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-96-1.png" style="display: block; margin: auto;" />
 
 
 ### Light Triad (LTS)
@@ -3171,7 +3234,7 @@ ggm_lts <- create_ggm(graphdata_lts, title = "Light Triad", layout="fr", bend=0.
 ggm_lts
 ```
 
-<img src="figures/unnamed-chunk-97-1.png" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-98-1.png" style="display: block; margin: auto;" />
 
 
 
@@ -3248,7 +3311,7 @@ ggm_upps <- create_ggm(graphdata_upps, title = "Impulsivity")
 ggm_upps
 ```
 
-<img src="figures/unnamed-chunk-99-1.png" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-100-1.png" style="display: block; margin: auto;" />
 
 ### Emotion Regulation (DERS)
 
@@ -3330,7 +3393,7 @@ ggm_ders <- create_ggm(graphdata_ders, title = "Difficulties in Emotion Regulati
 ggm_ders
 ```
 
-<img src="figures/unnamed-chunk-101-1.png" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-102-1.png" style="display: block; margin: auto;" />
 
 
 ### Interoception (MAIA2)
@@ -3383,7 +3446,7 @@ ggm_maia <- create_ggm(graphdata_maia, title = "Interoception")
 ggm_maia
 ```
 
-<img src="figures/unnamed-chunk-103-1.png" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-104-1.png" style="display: block; margin: auto;" />
 
 
 <!-- ```{r figure_ggm, fig.height=figwidth*3, fig.width=figwidth*3, message=FALSE, warning=FALSE, include=FALSE, eval=FALSE} -->
@@ -3423,7 +3486,7 @@ report::cite_packages(sessionInfo())
 |Daniel Lüdecke and Dominique Makowski (2020). easystats: Jump in the easyverse. R package version 0.2.0. https://github.com/easystats/easystats                                                                                                            |
 |Daniel Lüdecke, Dominique Makowski, Philip Waggoner and Mattan S. Ben-Shachar (2020). see: Visualisation Toolbox for 'easystats' and Extra Geoms, Themes and Color Palettes for 'ggplot2'. R package version 0.5.1. https://CRAN.R-project.org/package=see |
 |Dirk Eddelbuettel and Romain Francois (2011). Rcpp: Seamless R and C++ Integration. Journal of Statistical Software, 40(8), 1-18. URL http://www.jstatsoft.org/v40/i08/.                                                                                   |
-|Goodrich B, Gabry J, Ali I & Brilleman S. (2018). rstanarm: Bayesian applied regression modeling via Stan. R package version 2.17.4. http://mc-stan.org/.                                                                                                  |
+|Goodrich B, Gabry J, Ali I & Brilleman S. (2020). rstanarm: Bayesian applied regression modeling via Stan. R package version 2.21.1 https://mc-stan.org/rstanarm.                                                                                          |
 |H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016.                                                                                                                                                                   |
 |Hadley Wickham (2019). forcats: Tools for Working with Categorical Variables (Factors). R package version 0.4.0. https://CRAN.R-project.org/package=forcats                                                                                                |
 |Hadley Wickham (2019). stringr: Simple, Consistent Wrappers for Common String Operations. R package version 1.4.0. https://CRAN.R-project.org/package=stringr                                                                                              |
