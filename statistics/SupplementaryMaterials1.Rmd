@@ -1307,6 +1307,9 @@ sig <- model_parameters(model_dimensional)[2:5,] %>%
            t()) %>%
   mutate(Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality"))
 
+sig <- sig %>% 
+  mutate(Text = ifelse(pd >= 0.95, "°", Text))
+
 p_age <- rbind(estimate_link(model_dimensional, target="LIE_Frequency") %>%
         mutate(LIE_Ability = NA, LIE_Contextuality=NA, LIE_Negativity=NA),
       estimate_link(model_dimensional, target="LIE_Ability") %>%

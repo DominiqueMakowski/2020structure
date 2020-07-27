@@ -45,8 +45,8 @@ library(easystats)
 ```
 > # Attaching packages (red = needs update)
 > <U+2714> insight     0.9.0.1   <U+2714> bayestestR  0.7.2.1
-> <U+2714> performance 0.4.7.1   <U+2714> parameters  0.8.2  
-> <U+2714> see         0.5.1     <U+2714> effectsize  0.3.1  
+> <U+26A0> performance 0.4.7.1   <U+2714> parameters  0.8.2  
+> <U+26A0> see         0.5.1     <U+2714> effectsize  0.3.1  
 > <U+26A0> correlation 0.2.1     <U+2714> modelbased  0.3.0  
 > <U+2714> report      0.1.0     
 > Warnings or errors in CRAN checks for package(s) 'modelbased'.
@@ -2139,6 +2139,9 @@ sig <- model_parameters(model_dimensional)[2:5,] %>%
            summarise_all(function(x) {mean(range(x))}) %>%
            t()) %>%
   mutate(Dimension = fct_relevel(Dimension, "Ability", "Frequency", "Negativity", "Contextuality"))
+
+sig <- sig %>% 
+  mutate(Text = ifelse(pd >= 0.95, "°", Text))
 
 p_age <- rbind(estimate_link(model_dimensional, target="LIE_Frequency") %>%
         mutate(LIE_Ability = NA, LIE_Contextuality=NA, LIE_Negativity=NA),
