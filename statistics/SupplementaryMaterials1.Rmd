@@ -1196,8 +1196,8 @@ df <- cbind(df, lie) %>%
 ```{r message=FALSE, warning=FALSE}
 library(rstanarm)
 
-model_dimensional <- stan_glm(Sex ~ LIE_Ability + LIE_Frequency + LIE_Contextuality + LIE_Negativity, data=df, family = "binomial", refresh = 0, seed=333)
 model_profile <- stan_glm(Sex ~ LIE_Profile, data = df, family = "binomial", refresh = 0, seed=333)
+model_dimensional <- stan_glm(Sex ~ LIE_Ability + LIE_Frequency + LIE_Contextuality + LIE_Negativity, data=df, family = "binomial", refresh = 0, seed=333)
 
 performance::compare_performance(model_dimensional, model_profile, metrics = c("LOOIC", "R2"))
 
@@ -1273,8 +1273,8 @@ p_sex <- rbind(estimate_link(model_dimensional, target="LIE_Ability") %>%
 #### Age
 
 ```{r warning=FALSE, message=FALSE}
-model_dimensional <- stan_lmer(Age ~ LIE_Ability + LIE_Frequency + LIE_Contextuality + LIE_Negativity + Income + Education + (1|Sex), data = df, refresh = 0, seed=333)
 model_profile <- stan_lmer(Age ~ LIE_Profile + Income + Education + (1|Sex), data = df, refresh = 0, seed=333)
+model_dimensional <- stan_lmer(Age ~ LIE_Ability + LIE_Frequency + LIE_Contextuality + LIE_Negativity + Income + Education + (1|Sex), data = df, refresh = 0, seed=333)
 
 performance::compare_performance(model_dimensional, model_profile)
 
